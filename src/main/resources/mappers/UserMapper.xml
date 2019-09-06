@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+		"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+	
+	<!-- namespace表示命名空间，值必须为接口的名称(包括包名) -->
+	<mapper namespace="mapper.UserMapper">
+	
+	
+	
+	<!-- void insertUser(User user); 插入用户信息-->
+	<insert id="insertUser" parameterType="bean.User">
+		insert into t_user (
+		username, password, email, phone, created_user, created_time, modified_user, modified_time
+		) values( 
+		#{username}, #{password}, #{email}, #{phone}, #{createdUser}, #{createdTime}, #{modifiedUser}, #{modifiedTime} 
+		)
+	</insert>	
+	
+	<!-- User seletByUsername(String username); 根据用户名查找用户 -->
+	<select id="selectByUsername" resultType="bean.User">
+		select 
+		id, username, password, email, phone, face, sex,
+		created_user createdUser, created_time createdTime,
+		modified_user modifiedUser, modified_time modifiedTime
+		from t_user
+		where username=#{username}
+	</select>
+	
+	<!-- User selectByEmail(String email); 根据邮箱查找用户 -->
+	<select id="selectByEmail" resultType="bean.User">
+		select 
+		id, username, password, email, phone, face, sex,
+		created_user createdUser, created_time createdTime,
+		modified_user modifiedUser, modified_time modifiedTime
+		from t_user
+		where email=#{email}
+	</select>
+	
+	<!-- User selectByPhone(String phone); 根据邮箱查找用户 -->
+	<select id="selectByPhone" resultType="bean.User">
+		select 
+		id, username, password, email, phone, face, sex,
+		created_user createdUser, created_time createdTime,
+		modified_user modifiedUser, modified_time modifiedTime
+		from t_user
+		where phone=#{phone}
+	</select>
+	
+	</mapper>
