@@ -18,4 +18,10 @@ public interface IWeiboService {
 	 * @return
 	 */
 	List<Weibo> selectAll();
+	
+	/**
+	 * 查询指定用户的所有微博
+	 * @return
+	 */
+	List<Weibo> selectById(Integer userId);
 }

@@ -40,7 +40,7 @@
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<!-- 要拦截的路径 -->
-			<mvc:mapping path="/user/*"/>
+			<mvc:mapping path="/weibo/*"/>
 			<mvc:mapping path="/address/*"/>
 			<mvc:mapping path="/cart/*"/>
 			<!-- 不拦截的资源 -->

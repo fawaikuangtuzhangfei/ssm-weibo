@@ -18,4 +18,8 @@ public interface WeiboMapper {
 	//查询所有微博
 	List<Weibo> selectAll();
 	
+	//查询当前用户的所有微博-根据id 
+	List<Weibo> selectById(Integer userId);
+	
+	
 }

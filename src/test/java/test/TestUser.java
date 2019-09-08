@@ -57,7 +57,15 @@ public class TestUser {
 	public void testSelectByUsername(){
 		AbstractApplicationContext ac = new ClassPathXmlApplicationContext("application-dao.xml");
 		UserMapper mapper = ac.getBean("userMapper", UserMapper.class);
-		User user = mapper.selectByUsername("775159840");
+		User user = mapper.selectByUsername("liangweizhen");
+		System.out.println(user);
+		ac.close();
+	}
+	@Test
+	public void testSelectByuserName() {
+		AbstractApplicationContext ac = new ClassPathXmlApplicationContext("application-dao.xml","application-service.xml");
+		IUserService service = ac.getBean("userService", IUserService.class);
+		User user = service.selectByUsername("liangweizhen");
 		System.out.println(user);
 		ac.close();
 	}

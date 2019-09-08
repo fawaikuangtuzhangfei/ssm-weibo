@@ -34,19 +34,11 @@ public class UserController {
 			//1.声明rr对象
 			ResponseResult<Void> rr =  null;
 			try{
-				//2.调用业务层方法：login(username,password)返回user对象
-				User user = 
-						userService.login(
-						username, password);
-				//3.rr设置 state：1 message：登录成功
-				rr = 
-				new ResponseResult<Void>(1,"登录成功");
-				//4.把user 对象绑定到session中
+				User user = userService.login(username, password);
+				rr = new ResponseResult<Void>(1,"登录成功");
 				session.setAttribute("user",user);
 				}catch(RuntimeException ex){
-					//5.rr设置 state：0 message：ex.getMessage();
-					rr = 
-					new ResponseResult<Void>(0,ex.getMessage());
+					rr = new ResponseResult<Void>(0,ex.getMessage());
 				}
 			return rr;
 		}
@@ -140,5 +132,13 @@ public class UserController {
 	@RequestMapping("/showLogin.do")
 	public String showLogin() {
 		return "login";
+	}
+	
+	//退出登录
+	@RequestMapping("/exit.do")
+	public String exit(HttpSession session){
+		//设置session失效
+		session.invalidate();
+		return "redirect:../user/showLogin.do";
 	}
 }

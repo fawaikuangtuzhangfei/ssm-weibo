@@ -10,37 +10,28 @@
 	<!-- boolean insert(Weibo weibo); 发布信息-->
 	<insert id="insert" parameterType="bean.Weibo">
 		insert into t_weibo (
-		user_id, post_time,content,pic1,pic2,pic3,pic4,pic5,pic6,pic7,pic8,pic9,original,repost_id
+		user_id,content,pic1,pic2,pic3,pic4,pic5,pic6,pic7,pic8,pic9,original,repost_id
 		) values( 
-		#{userId}, #{postTime}, #{content},#{pic1}, #{pic2}, #{pic3}, #{pic4}, #{pic5}, #{pic6}, #{pic7}, #{pic8}, #{pic9}, #{original}, #{repostId} 
+		#{userId}, #{content},#{pic1}, #{pic2}, #{pic3}, #{pic4}, #{pic5}, #{pic6}, #{pic7}, #{pic8}, #{pic9}, #{original}, #{repostId} 
 		)
 	</insert>	
 	
 	<!-- List<Weibo> selectAll(); 查询所有微博 -->
-	<select id="selectAll" resultType="bean.Weibo">
+	<select id="selectAll" resultType="bean.Weibo" >
 		select 
-		id,user_id, post_time,content,pic1,pic2,pic3,pic4,pic5,pic6,pic7,pic8,pic9,original,repost_id
+		id,user_id as userId, post_time as postTime,content,pic1,pic2,pic3,pic4,pic5,pic6,pic7,pic8,pic9,original,repost_id
 		from t_weibo
+		order by post_time desc
 	</select>
 	
-	<!-- User selectByEmail(String email); 根据邮箱查找用户 -->
-	<select id="selectByEmail" resultType="bean.User">
+	<!-- List<Weibo> selectById(Integer userId); 查询单个用户的所有微博 -->
+	<select id="selectById" resultType="bean.Weibo">
 		select 
-		id, username, password, email, phone, face, sex,
-		created_user createdUser, created_time createdTime,
-		modified_user modifiedUser, modified_time modifiedTime
-		from t_user
-		where email=#{email}
+		id,user_id as userId, post_time as postTime,content,pic1,pic2,pic3,pic4,pic5,pic6,pic7,pic8,pic9,original,repost_id
+		from t_weibo
+		where user_id=#{userId}
+		order by post_time desc
 	</select>
 	
-	<!-- User selectByPhone(String phone); 根据邮箱查找用户 -->
-	<select id="selectByPhone" resultType="bean.User">
-		select 
-		id, username, password, email, phone, face, sex,
-		created_user createdUser, created_time createdTime,
-		modified_user modifiedUser, modified_time modifiedTime
-		from t_user
-		where phone=#{phone}
-	</select>
 	
 	</mapper>
