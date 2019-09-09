@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+		"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+	
+	<!-- namespace表示命名空间，值必须为接口的名称(包括包名) -->
+	<mapper namespace="mapper.CommentMapper">
+	
+	<!-- boolean insertComment(Comment comment); 发布评论-->
+	<insert id="insertComment" parameterType="bean.Comment">
+		insert into t_comment (
+		comment_id, user_id, weibo_id, comment_time, comment_content
+		) values( 
+		#{commentId}, #{userId},#{weiboId}, #{commentTime}, #{commentContent} 
+		)
+	</insert>	
+	
+	<!-- List<Comment> selectAll(Integer weiboId); 查询该微博下的所有评论 -->
+	<select id="selectAll" resultType="bean.Comment" >
+		select 
+		comment_id as commentId, user_id as userId, weibo_id as weiboId, comment_time as commentTime, comment_content as commentContent
+		from t_comment
+		where weibo_id = #{weiboId}
+		order by comment_time desc
+	</select>
+	
+	
+	
+	</mapper>

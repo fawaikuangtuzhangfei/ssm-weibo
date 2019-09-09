@@ -9,8 +9,11 @@
 <title>我的首页</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="../js/jquery-3.1.1.min.js"></script>
+<script src="../js/jquery-1.12.0.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
+
+<script type="text/javascript " src="../js/comment.js"></script>
+<script type="text/javascript " src="../js/jquery.flexText.js "></script>
 
 <!-- Bootstrap -->
 <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
@@ -117,33 +120,35 @@
 						<!-- Button trigger modal -->
 						<button type="button" class="btn btn-primary " data-toggle="modal"
 							data-target="#myModal" style="width: 25%"  data-id="${weibo.id }">转发</button>
-						<button onclick="" style="width: 25%" class="btn btn-warning"
-							id="bt">评论</button>
+						<button onclick="loadComment(${weibo.id})" style="width: 25%" class="btn btn-warning" id="bt">评论</button>
 						<button type="button" style="width: 25%" class="btn btn-danger">点赞</button>
 					</div>
 					<br> <br>
 				</div>
 
 				<!-- 评论区 -->
-				<div class="container "
-					style="width: 850px; background-color: #fff;">
-					<div class="commentAll " id="com${status.index }"
-						style="display: none;">
-						<!--评论区域 begin-->
-						<div class="reviewArea clearfix ">
-							<textarea class="content comment-input "
-								placeholder="等待输入......." onkeyup="keyUP(this) "></textarea>
-							<a href="javascript:; " class="plBtn ">评论</a>
-							<!-- 微博id -->
-							<input type="hidden" value="" class="weiboId">
-						</div>
-						<!--评论区域 end-->
-						<!--回复区域 begin-->
-						<div class="comment-show " id=""></div>
-						<!--回复区域 end-->
-					</div>
-					<hr>
+		<div class="container "	style="width: 850px; background-color: #fff;">
+			<div class="commentAll " id="com${weibo.id}" >
+				<!--评论区域 begin-->
+				<div class="reviewArea clearfix ">
+				<form id="form-pinglun">
+					<input type="hidden" value="${user.id}" name="userId">
+					<input type="hidden" value="${weibo.id}" name="weiboId">
+					<textarea class="content comment-input " id="pinglunContent"
+						placeholder="等待输入......." onkeyup="keyUP(this) " name="commentContent"></textarea>
+					<a href="javascript:; " class="plBtn pinglun" id="pinglun">评论</a>
+					<!-- 微博id -->
+					<input type="hidden" value="${weibo.id}" class="weiboId">
+				</form>
 				</div>
+				
+				<!--评论区域 end-->
+				<!--回复区域 begin-->
+				<div class="comment-show " id="show${weibo.id }"></div>
+				<!--回复区域 end-->
+			</div>
+			<hr>
+		</div>
 
 
 			</c:forEach>
@@ -180,7 +185,73 @@
 	</div>
 
 	<div></div>
+	
+<!-- //发布评论 -->
+<script>
 
+//<!--textarea限制字数-->
+function keyUP(t) {
+ var len = $(t).val().length;
+ if (len > 139) {
+     $(t).val($(t).val().substring(0, 140));
+ }
+}
+$('.pinglun').click(function(){
+    	$.ajax({
+    		url:"../weibo/postComment.do",
+    		//serialize()表示提交表单所有组件
+    		data:$("#form-pinglun").serialize(),
+    		type:"post",
+    		dataType:"json",
+    		success:function(obj){
+    			
+    		}
+    	});
+    	window.location.href="../weibo/showOne.do";
+  })
+ 
+</script>
+
+<!-- 加载评论 -->
+<script>
+function loadComment(weiboId){
+    var commentAction = "../weibo/showComments.do?weiboId=" + weiboId;
+    $.ajax({
+        type: 'GET',
+        url: commentAction,
+        contentType: 'application/json;charset=utf-8',
+        dataType: 'json',
+        success:function(data) {
+        	var result = data.data;
+        	for(var i in result){
+        		console.log(result[i].commentTime);
+        		var date1 = new Date(result[i].commentTime);
+        		var com = '<div class="comment-show-con clearfix ">' +
+                '<div class="comment-show-con-img pull-left ">' +
+              	//昵称
+                '<a href="# " class="comment-size-name ">'+ result[i].userId +'</a>' +
+                //内容
+                '<span class="my-pl-con ">:&nbsp; '+ result[i].commentContent +'</span></div></div>' +
+                '<div class="date-dz ">'+
+                //时间
+                '<span class="date-dz-left  comment-time ">'+ date1.toLocaleString() +'</span>' +
+                '<div class="date-dz-right pull-right comment-pl-block ">' +
+                //回复
+                '<a href="javascript:; " class="date-dz-pl pl-hf hf-con-block pull-left ">回复</a>' +
+                '<span class="pull-left date-dz-line ">|</span>' +
+                '<a href="javascript:; " class="date-dz-z pull-left ">' +
+                //赞
+                '<i class="date-dz-z-click-red "></i>赞 (<i class="z-num ">666</i>)</a>' +
+                '</div></div><div class="hf-list-con " style="text-align: left;" id="'+ result[i].commentId +'"></div>';
+        		$('#show'+weiboId).prepend(com);
+        	}
+            
+		}
+    });
+    
+}
+
+</script>
 	<!-- //转发微博 -->
 	<script>
 	$('#myModal').on('show.bs.modal', function (event) {      

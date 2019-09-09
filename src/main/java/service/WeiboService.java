@@ -23,7 +23,7 @@ public class WeiboService implements IWeiboService{
 	@Override
 	public boolean insertWeibo(Weibo weibo) {
 		weiboMapper.insert(weibo);
-		return false;
+		return true;
 	}
 
 	@Override
