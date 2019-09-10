@@ -131,7 +131,7 @@
 			<div class="commentAll " id="com${weibo.id}" >
 				<!--评论区域 begin-->
 				<div class="reviewArea clearfix ">
-				<form id="form-pinglun">
+				<form id="form-pinglun${weibo.id}">
 					<input type="hidden" value="${user.id}" name="userId">
 					<input type="hidden" value="${weibo.id}" name="weiboId">
 					<textarea class="content comment-input " id="pinglunContent"
@@ -197,17 +197,19 @@ function keyUP(t) {
  }
 }
 $('.pinglun').click(function(){
+	var id=$(this).parent().children("input")[2].value;
+	console.log(id);
     	$.ajax({
     		url:"../weibo/postComment.do",
     		//serialize()表示提交表单所有组件
-    		data:$("#form-pinglun").serialize(),
+    		data:$("#form-pinglun" + id).serialize(),
     		type:"post",
     		dataType:"json",
     		success:function(obj){
     			
     		}
     	});
-    	window.location.href="../weibo/showOne.do";
+    	//window.location.href="../weibo/showOne.do";
   })
  
 </script>
@@ -228,13 +230,14 @@ function loadComment(weiboId){
         		var date1 = new Date(result[i].commentTime);
         		var com = '<div class="comment-show-con clearfix ">' +
                 '<div class="comment-show-con-img pull-left ">' +
+              	//时间
+                '<span class="date-dz-left  comment-time ">'+ date1.toLocaleString() +'</span> <br>' +
               	//昵称
                 '<a href="# " class="comment-size-name ">'+ result[i].userId +'</a>' +
                 //内容
-                '<span class="my-pl-con ">:&nbsp; '+ result[i].commentContent +'</span></div></div>' +
+                '<span class="my-pl-con ">:&nbsp; '+ result[i].commentContent +'</span>' +
                 '<div class="date-dz ">'+
-                //时间
-                '<span class="date-dz-left  comment-time ">'+ date1.toLocaleString() +'</span>' +
+                
                 '<div class="date-dz-right pull-right comment-pl-block ">' +
                 //回复
                 '<a href="javascript:; " class="date-dz-pl pl-hf hf-con-block pull-left ">回复</a>' +
@@ -242,7 +245,10 @@ function loadComment(weiboId){
                 '<a href="javascript:; " class="date-dz-z pull-left ">' +
                 //赞
                 '<i class="date-dz-z-click-red "></i>赞 (<i class="z-num ">666</i>)</a>' +
-                '</div></div><div class="hf-list-con " style="text-align: left;" id="'+ result[i].commentId +'"></div>';
+                '<span class="pull-left date-dz-line ">|</span>' +
+                //删除
+                '<a href="javascript:;" class="removeBlock " id="'+ result[i].commentId +'">删除</a>' +
+                '</div></div><div class="hf-list-con " style="text-align: left;" id="123'+ result[i].commentId +'"></div>';
         		$('#show'+weiboId).prepend(com);
         	}
             
@@ -252,6 +258,18 @@ function loadComment(weiboId){
 }
 
 </script>
+
+<script>
+//删除当前行-评论
+$(document).on('click','.removeBlock',function (e) {  
+        console.log(e)      
+        var id=$(this).attr('id');
+        var url ="../weibo/removeById.do?weiboId="+id;
+		 window.location.href=url;
+    });
+</script>
+
+
 	<!-- //转发微博 -->
 	<script>
 	$('#myModal').on('show.bs.modal', function (event) {      

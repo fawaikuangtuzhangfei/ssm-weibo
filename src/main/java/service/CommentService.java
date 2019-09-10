@@ -31,4 +31,11 @@ public class CommentService implements ICommentService{
 		return commentMapper.selectAll(weiboId);
 	}
 
+	@Override
+	public void deleteComment(Integer commentId) {
+		commentMapper.deleteById(commentId);
+	}
+	
+	
+
 }

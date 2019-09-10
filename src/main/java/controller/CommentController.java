@@ -1,6 +1,5 @@
 package controller;
 
-import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import bean.Comment;
 import bean.ResponseResult;
 import service.CommentService;
-import utils.DateConvert;
 
 /**
  * t_comment 评论
@@ -46,6 +44,13 @@ public class CommentController {
 			rr =  new ResponseResult<List<Comment>>(1,"查询成功", allComments);
 		}
 		return rr;
+	}
+	
+	//单行删除
+	@RequestMapping("/removeById.do")
+	public String deleteComment(Integer weiboId){
+		commentService.deleteComment(weiboId);
+		return "redirect:../weibo/showOne.do";
 	}
 	
 }

@@ -25,4 +25,9 @@ public interface ICommentService {
 	 */
 	List<Comment> selectAll(Integer weiboId);
 	
+	/**
+	 * 删除该条评论
+	 * @param commentId
+	 */
+	void deleteComment(Integer commentId);
 }

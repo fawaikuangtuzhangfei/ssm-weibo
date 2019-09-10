@@ -55,7 +55,14 @@
 	console.log(newDate.toLocaleDateString()); // 2014年6月18日     
 	console.log(newDate.toLocaleString()); // 2014年6月18日 上午10:33:24      
 	console.log(newDate.toLocaleTimeString()); // 上午10:33:24
-
+  
+2.删除评论
+	1.JQ-动态添加元素-click方法没有触发解决方法:$(document).on('click','.removeBlock',function (e) {  
+        console.log(e)      
+        var id=$(this).attr('id');
+        var url ="../weibo/removeById.do?weiboId="+id;
+		 window.location.href=url;
+    });
   
 
 

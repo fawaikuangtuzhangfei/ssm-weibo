@@ -44,6 +44,18 @@ public class TestComment {
 		ac.close();
 	}
 	
+	@Test
+	public void testDel() {
+		//1.
+		AbstractApplicationContext ac = new ClassPathXmlApplicationContext("application-dao.xml");
+		//2.
+		CommentMapper mapper = ac.getBean("commentMapper", CommentMapper.class);
+		//3.
+		mapper.deleteById(1);
+		//4.
+		ac.close();
+	}
+	
 	/**
 	 * 测试业务层的insert
 	 */

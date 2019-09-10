@@ -17,4 +17,6 @@ public interface CommentMapper {
 	//查询当前微博下的所有评论
 	List<Comment> selectAll(Integer weiboId);
 	
+	//删除评论
+	void deleteById(Integer commentId);
 }

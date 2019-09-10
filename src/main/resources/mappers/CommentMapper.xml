@@ -23,6 +23,11 @@
 		order by comment_time desc
 	</select>
 	
+	<!-- void deleteById(Integer weiboId); 删除该条评论 -->
+	<delete id="deleteById">
+		delete from t_comment where comment_id=#{commentId}
+	</delete>
+	
 	
 	
 	</mapper>
