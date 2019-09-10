@@ -1,5 +1,6 @@
 # ssm-weibo
-记录练习ssm框架搭建微博的过程
+记录练习ssm框架搭建微博的过程  
+参考 https://github.com/yrucrew/ssm-demo 写的weibo
 
 # day01:  
 
