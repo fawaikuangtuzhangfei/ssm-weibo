@@ -83,5 +83,10 @@ public class UserService implements IUserService{
 		}
 	}
 
+	@Override
+	public void updateUser(User user) {
+		mapper.updateUser(user);
+	}
+
 
 }

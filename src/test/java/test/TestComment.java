@@ -56,6 +56,19 @@ public class TestComment {
 		ac.close();
 	}
 	
+	@Test
+	public void testCount() {
+		//1.
+		AbstractApplicationContext ac = new ClassPathXmlApplicationContext("application-dao.xml");
+		//2.
+		CommentMapper mapper = ac.getBean("commentMapper", CommentMapper.class);
+		//3.
+		Integer count = mapper.count(88);
+		System.out.println(count);
+		//4.
+		ac.close();
+	}
+	
 	/**
 	 * 测试业务层的insert
 	 */

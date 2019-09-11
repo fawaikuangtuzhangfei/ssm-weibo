@@ -37,6 +37,24 @@ public class TestUser {
 		ac.close();
 	}
 	
+	@Test
+	public void testUpdate() {
+		//1.
+		AbstractApplicationContext ac = new ClassPathXmlApplicationContext("application-dao.xml");
+		//2.
+		UserMapper mapper = ac.getBean("userMapper", UserMapper.class);
+		//3.
+		User user = new User();
+		user.setEmail("775159840@qq.com");
+		user.setPhone("2312");
+		user.setCreatedTime(new Date());
+		user.setSex(1);
+		user.setId(54);
+		mapper.updateUser(user);
+		//4.
+		ac.close();
+	}
+	
 	/**
 	 * 测试业务层的addUser
 	 */
@@ -74,6 +92,18 @@ public class TestUser {
 		AbstractApplicationContext ac = new ClassPathXmlApplicationContext("application-dao.xml");
 		UserMapper mapper = ac.getBean("userMapper", UserMapper.class);
 		User user = mapper.selectByEmail("775159840@qq.com");
+		System.out.println(user);
+		ac.close();
+	}
+	@Test
+	public void testUpdateU(){
+		AbstractApplicationContext ac = new ClassPathXmlApplicationContext("application-dao.xml","application-service.xml");
+		IUserService service = ac.getBean("userService", IUserService.class);
+		User user = new User();
+		user.setId(48);
+		user.setNickname("admin321");
+		user.setCity("2035");
+		service.updateUser(user);
 		System.out.println(user);
 		ac.close();
 	}

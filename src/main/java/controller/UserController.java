@@ -65,7 +65,7 @@ public class UserController {
 		}
 		return rr;
 	}
-
+	
 	// 实现异步验证，用户名是否存在
 	@RequestMapping("/checkUsername.do")
 	@ResponseBody
@@ -141,4 +141,23 @@ public class UserController {
 		session.invalidate();
 		return "redirect:../user/showLogin.do";
 	}
+	
+	//显示修改个人资料页面
+	@RequestMapping("/showUserinfo.do")
+	public String showUpdate(HttpSession session) {
+		System.out.println("进入修改页面");
+		User user = (User) session.getAttribute("user");
+		session.setAttribute("user", user);
+		return "userinfo";
+	}
+	
+	//实现修改用户个人信息
+		@RequestMapping("/updateUserInfo.do")
+		public String updateUser(User user){
+			System.out.println("修改成功！");
+			System.out.println(user);
+			userService.updateUser(user);
+			return "forward:../user/showUserinfo.do";
+		}
+		
 }

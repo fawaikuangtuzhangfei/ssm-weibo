@@ -42,6 +42,7 @@
 			<div id="message"></div>
 			<div class="container">
 				<p class="navbar-text navbar-left">当前用户: ${user.username }</p>
+				<p class="navbar-text navbar-left"><a href="../user/showUserinfo.do">修改个人资料</a></p>
 				<p class="navbar-text navbar-left"><a href="../user/exit.do">退出登录</a></p>
 			</div>
 		</div>
@@ -209,7 +210,7 @@ $('.pinglun').click(function(){
     			
     		}
     	});
-    	//window.location.href="../weibo/showOne.do";
+    	window.location.href="../weibo/showOne.do";
   })
  
 </script>
@@ -286,9 +287,11 @@ $(document).on('click','.removeBlock',function (e) {
 				data : $("#form-zhuanfa").serialize(),
 				type : "post",
 				dataType : "json",
-				success : function(obj) {}
+				success : function(obj) {
+					window.location.href = "../weibo/showOne.do";
+				}
 			});
-			window.location.href = "../weibo/showOne.do";
+			
 		})
 	</script>
 	<!-- //发布微博 -->

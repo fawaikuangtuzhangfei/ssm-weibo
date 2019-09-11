@@ -36,4 +36,12 @@ public interface IUserService {
 	 */
 	User checkPhone(String phone);
 	
+	/**
+	 * 更新用户的个人资料
+	 * @param id
+	 * @return
+	 */
+	void updateUser(User user);
+	
+	
 }

@@ -26,4 +26,9 @@ public interface UserMapper {
 	 * 插入用户
 	 */
 	void insertUser(User user);
+	
+	/*
+	 * 更新个人资料
+	 */
+	void updateUser(User user);
 }

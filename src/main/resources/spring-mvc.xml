@@ -41,7 +41,7 @@
 		<mvc:interceptor>
 			<!-- 要拦截的路径 -->
 			<mvc:mapping path="/weibo/*"/>
-			<mvc:mapping path="/address/*"/>
+			<mvc:mapping path="/user/*"/>
 			<mvc:mapping path="/cart/*"/>
 			<!-- 不拦截的资源 -->
 			<mvc:exclude-mapping path="/user/showLogin.do"/>

@@ -30,4 +30,11 @@ public interface ICommentService {
 	 * @param commentId
 	 */
 	void deleteComment(Integer commentId);
+	
+	/**
+	 * 查询该条微博下的评论数量
+	 * @param weiboId
+	 * @return
+	 */
+	Integer countComments(Integer weiboId);
 }

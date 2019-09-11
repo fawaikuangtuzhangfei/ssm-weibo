@@ -11,6 +11,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import bean.ResponseResult;
 import bean.User;
 import bean.Weibo;
 import service.UserService;
@@ -36,8 +37,10 @@ public class WeiboController {
 	@ResponseBody
 	//将form表单中的数据封装到weibo对象中
 	//**存在问题，文件无法获取到，由于jsp页面中from表单传值的问题
-	public void post(Weibo weibo){
+	public ResponseResult<Weibo> post(Weibo weibo){
+		ResponseResult<Weibo> rr = new ResponseResult<Weibo>();
 		weiboService.insertWeibo(weibo);
+		return rr;
 	}
 	
 	//展示所有微博
@@ -56,6 +59,7 @@ public class WeiboController {
 		Integer userId = user.getId();
 		List<Weibo> all = weiboService.selectById(userId);
 		map.addAttribute("all", all);
+		System.out.println("allweibo=" + all);
 		return "mine";
 	}
 }

@@ -25,6 +25,7 @@ public class CommentController {
 	@Resource
 	private CommentService commentService;
 	
+	//发布评论
 	@RequestMapping("/postComment.do")
 	@ResponseBody
 	public boolean postComment(Comment comment){
@@ -32,6 +33,7 @@ public class CommentController {
 		return true;
 	}
 	
+	//展示评论
 	@RequestMapping("/showComments.do")
 	@ResponseBody
 	public ResponseResult<List<Comment>> selectAll(ModelMap map, Integer weiboId){
@@ -51,6 +53,15 @@ public class CommentController {
 	public String deleteComment(Integer weiboId){
 		commentService.deleteComment(weiboId);
 		return "redirect:../weibo/showOne.do";
+	}
+	
+	//查看拥有多少评论数量
+	@RequestMapping("/countComments.do")
+	@ResponseBody
+	public ResponseResult<Integer> countComments(Integer weiboId){
+		Integer count = commentService.countComments(weiboId);
+		ResponseResult<Integer> rr = new ResponseResult<Integer>(count, "查询成功");
+		return rr;
 	}
 	
 }

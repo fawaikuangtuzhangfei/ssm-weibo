@@ -63,6 +63,12 @@
         var url ="../weibo/removeById.do?weiboId="+id;
 		 window.location.href=url;
     });
+    
+# day05:  
+
+1.修改个人资料，！！！虽然目前还无法实现上传头像和修改出生日期  
+	1.收获:浏览器->控制器传值时，若使用bean的方法，则必须时name的值和bean类中的set和get方法的属性一致，否则不会成功
+	2.转发可以共享request对象，而重定向不行
   
 
 

@@ -28,6 +28,12 @@
 		delete from t_comment where comment_id=#{commentId}
 	</delete>
 	
+	<!-- Integer count(Integer weiboId); 该条微博下共有多少条评论 -->
+	<select id="count" parameterType="bean.Comment" resultType="java.lang.Integer" >
+    select count(*) as commentNum from t_comment
+    where weibo_id = #{weiboId}
+    </select>
+	
 	
 	
 	</mapper>

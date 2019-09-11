@@ -19,7 +19,7 @@
 	<!-- User seletByUsername(String username); 根据用户名查找用户 -->
 	<select id="selectByUsername" resultType="bean.User">
 		select 
-		id, username, password, email, phone, face, sex,
+		id, username, password, nickname, bir, province, city, area,email, phone, face, sex,
 		created_user createdUser, created_time createdTime,
 		modified_user modifiedUser, modified_time modifiedTime
 		from t_user
@@ -29,7 +29,7 @@
 	<!-- User selectByEmail(String email); 根据邮箱查找用户 -->
 	<select id="selectByEmail" resultType="bean.User">
 		select 
-		id, username, password, email, phone, face, sex,
+		id, username, password, nickname, bir, province, city, area,email, phone, face, sex,
 		created_user createdUser, created_time createdTime,
 		modified_user modifiedUser, modified_time modifiedTime
 		from t_user
@@ -39,11 +39,28 @@
 	<!-- User selectByPhone(String phone); 根据邮箱查找用户 -->
 	<select id="selectByPhone" resultType="bean.User">
 		select 
-		id, username, password, email, phone, face, sex,
+		id, username, password, nickname, bir, province, city, area,email, phone, face, sex,
 		created_user createdUser, created_time createdTime,
 		modified_user modifiedUser, modified_time modifiedTime
 		from t_user
 		where phone=#{phone}
 	</select>
+	
+	<!-- void updateUser(User user); 更新个人资料 -->
+	<update id="updateUser" parameterType="bean.User">
+		update t_user
+		set
+			email=#{email}, 
+			phone=#{phone}, 
+			nickname=#{nickname},
+			face=#{face},
+			sex=#{sex},
+			bir=#{bir},
+			province=#{province},
+			city=#{city},
+			area=#{area}
+		where
+			id=#{id}
+	</update>
 	
 	</mapper>
