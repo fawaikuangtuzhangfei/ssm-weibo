@@ -30,7 +30,7 @@
 				<a href="#" class="navbar-link">实时</a>
 			</p>
 			<p class="navbar-text navbar-right">
-				<a href="#" class="navbar-link">首页</a>
+				<a href="../weibo/show.do" class="navbar-link">首页</a>
 			</p>
 			<p class="navbar-text navbar-right">
 				<a href="#" class="navbar-link">好友圈</a>
@@ -58,6 +58,7 @@
 
 		<div class="container" style="width: 850px; background-color: #fff;">
 			<c:forEach items="${all}" var="weibo" varStatus="">
+				<p style="color: #333">${weibo.username}</p><br>
 				<!-- 文字 -->
 				<div style="text-align: left; margin-left: 85px">
 					<p style="color: #333; font-size: 17px">${weibo.content }</p>

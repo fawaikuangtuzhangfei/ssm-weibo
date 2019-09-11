@@ -24,11 +24,22 @@ public class Weibo implements Serializable{
 	private String pic7;
 	private String pic8;
 	private String pic9;
+	
 	//1为原创 0为非原创
 	private Integer original;
 	//转发自哪条微博 ->直接存本表t_weibo的id
 	private Integer repostId;
 	
+	private String username;
+	
+	
+	
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -231,7 +242,7 @@ public class Weibo implements Serializable{
 		return "Weibo [id=" + id + ", userId=" + userId + ", postTime=" + postTime + ", content=" + content + ", pic1="
 				+ pic1 + ", pic2=" + pic2 + ", pic3=" + pic3 + ", pic4=" + pic4 + ", pic5=" + pic5 + ", pic6=" + pic6
 				+ ", pic7=" + pic7 + ", pic8=" + pic8 + ", pic9=" + pic9 + ", original=" + original + ", repostId="
-				+ repostId + "]";
+				+ repostId + ", username=" + username + "]";
 	}
 	
 	

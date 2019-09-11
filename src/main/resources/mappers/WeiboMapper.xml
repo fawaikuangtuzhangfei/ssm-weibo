@@ -19,8 +19,10 @@
 	<!-- List<Weibo> selectAll(); 查询所有微博 -->
 	<select id="selectAll" resultType="bean.Weibo" >
 		select 
-		id,user_id as userId, post_time as postTime,content,pic1,pic2,pic3,pic4,pic5,pic6,pic7,pic8,pic9,original,repost_id
-		from t_weibo
+		w.id,w.user_id as userId, w.post_time as postTime,w.content,w.pic1,w.pic2,w.pic3,
+		w.pic4,w.pic5,w.pic6,w.pic7,w.pic8,w.pic9,w.original,w.repost_id,u.username
+		from t_weibo w
+		left join t_user u on u.id = w.user_id
 		order by post_time desc
 	</select>
 	
