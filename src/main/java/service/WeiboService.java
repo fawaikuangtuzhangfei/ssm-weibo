@@ -38,4 +38,10 @@ public class WeiboService implements IWeiboService{
 		return all;
 	}
 
+	@Override
+	public List<Weibo> selectByContent(Integer userId, String content) {
+		List<Weibo> all = weiboMapper.selectByContent(userId, content);
+		return all;
+	}
+
 }

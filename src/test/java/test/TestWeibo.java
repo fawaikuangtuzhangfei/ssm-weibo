@@ -43,6 +43,18 @@ public class TestWeibo {
 		//4.
 		ac.close();
 	}
+	@Test
+	public void testSelectByContent() {
+		//1.
+		AbstractApplicationContext ac = new ClassPathXmlApplicationContext("application-dao.xml");
+		//2.
+		WeiboMapper mapper = ac.getBean("weiboMapper", WeiboMapper.class);
+		//3.
+		List<Weibo> weibo = mapper.selectByContent(48, "测试时间");
+		System.out.println(weibo.toString());
+		//4.
+		ac.close();
+	}
 	
 	@Test
 	public void testSelectAllS() {

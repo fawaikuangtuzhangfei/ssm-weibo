@@ -6,10 +6,13 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 
 import bean.ResponseResult;
 import bean.User;
@@ -25,7 +28,8 @@ import service.WeiboService;
 @RequestMapping("/weibo")
 @Controller
 public class WeiboController {
-
+	
+	public final Logger log = Logger.getLogger(this.getClass());
 	@Resource
 	WeiboService weiboService;
 	
@@ -46,6 +50,7 @@ public class WeiboController {
 	//展示所有微博
 	@RequestMapping("/show.do")
 	public String showAll(ModelMap map){
+		log.info("展示所有微博");
 		List<Weibo> all = weiboService.selectAll();
 		map.addAttribute("all", all);
 		return "mine";
@@ -54,12 +59,21 @@ public class WeiboController {
 	//显示指定用户的微博->生硬的从session中取出了user对象进而取出了id
 	@RequestMapping("/showOne.do")
 	public String showById(ModelMap map, HttpServletRequest request){
+		log.error("插入测试");
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		Integer userId = user.getId();
 		List<Weibo> all = weiboService.selectById(userId);
 		map.addAttribute("all", all);
-		System.out.println("allweibo=" + all);
+		return "mine";
+	}
+	
+	//显示指定用户的指定微博
+	@RequestMapping("/selectByContent.do")
+	public String showByContent(ModelMap map, HttpServletRequest request,@RequestParam("userId") Integer userId, @RequestParam("content") String content){
+		List<Weibo> all = weiboService.selectByContent(userId, content);
+		System.out.println("显示指定用户的微博" + all);
+		map.addAttribute("all", all);
 		return "mine";
 	}
 }

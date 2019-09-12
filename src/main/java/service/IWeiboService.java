@@ -24,4 +24,12 @@ public interface IWeiboService {
 	 * @return
 	 */
 	List<Weibo> selectById(Integer userId);
+	
+	/**
+	 * 查询当前用户的指定内容的微博
+	 * @param userId
+	 * @param content
+	 * @return
+	 */
+	List<Weibo> selectByContent(Integer userId, String content);
 }

@@ -27,10 +27,10 @@
 	<nav class="navbar navbar-default navbar-fixed-top">
 		<div class="container">
 			<p class="navbar-text navbar-right">
-				<a href="#" class="navbar-link">实时</a>
+				<a href="../weibo/show.do" class="navbar-link">实时微博</a>
 			</p>
 			<p class="navbar-text navbar-right">
-				<a href="../weibo/show.do" class="navbar-link">首页</a>
+				<a href="../weibo/showOne.do" class="navbar-link">我的首页</a>
 			</p>
 			<p class="navbar-text navbar-right">
 				<a href="#" class="navbar-link">好友圈</a>
@@ -44,12 +44,17 @@
 				<p class="navbar-text navbar-left">当前用户: ${user.username }</p>
 				<p class="navbar-text navbar-left"><a href="../user/showUserinfo.do">修改个人资料</a></p>
 				<p class="navbar-text navbar-left"><a href="../user/exit.do">退出登录</a></p>
+					<form id="form-souso" style="margin-top: 12px;" action="../weibo/selectByContent.do" method="post">
+						<input name="userId" type="hidden" value="${user.id }">
+						我的微博内容搜索:<input name="content" type="text" style="width: 50px">
+						<button type="submit" id="souso" >搜索</button>
+					</form>
 			</div>
 		</div>
 	</nav>
 
-	<div style="margin-top: 20px;">
-		<form id="form-fabu" action="" method="post">
+	<div class="container" style="margin-top: 20px; width: 850px; ">
+		<form id="form-fabu" action="" method="post" style="margin-bottom: 30px;" >
 			<input name="userId" type="hidden" value="${user.id }"> 内容：<input
 				name="content" type="text" /> <br /> 图1：<input name="pic1"
 				type="file" /> <input name="original" type="hidden" value="1">
@@ -272,6 +277,7 @@ $(document).on('click','.removeBlock',function (e) {
 </script>
 
 
+
 	<!-- //转发微博 -->
 	<script>
 	$('#myModal').on('show.bs.modal', function (event) {      
@@ -295,8 +301,8 @@ $(document).on('click','.removeBlock',function (e) {
 			
 		})
 	</script>
-	<!-- //发布微博 -->
-	<script>
+<!-- //发布微博 -->
+<script>
 $('#fabu').click(function(){
     	$.ajax({
     		url:"../weibo/post.do",
@@ -312,6 +318,7 @@ $('#fabu').click(function(){
   })
  
 </script>
+
 
 </body>
 </html>

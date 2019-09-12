@@ -147,7 +147,8 @@ public class UserController {
 	public String showUpdate(HttpSession session) {
 		System.out.println("进入修改页面");
 		User user = (User) session.getAttribute("user");
-		session.setAttribute("user", user);
+		User newUser = userService.selectByUsername(user.getUsername());
+		session.setAttribute("user", newUser);
 		return "userinfo";
 	}
 	
