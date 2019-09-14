@@ -17,14 +17,20 @@ public interface WeiboMapper {
 	//发布微博
 	boolean insert(Weibo weibo);
 	
+	//查询共有多少条微博 ->用于分页使用
+	Integer count();
+	
+	//查询本人有多少条微博 ->用于分页使用
+	Integer countByUser(Integer userId);
+	
 	//查询所有微博
-	List<Weibo> selectAll();
+	List<Weibo> selectAll(@Param("offset")Integer offset, @Param("count")Integer count);
 	
 	//查询当前用户的所有微博-根据id 
-	List<Weibo> selectById(Integer userId);
+	List<Weibo> selectById(@Param("userId")Integer userId,@Param("offset")Integer offset, @Param("count")Integer count);
 	
 	//查询当前用户-根据id 的指定微博-根据内容
-	List<Weibo> selectByContent(@Param("userId")Integer userId, @Param("content")String content);
+	List<Weibo> selectByContent(@Param("userId")Integer userId, @Param("content")String content,@Param("offset")Integer offset, @Param("count")Integer count);
 	
 	
 }

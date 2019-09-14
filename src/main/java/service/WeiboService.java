@@ -27,21 +27,31 @@ public class WeiboService implements IWeiboService{
 	}
 
 	@Override
-	public List<Weibo> selectAll() {
-		List<Weibo> all = weiboMapper.selectAll();
+	public List<Weibo> selectAll(Integer offset, Integer count) {
+		List<Weibo> all = weiboMapper.selectAll(offset, count);
 		return all;
 	}
 
 	@Override
-	public List<Weibo> selectById(Integer userId) {
-		List<Weibo> all = weiboMapper.selectById(userId);
+	public List<Weibo> selectById(Integer userId, Integer offset, Integer count) {
+		List<Weibo> all = weiboMapper.selectById(userId,offset, count);
 		return all;
 	}
 
 	@Override
-	public List<Weibo> selectByContent(Integer userId, String content) {
-		List<Weibo> all = weiboMapper.selectByContent(userId, content);
+	public List<Weibo> selectByContent(Integer userId, String content, Integer offset, Integer count) {
+		List<Weibo> all = weiboMapper.selectByContent(userId, content,offset, count);
 		return all;
+	}
+
+	@Override
+	public Integer count() {
+		return weiboMapper.count();
+	}
+
+	@Override
+	public Integer countByUser(Integer userId) {
+		return weiboMapper.countByUser(userId);
 	}
 
 }

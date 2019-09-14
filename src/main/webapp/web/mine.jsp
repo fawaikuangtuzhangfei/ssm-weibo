@@ -38,23 +38,29 @@
 			<!-- 用户信息 -->
 			<input type="hidden" value="${user.username }" id="username">
 			<input type="hidden" value="${user.nickname }" id="nickname">
-			<input type="hidden" value="${user}" >
+			<input type="hidden" value="${user}">
 			<div id="message"></div>
 			<div class="container">
 				<p class="navbar-text navbar-left">当前用户: ${user.username }</p>
-				<p class="navbar-text navbar-left"><a href="../user/showUserinfo.do">修改个人资料</a></p>
-				<p class="navbar-text navbar-left"><a href="../user/exit.do">退出登录</a></p>
-					<form id="form-souso" style="margin-top: 12px;" action="../weibo/selectByContent.do" method="post">
-						<input name="userId" id="userId" type="hidden" value="${user.id }">
-						我的微博内容搜索:<input name="content" type="text" style="width: 50px">
-						<button type="submit" id="souso" >搜索</button>
-					</form>
+				<p class="navbar-text navbar-left">
+					<a href="../user/showUserinfo.do">修改个人资料</a>
+				</p>
+				<p class="navbar-text navbar-left">
+					<a href="../user/exit.do">退出登录</a>
+				</p>
+				<form id="form-souso" style="margin-top: 12px;"
+					action="../weibo/selectByContent.do" method="post">
+					<input name="userId" id="userId" type="hidden" value="${user.id }">
+					我的微博内容搜索:<input name="content" type="text" style="width: 50px">
+					<button type="submit" id="souso">搜索</button>
+				</form>
 			</div>
 		</div>
 	</nav>
 
-	<div class="container" style="margin-top: 20px; width: 850px; ">
-		<form id="form-fabu" action="" method="post" style="margin-bottom: 30px;" >
+	<div class="container" style="margin-top: 20px; width: 850px;">
+		<form id="form-fabu" action="" method="post"
+			style="margin-bottom: 30px;">
 			<input name="userId" type="hidden" value="${user.id }"> 内容：<input
 				name="content" type="text" /> <br /> 图1：<input name="pic1"
 				type="file" /> <input name="original" type="hidden" value="1">
@@ -63,7 +69,8 @@
 
 		<div class="container" style="width: 850px; background-color: #fff;">
 			<c:forEach items="${all}" var="weibo" varStatus="">
-				<p style="color: #333">${weibo.username}</p><br>
+				<p style="color: #333">${weibo.username}</p>
+				<br>
 				<!-- 文字 -->
 				<div style="text-align: left; margin-left: 85px">
 					<p style="color: #333; font-size: 17px">${weibo.content }</p>
@@ -123,48 +130,67 @@
 				<div class="container" style="width: 850px; background-color: #fff;">
 					<br>
 					<div class="btn-group" style="width: 100%">
-						<button type="button" id="shoucang${weibo.id}" onclick="collect(${weibo.id})" 
-						style="width: 25%"  class="btn btn-success">收藏</button>
+						<button type="button" id="shoucang${weibo.id}"
+							onclick="collect(${weibo.id})" style="width: 25%"
+							class="btn btn-success">收藏</button>
 						<!-- Button trigger modal -->
 						<button type="button" class="btn btn-primary " data-toggle="modal"
-							data-target="#myModal" style="width: 25%"  data-id="${weibo.id }">转发</button>
-						<button onclick="loadComment(${weibo.id})" style="width: 25%" class="btn btn-warning" id="bt">评论</button>
+							data-target="#myModal" style="width: 25%" data-id="${weibo.id }">转发</button>
+						<button onclick="loadComment(${weibo.id})" style="width: 25%"
+							class="btn btn-warning" id="bt">评论</button>
 						<button type="button" style="width: 25%" class="btn btn-danger">点赞</button>
 					</div>
 					<br> <br>
 				</div>
 
 				<!-- 评论区 -->
-		<div class="container "	style="width: 850px; background-color: #fff;">
-			<div class="commentAll " id="com${weibo.id}" >
-				<!--评论区域 begin-->
-				<div class="reviewArea clearfix ">
-				<form id="form-pinglun${weibo.id}">
-					<input type="hidden" value="${user.id}" name="userId">
-					<input type="hidden" value="${weibo.id}" name="weiboId">
-					<textarea class="content comment-input " id="pinglunContent"
-						placeholder="等待输入......." onkeyup="keyUP(this) " name="commentContent"></textarea>
-					<a href="javascript:; " class="plBtn pinglun" id="pinglun">评论</a>
-					<!-- 微博id -->
-					<input type="hidden" id="weiboId" value="${weibo.id}" class="weiboId">
-				</form>
+				<div class="container "
+					style="width: 850px; background-color: #fff;">
+					<div class="commentAll " id="com${weibo.id}">
+						<!--评论区域 begin-->
+						<div class="reviewArea clearfix ">
+							<form id="form-pinglun${weibo.id}">
+								<input type="hidden" value="${user.id}" name="userId"> <input
+									type="hidden" value="${weibo.id}" name="weiboId">
+								<textarea class="content comment-input " id="pinglunContent"
+									placeholder="等待输入......." onkeyup="keyUP(this) "
+									name="commentContent"></textarea>
+								<a href="javascript:; " class="plBtn pinglun" id="pinglun">评论</a>
+								<!-- 微博id -->
+								<input type="hidden" id="weiboId" value="${weibo.id}"
+									class="weiboId">
+							</form>
+						</div>
+
+						<!--评论区域 end-->
+						<!--回复区域 begin-->
+						<div class="comment-show " id="show${weibo.id }"></div>
+						<!--回复区域 end-->
+					</div>
+					<hr>
 				</div>
-				
-				<!--评论区域 end-->
-				<!--回复区域 begin-->
-				<div class="comment-show " id="show${weibo.id }"></div>
-				<!--回复区域 end-->
-			</div>
-			<hr>
-		</div>
 
 
 			</c:forEach>
+			<!-- 实现分页 -->
+			<!-- 分页 -->
+			<div align="center" style="font-size: 20px">
+				共${count}条微博|共${pageSize}页|
+				<c:forEach var="i" begin="1" end="${pageSize}">
+					<a
+						href="../weibo/${wz}?page=${i}"
+						<c:if test="${curpage==i}">
+			  style="color: red"
+			</c:if>>
+						${i} </a>
+				</c:forEach>
+			</div>
 		</div>
 
 
 		<!-- bootstrap模态框（Modal） -->
-		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -176,10 +202,11 @@
 					</div>
 					<div class="modal-body">
 						<form id="form-zhuanfa">
-							说点什么吧:<input type="text" class="form-inline" name="content" style="width: 500px"> 
-							<input name="userId" type="hidden" value="${user.id }"> 
-							<input id="repostId" name="repostId" type="hidden" value=""> <br /> 
-							<input name="original" type="hidden" value="0">
+							说点什么吧:<input type="text" class="form-inline" name="content"
+								style="width: 500px"> <input name="userId" type="hidden"
+								value="${user.id }"> <input id="repostId"
+								name="repostId" type="hidden" value=""> <br /> <input
+								name="original" type="hidden" value="0">
 						</form>
 					</div>
 					<div class="modal-footer">
@@ -193,9 +220,9 @@
 	</div>
 
 	<div></div>
-	
-<!-- 页面加载时:查看是否已经被当前用户所收藏 -->	
-<script>
+
+	<!-- 页面加载时:查看是否已经被当前用户所收藏 -->
+	<script>
 
 //页面加载
       $(document).ready(function () {
@@ -212,8 +239,8 @@
 
 </script>
 
-<!-- 查看是否已经被当前用户所收藏 -->
-<script>
+	<!-- 查看是否已经被当前用户所收藏 -->
+	<script>
 //页面加载查询是不是已经关注
 function pdUserCollection(weiboId, userId) {
           $.ajax({
@@ -233,8 +260,8 @@ function pdUserCollection(weiboId, userId) {
       }
 </script>
 
-<!-- 收藏事件 -->
-<script>
+	<!-- 收藏事件 -->
+	<script>
 
 //收藏-点击之后变为已收藏  已收藏-收藏
       function collect(weiboId) {
@@ -269,8 +296,8 @@ function pdUserCollection(weiboId, userId) {
       }
 </script>
 
-<!-- 发布评论 -->
-<script>
+	<!-- 发布评论 -->
+	<script>
 //<!--textarea限制字数-->
 function keyUP(t) {
  var len = $(t).val().length;
@@ -296,8 +323,8 @@ $('.pinglun').click(function(){
  
 </script>
 
-<!-- 加载评论 -->
-<script>
+	<!-- 加载评论 -->
+	<script>
 function loadComment(weiboId){
     var commentAction = "../weibo/showComments.do?weiboId=" + weiboId;
     $.ajax({
@@ -341,7 +368,7 @@ function loadComment(weiboId){
 
 </script>
 
-<script>
+	<script>
 //删除当前行-评论
 $(document).on('click','.removeBlock',function (e) {  
         console.log(e)      
@@ -377,8 +404,8 @@ $(document).on('click','.removeBlock',function (e) {
 			
 		})
 	</script>
-<!-- //发布微博 -->
-<script>
+	<!-- //发布微博 -->
+	<script>
 $('#fabu').click(function(){
     	$.ajax({
     		url:"../weibo/post.do",

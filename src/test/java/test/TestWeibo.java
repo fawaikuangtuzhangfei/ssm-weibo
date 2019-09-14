@@ -25,7 +25,7 @@ public class TestWeibo {
 		WeiboMapper mapper = ac.getBean("weiboMapper", WeiboMapper.class);
 		//3.
 		Integer userId = 52;
-		List<Weibo> weibo = mapper.selectById(userId);
+		List<Weibo> weibo = mapper.selectById(userId, 1, 10);
 		System.out.println(weibo.toString());
 		//4.
 		ac.close();
@@ -38,7 +38,7 @@ public class TestWeibo {
 		//2.
 		WeiboMapper mapper = ac.getBean("weiboMapper", WeiboMapper.class);
 		//3.
-		List<Weibo> weibo = mapper.selectAll();
+		List<Weibo> weibo = mapper.selectAll(1,10);
 		System.out.println(weibo.toString());
 		//4.
 		ac.close();
@@ -50,7 +50,7 @@ public class TestWeibo {
 		//2.
 		WeiboMapper mapper = ac.getBean("weiboMapper", WeiboMapper.class);
 		//3.
-		List<Weibo> weibo = mapper.selectByContent(48, "测试时间");
+		List<Weibo> weibo = mapper.selectByContent(48, "测试时间",1,10);
 		System.out.println(weibo.toString());
 		//4.
 		ac.close();
@@ -60,7 +60,7 @@ public class TestWeibo {
 	public void testSelectAllS() {
 		AbstractApplicationContext ac = new ClassPathXmlApplicationContext("application-dao.xml","application-service.xml");
 		IWeiboService service = ac.getBean("weiboService", IWeiboService.class);
-		List<Weibo> weibo = service.selectAll();
+		List<Weibo> weibo = service.selectAll(1, 10);
 		System.out.println(weibo);
 		ac.close();
 	}
