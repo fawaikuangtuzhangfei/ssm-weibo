@@ -294,6 +294,7 @@ $(document).on('click','.removeBlock',function (e) {
 				data : $("#form-zhuanfa").serialize(),
 				type : "post",
 				dataType : "json",
+				async: false,
 				success : function(obj) {
 					window.location.href = "../weibo/showOne.do";
 				}
@@ -310,6 +311,7 @@ $('#fabu').click(function(){
     		data:$("#form-fabu").serialize(),
     		type:"post",
     		dataType:"json",
+    		async: false,
     		success:function(obj){
     			
     		}

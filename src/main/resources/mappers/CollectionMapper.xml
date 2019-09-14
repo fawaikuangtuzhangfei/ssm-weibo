@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+		"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+	
+	<!-- namespace表示命名空间，值必须为接口的名称(包括包名) -->
+	<mapper namespace="mapper.UserMapper">
+	
+	
+	
+	<!-- void collect(Collect collect); 收藏该条微博-->
+	<insert id="collect" parameterType="bean.Collect">
+		insert into t_collect (
+		collect_id, weibo_id, user_id, collect_time
+		) values( 
+		#{collectId}, #{weiboId}, #{userId}, #{collectTime}
+		)
+	</insert>	
+	
+	<!-- List<Collect> selectIsCollect(Collect collect); 查询是否已被当前用户收藏于否 -->
+	<select id="selectIsCollect" resultType="bean.Collect">
+		select 
+		c.collect_id as collectId, c.weibo_id as weiboId, c.user_id as userId, c.collect_time as collectTime
+		from t_collect c
+		where c.weibo_id=#{weiboId} and c.user_id=#{userId}
+	</select>
+	
+	<!-- User selectByEmail(String email); 根据邮箱查找用户 -->
+	<select id="selectByEmail" resultType="bean.User">
+		select 
+		id, username, password, nickname, bir, province, city, area,email, phone, face, sex,
+		created_user createdUser, created_time createdTime,
+		modified_user modifiedUser, modified_time modifiedTime
+		from t_user
+		where email=#{email}
+	</select>
+	
+	<!-- User selectByPhone(String phone); 根据邮箱查找用户 -->
+	<select id="selectByPhone" resultType="bean.User">
+		select 
+		id, username, password, nickname, bir, province, city, area,email, phone, face, sex,
+		created_user createdUser, created_time createdTime,
+		modified_user modifiedUser, modified_time modifiedTime
+		from t_user
+		where phone=#{phone}
+	</select>
+	
+	<!-- void updateUser(User user); 更新个人资料 -->
+	<update id="updateUser" parameterType="bean.User">
+		update t_user
+		set
+			email=#{email}, 
+			phone=#{phone}, 
+			nickname=#{nickname},
+			face=#{face},
+			sex=#{sex},
+			bir=#{bir},
+			province=#{province},
+			city=#{city},
+			area=#{area}
+		where
+			id=#{id}
+	</update>
+	
+	</mapper>

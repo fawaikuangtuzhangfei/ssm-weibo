@@ -59,7 +59,7 @@ public class WeiboController {
 	//显示指定用户的微博->生硬的从session中取出了user对象进而取出了id
 	@RequestMapping("/showOne.do")
 	public String showById(ModelMap map, HttpServletRequest request){
-		log.error("插入测试");
+		log.info("展示我的微博");
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		Integer userId = user.getId();
