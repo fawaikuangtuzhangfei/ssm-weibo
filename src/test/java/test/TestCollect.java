@@ -6,7 +6,9 @@ import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import bean.Collect;
 import bean.User;
+import mapper.CollectMapper;
 import mapper.UserMapper;
 import service.IUserService;
 
@@ -22,35 +24,38 @@ public class TestCollect {
 		//1.
 		AbstractApplicationContext ac = new ClassPathXmlApplicationContext("application-dao.xml");
 		//2.
-		UserMapper mapper = ac.getBean("userMapper", UserMapper.class);
+		CollectMapper mapper = ac.getBean("collectMapper", CollectMapper.class);
 		//3.
-		User user = new User();
-		user.setEmail("775159840@qq.com");
-		user.setUsername("775159840");
-		user.setPhone("18434762767");
-		user.setPassword("123");
-		user.setCreatedUser("不知名");
-		user.setCreatedTime(new Date());
-		user.setSex(1);
-		mapper.insertUser(user);
+		Collect collect = new Collect();
+		collect.setUserId(48);
+		collect.setWeiboId(104);
+		mapper.collect(collect);
+		//4.
+		ac.close();
+	}
+	@Test
+	public void testSelect() {
+		//1.
+		AbstractApplicationContext ac = new ClassPathXmlApplicationContext("application-dao.xml");
+		//2.
+		CollectMapper mapper = ac.getBean("collectMapper", CollectMapper.class);
+		//3.
+		System.out.println(mapper.selectIsCollect(48, 104));
 		//4.
 		ac.close();
 	}
 	
 	@Test
-	public void testUpdate() {
+	public void testDel() {
 		//1.
 		AbstractApplicationContext ac = new ClassPathXmlApplicationContext("application-dao.xml");
 		//2.
-		UserMapper mapper = ac.getBean("userMapper", UserMapper.class);
+		CollectMapper mapper = ac.getBean("collectMapper", CollectMapper.class);
 		//3.
-		User user = new User();
-		user.setEmail("775159840@qq.com");
-		user.setPhone("2312");
-		user.setCreatedTime(new Date());
-		user.setSex(1);
-		user.setId(54);
-		mapper.updateUser(user);
+		Collect collect = new Collect();
+		collect.setUserId(53);
+		collect.setWeiboId(105);
+		mapper.decollect(collect);
 		//4.
 		ac.close();
 	}

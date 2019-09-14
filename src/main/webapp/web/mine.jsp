@@ -38,14 +38,14 @@
 			<!-- 用户信息 -->
 			<input type="hidden" value="${user.username }" id="username">
 			<input type="hidden" value="${user.nickname }" id="nickname">
-			<input type="hidden" value="${user}" id="userId">
+			<input type="hidden" value="${user}" >
 			<div id="message"></div>
 			<div class="container">
 				<p class="navbar-text navbar-left">当前用户: ${user.username }</p>
 				<p class="navbar-text navbar-left"><a href="../user/showUserinfo.do">修改个人资料</a></p>
 				<p class="navbar-text navbar-left"><a href="../user/exit.do">退出登录</a></p>
 					<form id="form-souso" style="margin-top: 12px;" action="../weibo/selectByContent.do" method="post">
-						<input name="userId" type="hidden" value="${user.id }">
+						<input name="userId" id="userId" type="hidden" value="${user.id }">
 						我的微博内容搜索:<input name="content" type="text" style="width: 50px">
 						<button type="submit" id="souso" >搜索</button>
 					</form>
@@ -123,7 +123,8 @@
 				<div class="container" style="width: 850px; background-color: #fff;">
 					<br>
 					<div class="btn-group" style="width: 100%">
-						<button type="button" style="width: 25%" class="btn btn-success">收藏</button>
+						<button type="button" id="shoucang${weibo.id}" onclick="collect(${weibo.id})" 
+						style="width: 25%"  class="btn btn-success">收藏</button>
 						<!-- Button trigger modal -->
 						<button type="button" class="btn btn-primary " data-toggle="modal"
 							data-target="#myModal" style="width: 25%"  data-id="${weibo.id }">转发</button>
@@ -145,7 +146,7 @@
 						placeholder="等待输入......." onkeyup="keyUP(this) " name="commentContent"></textarea>
 					<a href="javascript:; " class="plBtn pinglun" id="pinglun">评论</a>
 					<!-- 微博id -->
-					<input type="hidden" value="${weibo.id}" class="weiboId">
+					<input type="hidden" id="weiboId" value="${weibo.id}" class="weiboId">
 				</form>
 				</div>
 				
@@ -193,9 +194,83 @@
 
 	<div></div>
 	
-<!-- //发布评论 -->
+<!-- 页面加载时:查看是否已经被当前用户所收藏 -->	
 <script>
 
+//页面加载
+      $(document).ready(function () {
+    	  var userId = $("#userId").val();
+    	  var btns = new Array();
+    	  $(".weiboId").each(function(i,n){
+    		  //获取到所有的weiboId
+    		  btns[i] = $(this).val();
+    		  
+    		//查询现状
+    		  pdUserCollection(btns[i], userId);
+    	  });
+      });
+
+</script>
+
+<!-- 查看是否已经被当前用户所收藏 -->
+<script>
+//页面加载查询是不是已经关注
+function pdUserCollection(weiboId, userId) {
+          $.ajax({
+              type: "post",
+              url: "../collect/selectByOne.do",
+              data: { "weiboId": weiboId, "userId": userId },
+              dataType:"json",
+              success:function (obj) {
+                  if (obj.state==1) {
+                      $("#shoucang"+ weiboId).text('取消收藏');
+                  } else {
+                      $("#shoucang"+ weiboId).text('收藏');
+                  }
+              }
+          })
+
+      }
+</script>
+
+<!-- 收藏事件 -->
+<script>
+
+//收藏-点击之后变为已收藏  已收藏-收藏
+      function collect(weiboId) {
+    	  var userId = $("#userId").val();
+    	  console.log($("#shoucang"+ weiboId).text());
+    	  if($("#shoucang"+ weiboId).text()=="收藏"){
+    		  $.ajax({
+                  type: "POST",
+                  url: "../collect/collect.do",
+                  data: { "weiboId": weiboId, "userId": userId },
+                  dataType: "json",
+                  success: function (obj) {
+                	  if (obj.state==1) {
+                          $("#shoucang"+ weiboId).text('取消收藏');
+                      } 
+                 }
+              })
+    	  }else{
+    		  $.ajax({
+                  type: "POST",
+                  url: "../collect/decollect.do",
+                  data: { "weiboId": weiboId, "userId": userId },
+                  dataType: "json",
+                  success: function (obj) {
+                	  if (obj.state==1) {
+                          $("#shoucang"+ weiboId).text('收藏');
+                      } 
+                 }
+              })
+    	  }
+          
+      }
+</script>
+
+<!-- 发布评论 -->
+<script>
 //<!--textarea限制字数-->
 function keyUP(t) {
  var len = $(t).val().length;
