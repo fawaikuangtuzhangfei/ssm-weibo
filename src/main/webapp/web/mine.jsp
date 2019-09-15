@@ -19,13 +19,17 @@
 <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="../css/login.css">
 
-
 <link rel="stylesheet" href="../css/regist.css">
+<link rel="stylesheet" type="text/css" href="../css/zoomify.min.css">
+<link rel="stylesheet" type="text/css" href="../css/upload.css">
 
-
+<!-- 百度下载插件 -->
+<link rel="stylesheet" type="text/css" href="../css/webuploader.css">
+<script type="text/javascript" src="../js/webuploader.js"></script>
+<script type="text/javascript" src="../js/upload.js"></script>
 </head>
 <body>
-
+<body style="padding: 80px">
 	<nav class="navbar navbar-default navbar-fixed-top">
 		<div class="container">
 			<p class="navbar-text navbar-right">
@@ -59,22 +63,42 @@
 			</div>
 		</div>
 	</nav>
-
-	<div class="container" style="margin-top: 20px; width: 850px;">
-		<form id="form-fabu" action="" method="post"
-			style="margin-bottom: 30px;">
-			<input name="userId" type="hidden" value="${user.id }"> 内容：<input
-				name="content" type="text" /> <br /> 图1：<input name="pic1"
-				type="file" /> <input name="original" type="hidden" value="1">
-			<button type="button" id="fabu" value="提交">提交</button>
-		</form>
+<div style="width: 70%; float: left;">
+<!-- 发送新微博 -->
+			<div class="container" style=" margin-top: 20px; background-color: #fff;">
+				<p style="font-size: 40px; color: black">分享新鲜事</p>
+				<form method="post" action="../weibo/post.do">
+					<textarea class="form-control" rows="4"
+						style="border: 1px; resize: none; width: 100%; background-color: #eee"
+						name="content"></textarea>
+					<div id="uploader-demo">
+						<div class="webuploader-container">
+							<!--用来存放item-->
+							<div id="fileList" class="uploader-list"></div>
+							<div id="sendButtom">
+								<div id="one" style="float: left; margin-left: 40%;">
+									<div id="filePicker" class="webuploader-pick form-control">选择图片</div>
+									<input type="file" name="file"
+										class="webuploader-element-invisible" multiple="multiple"
+										accept="image/*"> <label
+										style="cursor: pointer; background: rgb(255, 255, 255);"></label>
+								</div>
+								<div id="two" style="float: left;">
+									<button id="postWeibo" type="submit"
+										class="form-control btn btn-success">发微博</button><br>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+				<br/>
+<!-- 微博正文部分 -->
 		<!-- 微博内容&转发微博内容 -->
-		<div class="container" style="width: 850px; background-color: #fff; padding-left: 0px;">
 			<c:forEach items="${all}" var="weibo" varStatus="">
-				<p style="color: #333">${weibo.username}</p>
+				<p style="color: #333; padding-top: 34px;">${weibo.username}</p>
 				<br>
 				<!-- 文字 -->
-				<div style="text-align: left; margin-left: 85px">
+				<div style="text-align: left; margin-left: 85px;">
 					<p style="color: #333; font-size: 17px">${weibo.content }</p>
 				</div>
 				<br>
@@ -82,7 +106,7 @@
 				<!-- 原创微博 -->
 				<c:if test="${weibo.original == 1 }">
 				<!-- 图片 -->
-				<div class="example" style="margin-left: 85px; margin-bottom: 20px;">
+				<div class="example1" style="margin-left: 85px; margin-bottom: 20px;">
 					<table>
 						<tr>
 							<c:if test="${weibo.pic1!=null }">
@@ -288,10 +312,7 @@
 				</div>
 			</div>
 		</div>
-
-	</div>
-
-	<div></div>
+</div>
 
 	<!-- 页面加载时:查看是否已经被当前用户所收藏、点赞 -->
 	<script>

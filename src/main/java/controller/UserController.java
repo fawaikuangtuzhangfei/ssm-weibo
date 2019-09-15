@@ -24,24 +24,22 @@ public class UserController {
 
 	@Resource
 	private UserService userService;
-	
-	//异步提交登录
-		@RequestMapping("/login.do")
-		@ResponseBody
-		public ResponseResult<Void> login(
-				String username,String password,
-				HttpSession session){
-			//1.声明rr对象
-			ResponseResult<Void> rr =  null;
-			try{
-				User user = userService.login(username, password);
-				rr = new ResponseResult<Void>(1,"登录成功");
-				session.setAttribute("user",user);
-				}catch(RuntimeException ex){
-					rr = new ResponseResult<Void>(0,ex.getMessage());
-				}
-			return rr;
+
+	// 异步提交登录
+	@RequestMapping("/login.do")
+	@ResponseBody
+	public ResponseResult<Void> login(String username, String password, HttpSession session) {
+		// 1.声明rr对象
+		ResponseResult<Void> rr = null;
+		try {
+			User user = userService.login(username, password);
+			rr = new ResponseResult<Void>(1, "登录成功");
+			session.setAttribute("user", user);
+		} catch (RuntimeException ex) {
+			rr = new ResponseResult<Void>(0, ex.getMessage());
 		}
+		return rr;
+	}
 
 	/**
 	 * 异步提交注册
@@ -65,7 +63,7 @@ public class UserController {
 		}
 		return rr;
 	}
-	
+
 	// 实现异步验证，用户名是否存在
 	@RequestMapping("/checkUsername.do")
 	@ResponseBody
@@ -133,16 +131,16 @@ public class UserController {
 	public String showLogin() {
 		return "login";
 	}
-	
-	//退出登录
+
+	// 退出登录
 	@RequestMapping("/exit.do")
-	public String exit(HttpSession session){
-		//设置session失效
+	public String exit(HttpSession session) {
+		// 设置session失效
 		session.invalidate();
 		return "redirect:../user/showLogin.do";
 	}
-	
-	//显示修改个人资料页面
+
+	// 显示修改个人资料页面
 	@RequestMapping("/showUserinfo.do")
 	public String showUpdate(HttpSession session) {
 		System.out.println("进入修改页面");
@@ -151,14 +149,12 @@ public class UserController {
 		session.setAttribute("user", newUser);
 		return "userinfo";
 	}
-	
-	//实现修改用户个人信息
-		@RequestMapping("/updateUserInfo.do")
-		public String updateUser(User user){
-			System.out.println("修改成功！");
-			System.out.println(user);
-			userService.updateUser(user);
-			return "forward:../user/showUserinfo.do";
-		}
-		
+
+	// 实现修改用户个人信息
+	@RequestMapping("/updateUserInfo.do")
+	public String updateUser(User user) {
+		userService.updateUser(user);
+		return "forward:../user/showUserinfo.do";
+	}
+
 }
