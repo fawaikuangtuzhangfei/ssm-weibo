@@ -45,4 +45,11 @@ public interface IWeiboService {
 	 * @return
 	 */
 	Integer countByUser(Integer userId);
+	
+	/**
+	 * 查询指定微博的全部内容
+	 * @param weiboId
+	 * @return
+	 */
+	Weibo selectByWeiboId(Integer weiboId, Integer offset, Integer count);
 }

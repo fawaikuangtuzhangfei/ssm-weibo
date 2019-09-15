@@ -9,8 +9,11 @@ import java.util.Date;
  *
  */
 public class Weibo implements Serializable{
-	private static final long serialVersionUID = 1617260407666308257L;
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private Integer userId;
 	private Date postTime;
@@ -29,11 +32,19 @@ public class Weibo implements Serializable{
 	private Integer original;
 	//转发自哪条微博 ->直接存本表t_weibo的id
 	private Integer repostId;
+	//记录转发的微博
+	private Weibo repost;
 	
 	private String username;
 	
 	
 	
+	public Weibo getRepost() {
+		return repost;
+	}
+	public void setRepost(Weibo repost) {
+		this.repost = repost;
+	}
 	public String getUsername() {
 		return username;
 	}

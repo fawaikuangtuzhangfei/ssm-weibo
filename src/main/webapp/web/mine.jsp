@@ -21,6 +21,8 @@
 
 
 <link rel="stylesheet" href="../css/regist.css">
+
+
 </head>
 <body>
 
@@ -66,8 +68,8 @@
 				type="file" /> <input name="original" type="hidden" value="1">
 			<button type="button" id="fabu" value="提交">提交</button>
 		</form>
-
-		<div class="container" style="width: 850px; background-color: #fff;">
+		<!-- 微博内容&转发微博内容 -->
+		<div class="container" style="width: 850px; background-color: #fff; padding-left: 0px;">
 			<c:forEach items="${all}" var="weibo" varStatus="">
 				<p style="color: #333">${weibo.username}</p>
 				<br>
@@ -78,6 +80,7 @@
 				<br>
 				<p style="color: #333">${weibo.postTime}</p>
 				<!-- 原创微博 -->
+				<c:if test="${weibo.original == 1 }">
 				<!-- 图片 -->
 				<div class="example" style="margin-left: 85px; margin-bottom: 20px;">
 					<table>
@@ -125,6 +128,74 @@
 						</tr>
 					</table>
 				</div>
+			</c:if>
+			<!-- 非原创 转发微博 -->
+			<c:if test="${weibo.original == 0 }">
+				<!-- 头部 -->
+				<div class="container"
+					style="width: 850px; background-color: #eaeaec;">
+					<!-- 头像 -->
+					<!-- 昵称+日期 -->
+					<div
+						style="text-align: left; margin: 10px; margin-left: 20px; float: left;">
+						<a style="color: #333; font-size: 14px" href="javascrip:;">${weibo.repost.username }</a><br>
+					</div>
+				</div>
+				<div class="container"
+					style="width: 850px; background-color: #eaeaec;">
+					<!-- 文字 -->
+					<div style="text-align: left; margin-left: 160px">
+						<p style="color: #333; font-size: 17px">${weibo.repost.content }</p>
+					</div>
+					<!-- 图片 -->
+					<div class="example" style="margin-left: 160px;margin-bottom: 20px;">
+						<table>
+							<tr>
+								<c:if test="${weibo.repost.pic1!=null }">
+									<td><img src="/imgUpload/${weibo.repost.pic1 }"
+										style="width: 90px; height: 90px"></td>
+								</c:if>
+								<c:if test="${weibo.repost.pic2!=null }">
+									<td><img src="/imgUpload/${weibo.repost.pic2 }"
+										style="width: 90px; height: 90px"></td>
+								</c:if>
+								<c:if test="${weibo.repost.pic3!=null }">
+									<td><img src="/imgUpload/${weibo.repost.pic3 }"
+										style="width: 90px; height: 90px"></td>
+								</c:if>
+							</tr>
+							<tr>
+								<c:if test="${weibo.repost.pic4!=null }">
+									<td><img src="/imgUpload/${weibo.repost.pic4 }"
+										style="width: 90px; height: 90px"></td>
+								</c:if>
+								<c:if test="${weibo.repost.pic5!=null }">
+									<td><img src="/imgUpload/${weibo.repost.pic5 }"
+										style="width: 90px; height: 90px"></td>
+								</c:if>
+								<c:if test="${weibo.repost.pic6!=null }">
+									<td><img src="/imgUpload/${weibo.repost.pic6 }"
+										style="width: 90px; height: 90px"></td>
+								</c:if>
+							</tr>
+							<tr>
+								<c:if test="${weibo.repost.pic7!=null }">
+									<td><img src="/imgUpload/${weibo.repost.pic7 }"
+										style="width: 90px; height: 90px"></td>
+								</c:if>
+								<c:if test="${weibo.repost.pic8!=null }">
+									<td><img src="/imgUpload/${weibo.repost.pic8 }"
+										style="width: 90px; height: 90px"></td>
+								</c:if>
+								<c:if test="${weibo.repost.pic9!=null }">
+									<td><img src="/imgUpload/${weibo.repost.pic9 }"
+										style="width: 90px; height: 90px"></td>
+								</c:if>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</c:if>
 
 				<!-- 底部 -->
 				<div class="container" style="width: 850px; background-color: #fff;">
@@ -205,9 +276,9 @@
 						<form id="form-zhuanfa">
 							说点什么吧:<input type="text" class="form-inline" name="content"
 								style="width: 500px"> <input name="userId" type="hidden"
-								value="${user.id }"> <input id="repostId"
-								name="repostId" type="hidden" value=""> <br /> <input
-								name="original" type="hidden" value="0">
+								value="${user.id }"> 
+								<input id="repostId" name="repostId" type="hidden" value=""> <br /> 
+								<input name="original" type="hidden" value="0">
 						</form>
 					</div>
 					<div class="modal-footer">
@@ -387,6 +458,7 @@ function loadComment(weiboId){
         dataType: 'json',
         success:function(data) {
         	var result = data.data;
+        	$('#show'+weiboId).html("");
         	for(var i in result){
         		var date1 = new Date(result[i].commentTime);
         		var com = '<div class="comment-show-con clearfix ">' +
@@ -436,7 +508,7 @@ $(document).on('click','.removeBlock',function (e) {
 	$('#myModal').on('show.bs.modal', function (event) {      
 		var btnThis = $(event.relatedTarget); //触发事件的按钮      
 		var modal = $(this);  //当前模态框      
-		var modalId = btnThis.data('id');   //解析出data-id的内容      
+		var modalId = btnThis.data('id');   //解析出data-id的内容    
 		modal.find('#repostId').val(modalId);         
 	});
 	

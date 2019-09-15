@@ -26,6 +26,9 @@ public interface WeiboMapper {
 	//查询所有微博
 	List<Weibo> selectAll(@Param("offset")Integer offset, @Param("count")Integer count);
 	
+	//查询指定微博的全部内容->根据微博id查询
+	Weibo selectByWeiboId(@Param("weiboId")Integer weiboId,@Param("offset")Integer offset, @Param("count")Integer count);
+	
 	//查询当前用户的所有微博-根据id 
 	List<Weibo> selectById(@Param("userId")Integer userId,@Param("offset")Integer offset, @Param("count")Integer count);
 	

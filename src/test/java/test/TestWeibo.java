@@ -24,10 +24,31 @@ public class TestWeibo {
 		//2.
 		WeiboMapper mapper = ac.getBean("weiboMapper", WeiboMapper.class);
 		//3.
-		Integer userId = 52;
+		Integer userId = 58;
 		List<Weibo> weibo = mapper.selectById(userId, 1, 10);
 		System.out.println(weibo.toString());
 		//4.
+		ac.close();
+	}
+	
+	@Test
+	public void testSelectByweiboId() {
+		//1.
+		AbstractApplicationContext ac = new ClassPathXmlApplicationContext("application-dao.xml");
+		//2.
+		WeiboMapper mapper = ac.getBean("weiboMapper", WeiboMapper.class);
+		//3.
+		Weibo weibo = mapper.selectByWeiboId(118, 0, 10);
+		System.out.println(weibo.toString());
+		//4.
+		ac.close();
+	}
+	@Test
+	public void testSelectWeiboIds() {
+		AbstractApplicationContext ac = new ClassPathXmlApplicationContext("application-dao.xml","application-service.xml");
+		IWeiboService service = ac.getBean("weiboService", IWeiboService.class);
+		Weibo weibo = service.selectByWeiboId(118, 0, 10);
+		System.out.println(weibo);
 		ac.close();
 	}
 	

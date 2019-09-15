@@ -30,7 +30,6 @@ public class LikesController {
 	@ResponseBody
 	public ResponseResult<Integer> selectByOne(Integer userId, Integer weiboId, ModelMap map){
 		Integer nowCount = likesService.selectCount(weiboId);
-		log.info("点赞数nowCount=" + nowCount);
 		map.addAttribute("nowCount", nowCount);
 		Integer count = likesService.selctByUser(userId, weiboId);
 		ResponseResult<Integer> rr = null;

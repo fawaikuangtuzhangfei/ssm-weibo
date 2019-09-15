@@ -54,4 +54,9 @@ public class WeiboService implements IWeiboService{
 		return weiboMapper.countByUser(userId);
 	}
 
+	@Override
+	public Weibo selectByWeiboId(Integer weiboId, Integer offset, Integer count) {
+		return weiboMapper.selectByWeiboId(weiboId, offset, count);
+	}
+
 }
