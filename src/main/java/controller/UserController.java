@@ -1,12 +1,18 @@
 package controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import bean.ResponseResult;
 import bean.User;
@@ -21,6 +27,9 @@ import service.UserService;
 @RequestMapping("/user")
 @Controller
 public class UserController {
+
+	// 日志log4j
+	public final Logger log = Logger.getLogger(this.getClass());
 
 	@Resource
 	private UserService userService;
@@ -152,7 +161,37 @@ public class UserController {
 
 	// 实现修改用户个人信息
 	@RequestMapping("/updateUserInfo.do")
-	public String updateUser(User user) {
+	public String updateUser(User user, MultipartFile user_face) {
+		// ————————————————————头像上传————————————————
+		// //getOriginalFilename（）方法是得到原来的文件名在客户机的文件系统名称
+		// 原始名称
+		String originalFilename = user_face.getOriginalFilename();
+		// 上传图片
+		if (user_face != null && originalFilename != null && originalFilename.length() > 0) {
+
+			// 存储图片的物理路径
+			String pic_path = "D:\\Weibo_Person\\imgUpload\\";
+
+			// 新的图片名称
+			String newFileName = UUID.randomUUID() + originalFilename.substring(originalFilename.lastIndexOf("."));
+			// 新图片
+			File newFile = new File(pic_path + newFileName);
+
+			// 将内存中的数据写入磁盘
+			try {
+				// transferTo() 我主要就是用来把 MultipartFile 转换成 File
+				user_face.transferTo(newFile);
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+				log.error("头像上传失败" + e);
+			} catch (IOException e) {
+				e.printStackTrace();
+				log.error("头像上传失败" + e);
+			}
+
+			// 将新图片名称写到user中
+			user.setFace(newFileName);
+		}
 		userService.updateUser(user);
 		return "forward:../user/showUserinfo.do";
 	}

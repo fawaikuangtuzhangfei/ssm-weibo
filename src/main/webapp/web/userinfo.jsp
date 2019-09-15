@@ -24,7 +24,7 @@
 	<h1 class="cover-heading" style="margin-left: 350px">现在您可以更改信息！或者<a href="../weibo/showOne.do" >取消修改</a></h1>
 	<br>
 	<div class="cover-container">
-		<form class="form-horizontal" method="get"
+		<form class="form-horizontal" method="post"
 			enctype="multipart/form-data" action="updateUserInfo.do" name="form1">
 			<div class="form-group">
 				<label class="col-sm-4 control-label">昵称</label>
@@ -46,7 +46,7 @@
 						height="70" width="70" style="margin-left: 25px"> <br>
 					<br>
 					<!-- 上传框 -->
-					<input type="file" name="face" style="margin-left: 50px;"
+					<input type="file" name="user_face" style="margin-left: 50px;"
 						value="更换头像">
 				</div>
 			</div>
