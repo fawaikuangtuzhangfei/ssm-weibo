@@ -52,4 +52,10 @@ public interface IWeiboService {
 	 * @return
 	 */
 	Weibo selectByWeiboId(Integer weiboId, Integer offset, Integer count);
+	
+	/**
+	 * 删除掉此条微博
+	 * @param id
+	 */
+	void delWeibo(Integer id);
 }

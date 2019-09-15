@@ -23,6 +23,9 @@ public interface WeiboMapper {
 	//查询本人有多少条微博 ->用于分页使用
 	Integer countByUser(Integer userId);
 	
+	//删除此条微博
+	void delete(Integer id);
+	
 	//查询所有微博
 	List<Weibo> selectAll(@Param("offset")Integer offset, @Param("count")Integer count);
 	

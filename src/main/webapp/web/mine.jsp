@@ -116,7 +116,7 @@
 					</button>
 					<ul class="dropdown-menu" role="menu">
 						<li><a style="font-size: 10px"
-							href="javascript:delWeibo(${weibo.id })">删除</a></li>
+							href="../weibo/delWeibo.do?id=${weibo.id }">删除</a></li>
 					</ul>
 				</div>
 			</div>

@@ -80,4 +80,9 @@
 		order by post_time desc
 	</select>
 	
+	<!-- void delete(Integer id); 删除此条微博 -->
+	<delete id="delete">
+	delete from t_weibo where id=#{id}
+	</delete>
+	
 	</mapper>

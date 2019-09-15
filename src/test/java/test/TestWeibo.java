@@ -30,6 +30,17 @@ public class TestWeibo {
 		//4.
 		ac.close();
 	}
+	@Test
+	public void testDel() {
+		//1.
+		AbstractApplicationContext ac = new ClassPathXmlApplicationContext("application-dao.xml");
+		//2.
+		WeiboMapper mapper = ac.getBean("weiboMapper", WeiboMapper.class);
+		//3.
+		mapper.delete(122);
+		//4.
+		ac.close();
+	}
 	
 	@Test
 	public void testSelectByweiboId() {

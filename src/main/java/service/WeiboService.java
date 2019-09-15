@@ -59,4 +59,9 @@ public class WeiboService implements IWeiboService{
 		return weiboMapper.selectByWeiboId(weiboId, offset, count);
 	}
 
+	@Override
+	public void delWeibo(Integer id) {
+		weiboMapper.delete(id);
+	}
+
 }

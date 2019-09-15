@@ -200,6 +200,13 @@ public class WeiboController {
 		map.addAttribute("wz", "selectByContent.do");
 		return "mine";
 	}
+	
+	@RequestMapping("/delWeibo.do")
+	public String delWeibo(Integer id){
+		weiboService.delWeibo(id);
+		log.info("删除当前微博成功,id=" + id);
+		return "redirect:showOne.do";
+	}
 
 	// 图片上传
 	@RequestMapping("/upload.do")
