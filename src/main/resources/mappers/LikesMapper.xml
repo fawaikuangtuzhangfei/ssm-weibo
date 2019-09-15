@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+		"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+	
+	<!-- namespace表示命名空间，值必须为接口的名称(包括包名) -->
+	<mapper namespace="mapper.LikesMapper">
+	
+	
+	
+	<!-- void like(Likes like); 点赞该条微博-->
+	<insert id="like" parameterType="bean.Likes">
+		insert into t_likes (
+		weibo_id, user_id
+		) values( 
+		#{weiboId}, #{userId}
+		)
+	</insert>	
+	
+	<!-- Integer selectIsLike(@Param("userId")Integer userId, @Param("weiboId")Integer weiboId); 查询是否已被当前用户点赞于否 -->
+	<select id="selectIsLike" resultType="java.lang.Integer">
+		select 
+		count(1)
+		from t_likes c
+		where c.weibo_id=#{weiboId} and c.user_id=#{userId}
+	</select>
+	
+	<!-- void delike(Likes like); 取消点赞 -->
+	<select id="delike">
+		delete 
+		from t_likes
+		where weibo_id=#{weiboId} and user_id=#{userId}
+	</select>
+	
+	<!-- Integer selectCount(Integer weiboId); 当前微博点赞总数 -->
+	<select id="selectCount" resultType="java.lang.Integer">
+		select 
+		count(1)
+		from t_likes c
+		where c.weibo_id=#{weiboId} 
+	</select>
+	
+	
+	
+	</mapper>

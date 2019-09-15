@@ -138,7 +138,8 @@
 							data-target="#myModal" style="width: 25%" data-id="${weibo.id }">转发</button>
 						<button onclick="loadComment(${weibo.id})" style="width: 25%"
 							class="btn btn-warning" id="bt">评论</button>
-						<button type="button" style="width: 25%" class="btn btn-danger">点赞</button>
+						<button type="button" id="dianzan${weibo.id}" style="width: 25%" 
+						onclick="like(${weibo.id})" class="btn btn-danger">点赞</button>
 					</div>
 					<br> <br>
 				</div>
@@ -221,7 +222,7 @@
 
 	<div></div>
 
-	<!-- 页面加载时:查看是否已经被当前用户所收藏 -->
+	<!-- 页面加载时:查看是否已经被当前用户所收藏、点赞 -->
 	<script>
 
 //页面加载
@@ -234,39 +235,59 @@
     		  
     		//查询现状
     		  pdUserCollection(btns[i], userId);
+    		  pdUserLikes(btns[i], userId);
     	  });
       });
 
 </script>
 
-	<!-- 查看是否已经被当前用户所收藏 -->
+	<!-- 查看是否已经被当前用户所收藏、点赞 -->
 	<script>
-//页面加载查询是不是已经关注
-function pdUserCollection(weiboId, userId) {
+//页面加载查询是不是已经关注、点赞
+//点赞
+function pdUserLikes(weiboId, userId) {
           $.ajax({
               type: "post",
-              url: "../collect/selectByOne.do",
+              url: "../like/selectByOne.do",
               data: { "weiboId": weiboId, "userId": userId },
               dataType:"json",
               success:function (obj) {
                   if (obj.state==1) {
-                      $("#shoucang"+ weiboId).text('取消收藏');
+                	  $("#dianzan"+weiboId).attr("class","btn btn-danger glyphicon glyphicon-heart");
+                      $("#dianzan"+ weiboId).text('取消点赞 ' + obj.data);
                   } else {
-                      $("#shoucang"+ weiboId).text('收藏');
+                	  $("#dianzan"+weiboId).attr("class","btn btn-danger glyphicon glyphicon-heart-empty");
+                      $("#dianzan"+ weiboId).text('点赞 '+ obj.data);
                   }
               }
           })
 
       }
+//收藏
+function pdUserCollection(weiboId, userId) {
+    $.ajax({
+        type: "post",
+        url: "../collect/selectByOne.do",
+        data: { "weiboId": weiboId, "userId": userId },
+        dataType:"json",
+        success:function (obj) {
+            if (obj.state==1) {
+                $("#shoucang"+ weiboId).text('取消收藏');
+            } else {
+                $("#shoucang"+ weiboId).text('收藏');
+            }
+        }
+    })
+
+}
 </script>
 
-	<!-- 收藏事件 -->
-	<script>
+	<!-- 收藏事件 点赞事件-->
+<script>
 
 //收藏-点击之后变为已收藏  已收藏-收藏
       function collect(weiboId) {
     	  var userId = $("#userId").val();
-    	  console.log($("#shoucang"+ weiboId).text());
     	  if($("#shoucang"+ weiboId).text()=="收藏"){
     		  $.ajax({
                   type: "POST",
@@ -294,6 +315,39 @@ function pdUserCollection(weiboId, userId) {
     	  }
           
       }
+      
+    //点赞-点击之后变为已点赞  已点赞-点赞
+      function like(weiboId) {
+    	  var userId = $("#userId").val();
+    	  if($("#dianzan"+weiboId).hasClass("glyphicon-heart")){
+    		  $.ajax({
+                  type: "POST",
+                  url: "../like/delike.do",
+                  data: { "weiboId": weiboId, "userId": userId },
+                  dataType: "json",
+                  success: function (obj) {
+                	  if (obj.state==1) {
+                		  $("#dianzan"+weiboId).attr("class","btn btn-danger glyphicon glyphicon-heart-empty");
+                          $("#dianzan"+ weiboId).text('点赞 ' + obj.data);
+                      } 
+                 }
+              })
+    	  }else{
+    		  $.ajax({
+                  type: "POST",
+                  url: "../like/like.do",
+                  data: { "weiboId": weiboId, "userId": userId },
+                  dataType: "json",
+                  success: function (obj) {
+                	  if (obj.state==1) {
+                		  $("#dianzan"+weiboId).attr("class","btn btn-danger  glyphicon glyphicon-heart");
+                          $("#dianzan"+ weiboId).text('取消点赞 ' + obj.data);
+                      } 
+                 }
+              })
+    	  }
+          
+      }
 </script>
 
 	<!-- 发布评论 -->
@@ -307,7 +361,6 @@ function keyUP(t) {
 }
 $('.pinglun').click(function(){
 	var id=$(this).parent().children("input")[2].value;
-	console.log(id);
     	$.ajax({
     		url:"../weibo/postComment.do",
     		//serialize()表示提交表单所有组件
@@ -335,7 +388,6 @@ function loadComment(weiboId){
         success:function(data) {
         	var result = data.data;
         	for(var i in result){
-        		console.log(result[i].commentTime);
         		var date1 = new Date(result[i].commentTime);
         		var com = '<div class="comment-show-con clearfix ">' +
                 '<div class="comment-show-con-img pull-left ">' +
@@ -371,7 +423,6 @@ function loadComment(weiboId){
 	<script>
 //删除当前行-评论
 $(document).on('click','.removeBlock',function (e) {  
-        console.log(e)      
         var id=$(this).attr('id');
         var url ="../weibo/removeById.do?weiboId="+id;
 		 window.location.href=url;
