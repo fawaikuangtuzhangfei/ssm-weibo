@@ -95,14 +95,36 @@
 <!-- 微博正文部分 -->
 		<!-- 微博内容&转发微博内容 -->
 			<c:forEach items="${all}" var="weibo" varStatus="">
-				<p style="color: #333; padding-top: 34px;">${weibo.username}</p>
-				<br>
+			<!-- 头部 -->
+			<div class="container" style="width: 850px; padding-top: 34px; background-color: white;">
+				<!-- 头像 -->
+				<div style="height: 50px; width: 50px; margin: 10px; float: left;">
+					<img src="/imgUpload/${user.face}" width="50px" height="50px"
+						class="img-circle">
+				</div>
+				<!-- 昵称+日期 -->
+				<div
+					style="text-align: left; margin: 10px; margin-left: 20px; float: left;">
+					<a style="color: #333; font-size: 20px" href="#">${user.username }</a>
+					<br> <span style="color: #333" >${weibo.postTime }</span>
+				</div>
+				<!-- 删除操作按钮 -->
+				<div class="btn-group" style="float: right; margin: 10px">
+					<button type="button" class="btn btn-xs btn-Info data-toggle"
+						data-toggle="dropdown">
+						<span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" role="menu">
+						<li><a style="font-size: 10px"
+							href="javascript:delWeibo(${weibo.id })">删除</a></li>
+					</ul>
+				</div>
+			</div>
+			<!-- 微博正文 -->
 				<!-- 文字 -->
 				<div style="text-align: left; margin-left: 85px;">
 					<p style="color: #333; font-size: 17px">${weibo.content }</p>
 				</div>
-				<br>
-				<p style="color: #333">${weibo.postTime}</p>
 				<!-- 原创微博 -->
 				<c:if test="${weibo.original == 1 }">
 				<!-- 图片 -->
