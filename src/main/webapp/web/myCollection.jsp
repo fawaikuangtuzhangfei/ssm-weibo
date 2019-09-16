@@ -88,16 +88,19 @@
 			<div class="container" style="width: 850px; padding-top: 34px; background-color: white;">
 				<!-- 头像 -->
 				<div style="height: 50px; width: 50px; margin: 10px; float: left;">
-					<img src="/imgUpload/${user.face}" width="50px" height="50px"
+				<a href="../user/showOne.do?userId=${weibo.userId }">
+					<img src="/imgUpload/${weibo.face}" width="50px" height="50px"
 						class="img-circle">
+				</a>
 				</div>
 				<!-- 昵称+日期 -->
 				<div
 					style="text-align: left; margin: 10px; margin-left: 20px; float: left;">
-					<a style="color: #333; font-size: 20px" href="#">${user.username }</a>
+					<a style="color: #333; font-size: 20px" href="../user/showOne.do?userId=${weibo.userId }">${weibo.username }</a>
 					<br> <span style="color: #333" >${weibo.postTime }</span>
 				</div>
 				<!-- 删除操作按钮 -->
+				<c:if test="${weibo.userId == user.id }">
 				<div class="btn-group" style="float: right; margin: 10px">
 					<button type="button" class="btn btn-xs btn-Info data-toggle"
 						data-toggle="dropdown">
@@ -108,6 +111,7 @@
 							href="../weibo/delWeibo.do?id=${weibo.id }">删除</a></li>
 					</ul>
 				</div>
+				</c:if>
 			</div>
 			<!-- 微博正文 -->
 				<!-- 文字 -->
@@ -172,14 +176,16 @@
 					<!-- 头像 -->
 					<div
 						style="cursor: pointer; height: 30px; width: 30px; margin: 10px; float: left; margin-left: 100px;">
+					<a href="../user/showOne.do?userId=${weibo.repost.userId }">
 						<img
 							src="/imgUpload/${weibo.repost.face}" width="40px"
 							height="40px" class="img-circle">
+					</a>
 					</div>
 					<!-- 昵称+日期 -->
 					<div
 						style="text-align: left; margin: 10px; margin-left: 20px; float: left;">
-						<a style="color: #333; font-size: 14px" href="javascrip:;">${weibo.repost.username }</a><br>
+						<a style="color: #333; font-size: 14px" href="../user/showOne.do?userId=${weibo.repost.userId }">${weibo.repost.username }</a><br>
 						<span style="color: #333; font-size: 10px">${weibo.repost.postTime }</span>
 					</div>
 				</div>

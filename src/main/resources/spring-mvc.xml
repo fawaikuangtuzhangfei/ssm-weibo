@@ -43,6 +43,7 @@
 			<mvc:mapping path="/weibo/*"/>
 			<mvc:mapping path="/user/*"/>
 			<mvc:mapping path="/collect/*"/>
+			<mvc:mapping path="/like/*"/>
 			<!-- 不拦截的资源 -->
 			<mvc:exclude-mapping path="/user/showLogin.do"/>
 			<mvc:exclude-mapping path="/user/showRegister.do"/>

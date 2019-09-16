@@ -43,5 +43,11 @@ public interface IUserService {
 	 */
 	void updateUser(User user);
 	
+	/**
+	 * 根据用户id查询用户全部信息
+	 * @param id
+	 * @return
+	 */
+	User selectById(Integer id);
 	
 }

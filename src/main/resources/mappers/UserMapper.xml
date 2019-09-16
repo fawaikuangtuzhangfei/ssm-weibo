@@ -16,6 +16,16 @@
 		)
 	</insert>	
 	
+	<!-- User selectById(Integer id); 根据用户id查询用户的全部信息-->
+	<select id="selectById" resultType="bean.User">
+		select 
+		id, username, password, nickname, bir, province, city, area,email, phone, face, sex,
+		created_user createdUser, created_time createdTime,
+		modified_user modifiedUser, modified_time modifiedTime
+		from t_user
+		where id=#{id}
+	</select>
+	
 	<!-- User seletByUsername(String username); 根据用户名查找用户 -->
 	<select id="selectByUsername" resultType="bean.User">
 		select 

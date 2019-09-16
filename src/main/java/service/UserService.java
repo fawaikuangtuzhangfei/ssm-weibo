@@ -88,5 +88,10 @@ public class UserService implements IUserService{
 		mapper.updateUser(user);
 	}
 
+	@Override
+	public User selectById(Integer id) {
+		return mapper.selectById(id);
+	}
+
 
 }

@@ -2,13 +2,16 @@ package controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,7 +19,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import bean.ResponseResult;
 import bean.User;
+import bean.Weibo;
 import service.UserService;
+import service.WeiboService;
 
 /**
  * t_user控制器类
@@ -33,6 +38,9 @@ public class UserController {
 
 	@Resource
 	private UserService userService;
+	
+	@Resource
+	WeiboService weiboService;
 
 	// 异步提交登录
 	@RequestMapping("/login.do")
@@ -195,5 +203,40 @@ public class UserController {
 		userService.updateUser(user);
 		return "forward:../user/showUserinfo.do";
 	}
+	
+	//前往我的微博主页
+		@RequestMapping("/showOne.do")
+		public String showById(ModelMap map, HttpServletRequest request, Integer page, Integer userId) {
+			// 默认为当前页
+			if (page == null) {
+				page = 1;
+			}
+			// 一页展示10个 当前是第几个
+			Integer offset = (page - 1) * 10;
+			// 分页查询
+			List<Weibo> all = weiboService.selectById(userId, offset, 10);
+			//存放用户
+			User user = userService.selectById(userId);
+			map.addAttribute("usernow", user);
+			// 总微博数
+			Integer count = weiboService.countByUser(userId);
+			// 一页上显示10个，总共几页
+			int pageSize = count % 10 == 0 ? count / 10 : count / 10 + 1;
+			for (int i = 0; i < all.size(); i++) {
+				// 是否原创
+				Integer repostId = all.get(i).getRepostId();
+				Weibo repost = weiboService.selectByWeiboId(repostId, offset, 10);
+				all.get(i).setRepost(repost);
+				log.info("展示单用户微博->非原创微博" + i + ":" + repost);
+			}
+			map.addAttribute("all", all);
+			log.info(all);
+			// 将页数和总数和当前页面放进session中
+			map.addAttribute("count", count);
+			map.addAttribute("pageSize", pageSize);
+			map.addAttribute("curpage", page);
+			map.addAttribute("wz", "showOne.do?userId="+userId);
+			return "myWeibo";
+		}
 
 }
