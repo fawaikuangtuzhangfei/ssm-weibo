@@ -45,6 +45,21 @@ public class TestLikes {
 	}
 	
 	@Test
+	public void testSelectAllLikes() {
+		//1.
+		AbstractApplicationContext ac = new ClassPathXmlApplicationContext("application-dao.xml");
+		//2.
+		LikesMapper mapper = ac.getBean("likesMapper", LikesMapper.class);
+		//3.
+		Integer [] likes = mapper.selectAllLikes(48);
+		for(Integer i:likes){
+			System.out.println(i);
+		}
+		//4.
+		ac.close();
+	}
+	
+	@Test
 	public void testDel() {
 		//1.
 		AbstractApplicationContext ac = new ClassPathXmlApplicationContext("application-dao.xml");

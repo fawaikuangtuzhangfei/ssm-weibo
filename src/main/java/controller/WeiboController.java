@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import bean.ResponseResult;
 import bean.User;
 import bean.Weibo;
 import net.sf.json.JSONObject;
@@ -42,8 +43,17 @@ public class WeiboController {
 
 	@Resource
 	UserService userService;
+	
+	//转发微博
+	@RequestMapping("/repost.do")
+	@ResponseBody
+	public ResponseResult<Weibo> post(Weibo weibo){
+		ResponseResult<Weibo> rr = new ResponseResult<Weibo>(1,"转发成功");
+		weiboService.insertWeibo(weibo);
+		return rr;
+	}
 
-	// 发布微博/转发微博
+	// 发布微博
 	@RequestMapping("/post.do")
 	// 将form表单中的数据封装到weibo对象中
 	// **存在问题，文件无法获取到，由于jsp页面中from表单传值的问题

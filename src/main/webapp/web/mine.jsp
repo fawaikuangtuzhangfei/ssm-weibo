@@ -74,7 +74,7 @@
 			<ul class="nav navbar-left nav-pills nav-stacked">
 				<li class="" style="width: 100%" ><a href="../weibo/showOne.do">首页</a></li>
 				<li style="width: 100%"><a href="#">好友圈</a></li>
-				<li style="width: 100%"><a href="#">我的赞</a></li>
+				<li style="width: 100%"><a href="../like/showMyLike.do">我的赞</a></li>
 				<li style="width: 100%"><a href="../collect/showMyCollect.do">我的收藏</a></li>
 			</ul>
 		</div>
@@ -137,7 +137,7 @@
 			</div>
 			<!-- 微博正文 -->
 				<!-- 文字 -->
-				<div style="text-align: left; margin-left: 85px;">
+				<div class="container" style="text-align: left; margin-left: 85px; ">
 					<p style="color: #333; font-size: 17px">${weibo.content }</p>
 				</div>
 				<!-- 原创微博 -->
@@ -572,7 +572,7 @@ $(document).on('click','.removeBlock',function (e) {
 	
 		$('#zhuanfa').click(function() {
 			$.ajax({
-				url : "../weibo/post.do",
+				url : "../weibo/repost.do",
 				//serialize()表示提交表单所有组件
 				data : $("#form-zhuanfa").serialize(),
 				type : "post",

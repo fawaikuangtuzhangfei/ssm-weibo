@@ -38,5 +38,12 @@ public interface LikesMapper {
 	 */
 	Integer selectCount(Integer weiboId);
 	
+	/**
+	 * 查询当前用户的所有点赞微博id
+	 * @param userId
+	 * @return
+	 */
+	Integer[] selectAllLikes(Integer userId);
+	
 	
 }

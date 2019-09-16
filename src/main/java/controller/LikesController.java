@@ -1,6 +1,11 @@
 package controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -10,7 +15,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import bean.Likes;
 import bean.ResponseResult;
+import bean.User;
+import bean.Weibo;
 import service.ILikesService;
+import service.WeiboService;
 
 /**
  * t_likes 点赞controller
@@ -25,6 +33,9 @@ public class LikesController {
 	
 	@Resource
 	private ILikesService likesService;
+	
+	@Resource
+	WeiboService weiboService;
 	
 	@RequestMapping("/selectByOne")
 	@ResponseBody
@@ -69,5 +80,44 @@ public class LikesController {
 		return rr;
 	}
 	
-	
+	@RequestMapping("/showMyLike")
+	public String showAll(HttpServletRequest request, ModelMap map, Integer page){
+		// 默认为当前页
+		if (page == null) {
+			page = 1;
+		}
+		// 一页展示10个 当前是第几个
+		Integer offset = (page - 1) * 10;
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+		Integer userId = user.getId();
+		//查询当前用户所有的点赞
+		Integer[] collects = likesService.selectAllLikes(userId);
+		//存放所有的点赞
+		List<Weibo> allCollects = new ArrayList<Weibo>();
+		for(Integer weiboId : collects){
+			log.info("当前用户点赞微博id=" + weiboId);
+			Weibo allWeibo = weiboService.selectByWeiboId(weiboId, offset,10);
+			allCollects.add(allWeibo);
+		}
+		// 总点赞微博数
+		Integer count = allCollects.size();
+		// 一页上显示10个，总共几页
+		int pageSize = count % 10 == 0 ? count / 10 : count / 10 + 1;
+		for (int i = 0; i < allCollects.size(); i++) {
+			// 是否原创
+			Integer repostId = allCollects.get(i).getRepostId();
+			Weibo repost = weiboService.selectByWeiboId(repostId, offset, 10);
+			allCollects.get(i).setRepost(repost);
+		}
+		log.info("所有点赞");
+		System.out.println(allCollects);
+		map.addAttribute("all", allCollects);
+		// 将页数和总数和当前页面放进session中
+		map.addAttribute("count", count);
+		map.addAttribute("pageSize", pageSize);
+		map.addAttribute("curpage", page);
+		map.addAttribute("wz", "showOne.do");
+		return "myCollection";
+	}
 }

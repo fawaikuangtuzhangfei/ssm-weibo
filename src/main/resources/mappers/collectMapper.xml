@@ -38,7 +38,7 @@
 		c.weibo_id as weiboId, c.user_id as userId, c.collect_time as collectTime
 		from t_collect c
 		where c.user_id=#{userId}
-		order by c.collect_time
+		order by c.collect_time desc
 	</select>
 	
 	

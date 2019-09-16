@@ -39,6 +39,13 @@
 		where c.weibo_id=#{weiboId} 
 	</select>
 	
-	
+	<!-- Integer[] selectAllLikes(Integer userId); 当前用户的所有点赞微博 -->
+	<select id="selectAllLikes" resultType="java.lang.Integer">
+		select 
+		c.weibo_id as weiboId
+		from t_likes c
+		where c.user_id=#{userId} 
+		order by c.like_time desc
+	</select>
 	
 	</mapper>

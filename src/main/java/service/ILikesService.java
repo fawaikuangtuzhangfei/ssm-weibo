@@ -35,5 +35,12 @@ public interface ILikesService {
 	 * @return
 	 */
 	Integer selectCount(Integer weiboId);
+	
+	/**
+	 * 查询当前用户的点赞的微博id
+	 * @param userId
+	 * @return
+	 */
+	Integer[] selectAllLikes(Integer userId);
 
 }

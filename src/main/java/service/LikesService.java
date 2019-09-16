@@ -37,6 +37,11 @@ public class LikesService implements ILikesService{
 	public Integer selectCount(Integer weiboId) {
 		return likemapper.selectCount(weiboId);
 	}
+
+	@Override
+	public Integer[] selectAllLikes(Integer userId) {
+		return likemapper.selectAllLikes(userId);
+	}
 	
 	
 	
