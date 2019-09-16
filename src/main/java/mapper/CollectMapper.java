@@ -1,5 +1,6 @@
 package mapper;
 
+
 import org.apache.ibatis.annotations.Param;
 
 import bean.Collect;
@@ -31,5 +32,12 @@ public interface CollectMapper {
 	 */
 	void decollect(Collect collect);
 	
-	
+	/**
+	 * 查询当前用户的所有收藏
+	 * @param offset
+	 * @param count
+	 * @param userId
+	 * @return
+	 */
+	Integer[] selectAll(@Param("userId")Integer userId);
 }

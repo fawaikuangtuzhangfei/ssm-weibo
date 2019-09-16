@@ -44,6 +44,20 @@ public class TestCollect {
 		//4.
 		ac.close();
 	}
+	@Test
+	public void testSelectAll() {
+		//1.
+		AbstractApplicationContext ac = new ClassPathXmlApplicationContext("application-dao.xml");
+		//2.
+		CollectMapper mapper = ac.getBean("collectMapper", CollectMapper.class);
+		//3.
+		Integer [] all = mapper.selectAll(48);
+		for(Integer i:all){
+			System.out.println(i);
+		}
+		//4.
+		ac.close();
+	}
 	
 	@Test
 	public void testDel() {

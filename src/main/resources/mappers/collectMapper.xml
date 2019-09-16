@@ -31,31 +31,24 @@
 		where weibo_id=#{weiboId} and user_id=#{userId}
 	</select>
 	
-	
-	<select id="selectByEmail" resultType="bean.User">
+	<!-- 查询当前用户的所有收藏 -->
+	<!-- Integer[] selectAll(@Param("userId")Integer userId); -->
+	<select id="selectAll" resultType="java.lang.Integer">
 		select 
-		c.collect_id as collectId, c.weibo_id as weiboId, c.user_id as userId, c.collect_time as collectTime
+		c.weibo_id as weiboId, c.user_id as userId, c.collect_time as collectTime
 		from t_collect c
-		where c.weibo_id=#{weiboId} and c.user_id=#{userId}
+		where c.user_id=#{userId}
+		order by c.collect_time
 	</select>
 	
 	
 	
 	<!-- void updateUser(User user); 更新个人资料 -->
-	<update id="updateUser" parameterType="bean.User">
-		update t_user
-		set
-			email=#{email}, 
-			phone=#{phone}, 
-			nickname=#{nickname},
-			face=#{face},
-			sex=#{sex},
-			bir=#{bir},
-			province=#{province},
-			city=#{city},
-			area=#{area}
-		where
-			id=#{id}
+	<update id="updateUser" parameterType="bean.Weibo">
+		select 
+		c.weibo_id as weiboId, c.collect_time as collectTime
+		from t_collect c
+		where c.user_id=#{userId}
 	</update>
 	
 	</mapper>

@@ -27,7 +27,13 @@
 <link rel="stylesheet" type="text/css" href="../css/webuploader.css">
 <script type="text/javascript" src="../js/webuploader.js"></script>
 <script type="text/javascript" src="../js/upload.js"></script>
+
+<!-- zoomify图片放大缩小的插件 -->
+<link rel="stylesheet" type="text/css" href="../css/zoomify.min.css">
+<script type="text/javascript " src="../js/zoomify.js"></script>
+
 </head>
+
 <body>
 <body style="padding: 80px">
 	<nav class="navbar navbar-default navbar-fixed-top">
@@ -63,10 +69,19 @@
 			</div>
 		</div>
 	</nav>
+	<!-- 左侧导航栏 -->
+		<div style="width: 8%; float: left; margin-right: 10px; background-color: #fff;">
+			<ul class="nav navbar-left nav-pills nav-stacked">
+				<li class="" style="width: 100%" ><a href="../weibo/showOne.do">首页</a></li>
+				<li style="width: 100%"><a href="#">好友圈</a></li>
+				<li style="width: 100%"><a href="#">我的赞</a></li>
+				<li style="width: 100%"><a href="../collect/showMyCollect.do">我的收藏</a></li>
+			</ul>
+		</div>
 <div style="width: 70%; float: left;">
 <!-- 发送新微博 -->
 			<div class="container" style=" margin-top: 20px; background-color: #fff;">
-				<p style="font-size: 40px; color: black">分享新鲜事</p>
+				<p style="font-size: 40px; color: black" align="center">分享新鲜事</p>
 				<form method="post" action="../weibo/post.do">
 					<textarea class="form-control" rows="4"
 						style="border: 1px; resize: none; width: 100%; background-color: #eee"
@@ -128,7 +143,7 @@
 				<!-- 原创微博 -->
 				<c:if test="${weibo.original == 1 }">
 				<!-- 图片 -->
-				<div class="example1" style="margin-left: 85px; margin-bottom: 20px;">
+				<div class="example" style="margin-left: 85px; margin-bottom: 20px;">
 					<table>
 						<tr>
 							<c:if test="${weibo.pic1!=null }">
@@ -588,7 +603,9 @@ $('#fabu').click(function(){
   })
  
 </script>
-
+<script type="text/javascript">
+		$('.example img').zoomify();
+</script>
 
 </body>
 </html>

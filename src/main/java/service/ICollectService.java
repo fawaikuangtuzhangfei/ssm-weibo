@@ -1,5 +1,6 @@
 package service;
 
+
 import bean.Collect;
 
 /**
@@ -28,4 +29,11 @@ public interface ICollectService {
 	 * @param collect
 	 */
 	void decollect(Collect collect);
+	
+	/**
+	 * 查看当前用户的所有收藏
+	 * @param userId
+	 * @return
+	 */
+	Integer[] selectAll(Integer userId);
 }

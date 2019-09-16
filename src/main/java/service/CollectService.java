@@ -1,5 +1,6 @@
 package service;
 
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -31,6 +32,11 @@ public class CollectService implements ICollectService{
 	@Override
 	public void decollect(Collect collect) {
 		collectMapper.decollect(collect);
+	}
+
+	@Override
+	public Integer[] selectAll(Integer userId) {
+		return collectMapper.selectAll( userId);
 	}
 
 	
