@@ -35,10 +35,18 @@ public class Weibo implements Serializable{
 	//记录转发的微博
 	private Weibo repost;
 	
+	//t_user
 	private String username;
+	private String face;
 	
 	
 	
+	public String getFace() {
+		return face;
+	}
+	public void setFace(String face) {
+		this.face = face;
+	}
 	public Weibo getRepost() {
 		return repost;
 	}

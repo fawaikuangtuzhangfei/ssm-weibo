@@ -546,7 +546,7 @@ $(document).on('click','.removeBlock',function (e) {
 	
 		$('#zhuanfa').click(function() {
 			$.ajax({
-				url : "../weibo/post.do",
+				url : "../weibo/repost.do",
 				//serialize()表示提交表单所有组件
 				data : $("#form-zhuanfa").serialize(),
 				type : "post",

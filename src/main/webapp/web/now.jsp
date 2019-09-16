@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>我的首页</title>
+<title>实时微博</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="../js/jquery-1.12.0.min.js"></script>
@@ -114,13 +114,13 @@
 			<div class="container" style="width: 850px; padding-top: 34px; background-color: white;">
 				<!-- 头像 -->
 				<div style="height: 50px; width: 50px; margin: 10px; float: left;">
-					<img src="/imgUpload/${user.face}" width="50px" height="50px"
+					<img src="/imgUpload/${weibo.face}" width="50px" height="50px"
 						class="img-circle">
 				</div>
 				<!-- 昵称+日期 -->
 				<div
 					style="text-align: left; margin: 10px; margin-left: 20px; float: left;">
-					<a style="color: #333; font-size: 20px" href="#">${user.username }</a>
+					<a style="color: #333; font-size: 20px" href="#">${weibo.username }</a>
 					<br> <span style="color: #333" >${weibo.postTime }</span>
 				</div>
 				<c:if test="${weibo.userId == user.id }">

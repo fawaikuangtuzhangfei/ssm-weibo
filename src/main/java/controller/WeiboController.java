@@ -124,21 +124,19 @@ public class WeiboController {
 		List<Weibo> all = weiboService.selectAll(offset, 10);
 		Integer count = weiboService.count();
 		int pageSize = count % 10 == 0 ? count / 10 : count / 10 + 1;
-		// 存放所有转发的微博
-		List<Weibo> allReposts = new ArrayList<Weibo>();
 		for (int i = 0; i < all.size(); i++) {
 			// 是否原创
 			Integer repostId = all.get(i).getRepostId();
 			Weibo repost = weiboService.selectByWeiboId(repostId, offset, 10);
 			all.get(i).setRepost(repost);
-			allReposts.add(repost);
 		}
 		map.addAttribute("count", count);
 		map.addAttribute("pageSize", pageSize);
 		map.addAttribute("all", all);
+		log.info("实时微博:" + all);
 		map.addAttribute("curpage", page);
 		map.addAttribute("wz", "show.do");
-		return "mine";
+		return "now";
 	}
 
 	// 显示指定用户的微博->生硬的从session中取出了user对象进而取出了id
@@ -159,14 +157,11 @@ public class WeiboController {
 		Integer count = weiboService.countByUser(userId);
 		// 一页上显示10个，总共几页
 		int pageSize = count % 10 == 0 ? count / 10 : count / 10 + 1;
-		// 存放所有转发的微博
-		List<Weibo> allReposts = new ArrayList<Weibo>();
 		for (int i = 0; i < all.size(); i++) {
 			// 是否原创
 			Integer repostId = all.get(i).getRepostId();
 			Weibo repost = weiboService.selectByWeiboId(repostId, offset, 10);
 			all.get(i).setRepost(repost);
-			allReposts.add(repost);
 		}
 		map.addAttribute("all", all);
 		// 将页数和总数和当前页面放进session中
