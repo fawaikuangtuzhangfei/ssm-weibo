@@ -32,7 +32,8 @@
 	<select id="selectById" resultType="bean.Weibo">
 		select
 		w.id,w.user_id as userId, w.post_time as postTime,w.content,w.pic1,w.pic2,w.pic3,
-		w.pic4,w.pic5,w.pic6,w.pic7,w.pic8,w.pic9,w.original,w.repost_id as repostId,u.username
+		w.pic4,w.pic5,w.pic6,w.pic7,w.pic8,w.pic9,w.original,w.repost_id as repostId,
+		u.username, u.face
 		from t_weibo w
 		left join t_user u on u.id = w.user_id
 		where w.user_id=#{userId}
@@ -44,7 +45,8 @@
 	<select id="selectByWeiboId" resultType="bean.Weibo">
 		select
 		w.id,w.user_id as userId, w.post_time as postTime,w.content,w.pic1,w.pic2,w.pic3,
-		w.pic4,w.pic5,w.pic6,w.pic7,w.pic8,w.pic9,w.original,w.repost_id as repostId,u.username
+		w.pic4,w.pic5,w.pic6,w.pic7,w.pic8,w.pic9,w.original,w.repost_id as repostId,
+		u.username, u.face
 		from t_weibo w
 		left join t_user u on u.id = w.user_id
 		where w.id=#{weiboId}
@@ -56,7 +58,8 @@
 	<select id="selectByContent"  resultType="bean.Weibo">
 		select
 		w.id,w.user_id as userId, w.post_time as postTime,w.content,w.pic1,w.pic2,w.pic3,
-		w.pic4,w.pic5,w.pic6,w.pic7,w.pic8,w.pic9,w.original,w.repost_id as repostId,u.username
+		w.pic4,w.pic5,w.pic6,w.pic7,w.pic8,w.pic9,w.original,w.repost_id as repostId,
+		u.username, u.face
 		from t_weibo w
 		left join t_user u on u.id = w.user_id
 		where w.user_id=#{userId} and w.content like "%"#{content}"%"

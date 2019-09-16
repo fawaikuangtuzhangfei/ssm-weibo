@@ -261,7 +261,7 @@ public class Weibo implements Serializable{
 		return "Weibo [id=" + id + ", userId=" + userId + ", postTime=" + postTime + ", content=" + content + ", pic1="
 				+ pic1 + ", pic2=" + pic2 + ", pic3=" + pic3 + ", pic4=" + pic4 + ", pic5=" + pic5 + ", pic6=" + pic6
 				+ ", pic7=" + pic7 + ", pic8=" + pic8 + ", pic9=" + pic9 + ", original=" + original + ", repostId="
-				+ repostId + ", username=" + username + "]";
+				+ repostId + ", repost=" + repost + ", username=" + username + ", face=" + face + "]";
 	}
 	
 	

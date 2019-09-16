@@ -198,10 +198,17 @@
 				<div class="container"
 					style="width: 850px; background-color: #eaeaec;">
 					<!-- 头像 -->
+					<div
+						style="cursor: pointer; height: 30px; width: 30px; margin: 10px; float: left; margin-left: 100px;">
+						<img
+							src="/imgUpload/${weibo.repost.face}" width="40px"
+							height="40px" class="img-circle">
+					</div>
 					<!-- 昵称+日期 -->
 					<div
 						style="text-align: left; margin: 10px; margin-left: 20px; float: left;">
 						<a style="color: #333; font-size: 14px" href="javascrip:;">${weibo.repost.username }</a><br>
+						<span style="color: #333; font-size: 10px">${weibo.repost.postTime }</span>
 					</div>
 				</div>
 				<div class="container"

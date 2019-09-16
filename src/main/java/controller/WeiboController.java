@@ -128,6 +128,7 @@ public class WeiboController {
 			// 是否原创
 			Integer repostId = all.get(i).getRepostId();
 			Weibo repost = weiboService.selectByWeiboId(repostId, offset, 10);
+			log.info("展示所有微博->非原创微博" + i + ":" + repost);
 			all.get(i).setRepost(repost);
 		}
 		map.addAttribute("count", count);
@@ -162,8 +163,10 @@ public class WeiboController {
 			Integer repostId = all.get(i).getRepostId();
 			Weibo repost = weiboService.selectByWeiboId(repostId, offset, 10);
 			all.get(i).setRepost(repost);
+			log.info("展示单用户微博->非原创微博" + i + ":" + repost);
 		}
 		map.addAttribute("all", all);
+		log.info(all);
 		// 将页数和总数和当前页面放进session中
 		map.addAttribute("count", count);
 		map.addAttribute("pageSize", pageSize);

@@ -80,7 +80,7 @@
 		</div>
 <div style="width: 70%; float: left;">
 <!-- 发送新微博 -->
-			<div class="container" style=" margin-top: 20px; background-color: #fff;">
+			<div class="container" style="background-color: #fff;">
 				<p style="font-size: 40px; color: black" align="center">分享新鲜事</p>
 				<form method="post" action="../weibo/post.do">
 					<textarea class="form-control" rows="4"
@@ -111,7 +111,7 @@
 		<!-- 微博内容&转发微博内容 -->
 			<c:forEach items="${all}" var="weibo" varStatus="">
 			<!-- 头部 -->
-			<div class="container" style="width: 850px; padding-top: 34px; background-color: white;">
+			<div class="container" style="width: 800px; padding-top: 34px; background-color: white;">
 				<!-- 头像 -->
 				<div style="height: 50px; width: 50px; margin: 10px; float: left;">
 					<img src="/imgUpload/${user.face}" width="50px" height="50px"
@@ -198,12 +198,20 @@
 				<div class="container"
 					style="width: 850px; background-color: #eaeaec;">
 					<!-- 头像 -->
+					<div
+						style="cursor: pointer; height: 30px; width: 30px; margin: 10px; float: left; margin-left: 100px;">
+						<img
+							src="/imgUpload/${weibo.repost.face}" width="40px"
+							height="40px" class="img-circle">
+					</div>
 					<!-- 昵称+日期 -->
 					<div
 						style="text-align: left; margin: 10px; margin-left: 20px; float: left;">
 						<a style="color: #333; font-size: 14px" href="javascrip:;">${weibo.repost.username }</a><br>
+						<span style="color: #333; font-size: 10px">${weibo.repost.postTime }</span>
 					</div>
 				</div>
+				<!-- 正文 -->
 				<div class="container"
 					style="width: 850px; background-color: #eaeaec;">
 					<!-- 文字 -->
@@ -261,7 +269,7 @@
 			</c:if>
 
 				<!-- 底部 -->
-				<div class="container" style="width: 850px; background-color: #fff;">
+				<div class="container" style="width: 955px; background-color: #fff;">
 					<br>
 					<div class="btn-group" style="width: 100%">
 						<button type="button" id="shoucang${weibo.id}"
