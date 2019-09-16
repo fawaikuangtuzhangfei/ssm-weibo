@@ -118,6 +118,6 @@ public class LikesController {
 		map.addAttribute("pageSize", pageSize);
 		map.addAttribute("curpage", page);
 		map.addAttribute("wz", "showOne.do");
-		return "myCollection";
+		return "myLikes";
 	}
 }
