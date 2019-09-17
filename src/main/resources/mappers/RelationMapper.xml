@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+		"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+	
+	<!-- namespace表示命名空间，值必须为接口的名称(包括包名) -->
+	<mapper namespace="mapper.RelationMapper">
+	
+	
+	
+	<!-- void relation(Relation Relation); 关注 -->
+	<insert id="relation" parameterType="bean.Relation">
+		insert into t_Relation (
+		user_id, follow_id, state
+		) values( 
+		#{userId}, #{followId}, 1
+		)
+	</insert>	
+	
+	<!-- Integer selectIsRelation(@Param("userId")Integer userId, @Param("followId")Integer followId); 是否关注这个人-->
+	<select id="selectIsRelation" resultType="java.lang.Integer">
+		select 
+		state
+		from t_Relation c
+		where c.follow_id=#{followId} and c.user_id=#{userId}
+	</select>
+	
+	<!-- void deRelation(Relation Relation); 取消关注 -->
+	<select id="deRelation">
+		delete 
+		from t_Relation
+		where user_id=#{userId} and follow_id=#{followId}
+	</select>
+	
+	<!-- 查询当前用户的所有关注 -->
+	<!-- Integer[] selectAll(@Param("userId")Integer userId); -->
+	<select id="selectAll" resultType="java.lang.Integer">
+		select 
+		c.follow_id as followId, c.user_id as userId, c.follow_time as followTime, c.state, c.relation_id as relationId
+		from t_Relation c
+		where c.user_id=#{userId}
+		order by c.follow_time desc
+	</select>
+	
+	
+	
+
+	
+	</mapper>
