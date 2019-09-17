@@ -298,7 +298,7 @@
 				共${count}条微博|共${pageSize}页|
 				<c:forEach var="i" begin="1" end="${pageSize}">
 					<a
-						href="../weibo/${wz}?page=${i}"
+						href="../collect/showMyCollect.do?page=${i}"
 						<c:if test="${curpage==i}">
 			  style="color: red"
 			</c:if>>

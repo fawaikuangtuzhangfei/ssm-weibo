@@ -93,21 +93,22 @@ public class LikesController {
 		Integer userId = user.getId();
 		//查询当前用户所有的点赞
 		Integer[] collects = likesService.selectAllLikes(userId);
+		// 总点赞微博数
+		Integer count = collects.length;
 		//存放所有的点赞
 		List<Weibo> allCollects = new ArrayList<Weibo>();
-		for(Integer weiboId : collects){
-			log.info("当前用户点赞微博id=" + weiboId);
-			Weibo allWeibo = weiboService.selectByWeiboId(weiboId, offset,10);
+		for(int i=offset; i<count; i++){
+			log.info("当前用户点赞微博id=" + collects[i]);
+			Weibo allWeibo = weiboService.selectByWeiboId(collects[i], 0,10);
 			allCollects.add(allWeibo);
 		}
-		// 总点赞微博数
-		Integer count = allCollects.size();
 		// 一页上显示10个，总共几页
 		int pageSize = count % 10 == 0 ? count / 10 : count / 10 + 1;
+		
 		for (int i = 0; i < allCollects.size(); i++) {
 			// 是否原创
 			Integer repostId = allCollects.get(i).getRepostId();
-			Weibo repost = weiboService.selectByWeiboId(repostId, offset, 10);
+			Weibo repost = weiboService.selectByWeiboId(repostId, 0, 10);
 			allCollects.get(i).setRepost(repost);
 		}
 		log.info("所有点赞");

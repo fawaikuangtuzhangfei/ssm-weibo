@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -171,7 +170,7 @@ public class WeiboController {
 		map.addAttribute("count", count);
 		map.addAttribute("pageSize", pageSize);
 		map.addAttribute("curpage", page);
-		map.addAttribute("wz", "showOne.do");
+		map.addAttribute("wz", "showOne.do?");
 		return "mine";
 	}
 
@@ -179,33 +178,33 @@ public class WeiboController {
 	@RequestMapping("/selectByContent.do")
 	public String showByContent(Integer page, ModelMap map, HttpServletRequest request,
 			@RequestParam("userId") Integer userId, @RequestParam("content") String content) {
+		log.info("用户:" + userId + "，要搜的内容是:" + content + ",当前页数:" + page);
 		// 默认为当前页
 		if (page == null) {
 			page = 1;
 		}
 		// 一页展示10个 当前是第几个
 		Integer offset = (page - 1) * 10;
-
-		List<Weibo> all = weiboService.selectByContent(userId, content, offset, 10);
-		// 总微博数
-		Integer count = weiboService.countByUser(userId);
+		//有多少个符合条件的查询结果
+		Integer count = weiboService.selectByContentNoPage(userId, content);
+		
+		List<Weibo> all = weiboService.selectByContent(userId, content, offset, count);
+		
 		// 一页上显示10个，总共几页
 		int pageSize = count % 10 == 0 ? count / 10 : count / 10 + 1;
 		// 存放所有转发的微博
-		List<Weibo> allReposts = new ArrayList<Weibo>();
-		for (int i = 0; i < all.size(); i++) {
+		for (int i = offset; i < pageSize; i++) {
 			// 是否原创
 			Integer repostId = all.get(i).getRepostId();
 			Weibo repost = weiboService.selectByWeiboId(repostId, offset, 10);
 			all.get(i).setRepost(repost);
-			allReposts.add(repost);
 		}
 		map.addAttribute("all", all);
 		// 将页数和总数和当前页面放进session中
 		map.addAttribute("count", count);
 		map.addAttribute("pageSize", pageSize);
 		map.addAttribute("curpage", page);
-		map.addAttribute("wz", "selectByContent.do");
+		map.addAttribute("wz", "selectByContent.do?userId=" + userId + "&content=" + content + "&");
 		return "mine";
 	}
 	

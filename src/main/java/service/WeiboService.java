@@ -64,4 +64,9 @@ public class WeiboService implements IWeiboService{
 		weiboMapper.delete(id);
 	}
 
+	@Override
+	public Integer selectByContentNoPage(Integer userId, String content) {
+		return weiboMapper.selectByContentNoPage(userId, content);
+	}
+
 }

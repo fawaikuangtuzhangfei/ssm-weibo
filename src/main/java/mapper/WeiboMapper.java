@@ -38,5 +38,7 @@ public interface WeiboMapper {
 	//查询当前用户-根据id 的指定微博-根据内容
 	List<Weibo> selectByContent(@Param("userId")Integer userId, @Param("content")String content,@Param("offset")Integer offset, @Param("count")Integer count);
 	
-	
+	//查询当前用户-根据id 的指定微博-根据内容(不分页)的数量
+	Integer selectByContentNoPage(@Param("userId")Integer userId, @Param("content")String content);
+
 }
