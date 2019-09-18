@@ -57,7 +57,6 @@ public class RelationController {
 	@RequestMapping("/selectIsFollow")
 	@ResponseBody
 	public ResponseResult<Integer> selectIsFollow(Integer userId, Integer followId){
-		log.info("加载页面关注selectIsFollow:userId=" + userId + ",followId=" + followId); 
 		ResponseResult<Integer> rr = null;
 		Integer count = relationService.selectIsFollow(userId, followId);
 		if(count != null){

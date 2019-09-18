@@ -133,14 +133,14 @@ $(function() {
 				<!-- 头像 -->
 				<div style="height: 50px; width: 50px; margin: 10px; float: left;">
 					<a href="../user/showOne.do?userId=${user.id }" 
-					class="bind_hover_card" data-toggle="popover"  
+					class="bind_hover_card popover-show" data-toggle="popover"  
 					title="${weibo.username }" 
 					data-content=
 					"<form><ul><li><span aria-hidden='true' class='icon_globe'></span> <font>粉丝数:</font>7389223</li> 
      <li><span aria-hidden='true' class='icon_piechart'></span> <font>关注:</font>265</li>
      <li><span aria-hidden='true' class='icon_search_alt'></span> <font>微博:</font>645</li>
      <li><span aria-hidden='true' class='icon_pens_alt'></span> <font>所在地:</font>${user.province}</li>
-     <input type='button' value='关注' id='guanzhu${weibo.id }' onclick='guanzhu(${weibo.id },${weibo.userId })'/></form>"
+     <input type='button' value='关注' id='guanzhu${weibo.userId }' onclick='guanzhu(${weibo.userId })'/></form>"
 					data-placement="bottom" data-trigger="hover">
 						<img src="/imgUpload/${user.face}" width="50px" height="50px"
 						class="img-circle" >
@@ -230,14 +230,14 @@ $(function() {
 					<div
 						style="cursor: pointer; height: 30px; width: 30px; margin: 10px; float: left; margin-left: 100px;">
 						<a href="../user/showOne.do?userId=${weibo.repost.userId }" 
-					class="bind_hover_card" data-toggle="popover"  
+					class="bind_hover_card popover-show" data-toggle="popover"  
 					title="${weibo.repost.username }" 
 					data-content=
 					"<form><ul><li><span aria-hidden='true' class='icon_globe'></span> <font>粉丝数:</font>7389223</li> 
      						<li><span aria-hidden='true' class='icon_piechart'></span> <font>关注:</font>265</li>
     						 <li><span aria-hidden='true' class='icon_search_alt'></span> <font>微博:</font>645</li>
      						<li><span aria-hidden='true' class='icon_pens_alt'></span> <font>所在地:</font>${user.province}</li>
-     						<input type='button' value='关注' id='guanzhu${weibo.id }' onclick='guanzhu(${weibo.id },${weibo.repost.userId })'/></form>"
+     						<input type='button' value='关注' id='guanzhu${weibo.repost.userId }' onclick='guanzhuOther(${weibo.repost.userId })'/></form>"
 					data-placement="bottom" data-trigger="hover">
 						
 						<img
@@ -427,15 +427,17 @@ $(function() {
     		//查询现状
     		  pdUserCollection(btns[i], userId);
     		  pdUserLikes(btns[i], userId);
-    		  pdIsFollow(btns[i], userId);
     	  });
     	  
       });
-
 </script>
 
 	<!-- 查看是否已经被当前用户所收藏、点赞 -->
 	<script>
+    $(function () { $('.popover-show').on('shown.bs.popover', function () {
+        pdIsFollow();
+ 		})
+});
 //页面加载查询是不是已经关注、点赞、收藏
 //是否点赞
 function pdUserLikes(weiboId, userId) {
@@ -474,17 +476,19 @@ function pdUserCollection(weiboId, userId) {
 
 }
 //是否关注
-function pdIsFollow(weiboId, userId){
+function pdIsFollow(){
 	var btns = new Array();
+	//获取当前用户
+	var userId = $("#userId").val();
+	//遍历当前页面的所有用户
 	$(".followId").each(function(i,n){
 		  btns[i] = $(this).val();
-		  console.log('pdIs' + weiboId + userId);
-		  pdUserFollow(weiboId, btns[i], userId);
+		  pdUserFollow(btns[i], userId);
+		  pdUserFollowOther(btns[i], userId);
 	  	});
 }
 
-function pdUserFollow(weiboId, followId, userId) {
-	console.log('follow:' + weiboId + followId + userId);
+function pdUserFollow(followId, userId) {
   $.ajax({
       type: "post",
       url: "../relation/selectIsFollow.do",
@@ -492,26 +496,37 @@ function pdUserFollow(weiboId, followId, userId) {
       dataType:"json",
       success:function (obj) {
           if (obj.state==1) {
-        	  console.log($('#guanzhu'+ weiboId));
-              $('#guanzhu'+ weiboId).val('取消关注');
+              $('#guanzhu'+ userId).val('取消关注');
           } else {
-              $("#guanzhu"+ weiboId).val('关注');
+              $("#guanzhu"+ userId).val('关注');
           }
       }
   })
-
 }
+function pdUserFollowOther(followId, userId) {
+	  $.ajax({
+	      type: "post",
+	      url: "../relation/selectIsFollow.do",
+	      data: { "followId": followId, "userId": userId },
+	      dataType:"json",
+	      success:function (obj) {
+	          if (obj.state==1) {
+	              $('#guanzhu'+ followId).val('取消关注');
+	          } else {
+	              $("#guanzhu"+ followId).val('关注');
+	          }
+	      }
+	  })
+	}
 </script>
 
 	<!-- 关注事件 收藏事件 点赞事件 -->
 <script>
 
 //关注-点击之后变为已关注  互相关注-关注
-function guanzhu(weiboId, followId) {
+function guanzhu(followId) {
 	  var userId = $("#userId").val();
-	  console.log(weiboId);
-	  console.log($("#guanzhu"+ weiboId).val());
-	  if($("#guanzhu"+ weiboId).val()=="关注"){
+	  if($("#guanzhu"+ userId).val()=="关注"){
 		  $.ajax({
             type: "POST",
             url: "../relation/follow.do",
@@ -519,7 +534,7 @@ function guanzhu(weiboId, followId) {
             dataType: "json",
             success: function (obj) {
           	  if (obj.state==1) {
-          		  $("#guanzhu"+ weiboId).val('取消关注');
+          		  $("#guanzhu"+ userId).val('取消关注');
                 } 
            }
         })
@@ -530,13 +545,41 @@ function guanzhu(weiboId, followId) {
             data: { "followId": followId, "userId": userId },
             dataType: "json",
             success: function (obj) {
-          	  if (obj.state==1) {
+          	  if (obj.state==0) {
           		  $("#guanzhu"+ weiboId).val('关注');
                 } 
            }
         })
 	  }
-    
+}
+
+function guanzhuOther(followId) {
+	  var userId = $("#userId").val();
+	  if($("#guanzhu"+ followId).val()=="关注"){
+		  $.ajax({
+          type: "POST",
+          url: "../relation/follow.do",
+          data: { "followId": followId, "userId": userId },
+          dataType: "json",
+          success: function (obj) {
+        	  if (obj.state==1) {
+        		  $("#guanzhu"+ followId).val('取消关注');
+              } 
+         }
+      })
+	  }else{
+		  $.ajax({
+          type: "POST",
+          url: "../relation/defollow.do",
+          data: { "followId": followId, "userId": userId },
+          dataType: "json",
+          success: function (obj) {
+        	  if (obj.state==0) {
+        		  $("#guanzhu"+ followId).val('关注');
+              } 
+         }
+      })
+	  }
 }
 
 //收藏-点击之后变为已收藏  已收藏-收藏

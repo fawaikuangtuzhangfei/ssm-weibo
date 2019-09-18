@@ -20,17 +20,15 @@ public class TestRelation {
 	
 	@Test
 	public void testInsert() {
-		//1.
-		AbstractApplicationContext ac = new ClassPathXmlApplicationContext("application-dao.xml");
-		//2.
-		RelationMapper mapper = ac.getBean("relationMapper", RelationMapper.class);
-		//3.
-		Relation relation = new Relation();
-		relation.setFollowId(48);
-		relation.setUserId(48);
-		mapper.relation(relation);
-		//4.
-		ac.close();
+		double result = 1.0;//最终结果
+		double j = 1.0;//每次的计算结果 1/3   1*2/3*5 ...
+		for(int i=1; j>=0.0005; i++){
+			j=i*i/(2*i+1);//每次的计算结果 1/3   1*2/3*5 ...
+			if(j <= 0.0005) break; //如果某一项小于0.0005直接跳出循环
+			result += j;  //每次的计算结果 1/3+(1*2 / 3*5)+...
+		}
+		result = result*2; //把那边的2乘过来
+		System.out.println(result);
 	}
 	@Test
 	public void testSelect() {
