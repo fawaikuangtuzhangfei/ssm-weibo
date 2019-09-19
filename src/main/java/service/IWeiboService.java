@@ -66,4 +66,19 @@ public interface IWeiboService {
 	 * @param id
 	 */
 	void delWeibo(Integer id);
+	
+	/**
+	 * 查询多个用户的所有微博并按照发微博的时间排序
+	 * @param userIds
+	 * @return
+	 */
+	List<Weibo> selectMany(Integer[] userIds, Integer offset, Integer count);
+	
+	/**
+	 * 查询多个用户共有多少条微博
+	 * @param userIds
+	 * @return
+	 */
+	Integer countMany(Integer[] userIds);
+	
 }

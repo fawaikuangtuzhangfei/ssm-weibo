@@ -41,4 +41,9 @@ public interface WeiboMapper {
 	//查询当前用户-根据id 的指定微博-根据内容(不分页)的数量
 	Integer selectByContentNoPage(@Param("userId")Integer userId, @Param("content")String content);
 
+	//查询多个用户的微博并按照时间排序
+	List<Weibo> selectMany(@Param("userIds")Integer[] userIds, @Param("offset")Integer offset, @Param("count")Integer count);
+	
+	//查询多个用户总共有多少条微博
+	Integer countMany(Integer[] userIds);
 }

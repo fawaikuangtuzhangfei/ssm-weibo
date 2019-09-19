@@ -31,6 +31,40 @@ public class TestWeibo {
 		ac.close();
 	}
 	@Test
+	public void testCountMany() {
+		//1.
+		AbstractApplicationContext ac = new ClassPathXmlApplicationContext("application-dao.xml");
+		//2.
+		WeiboMapper mapper = ac.getBean("weiboMapper", WeiboMapper.class);
+		//3.
+		Integer []userIds = {58,57,59,60};
+		System.out.println(mapper.countMany(userIds));
+		//4.
+		ac.close();
+	}
+	@Test
+	public void testSelectMany() {
+		//1.
+		AbstractApplicationContext ac = new ClassPathXmlApplicationContext("application-dao.xml");
+		//2.
+		WeiboMapper mapper = ac.getBean("weiboMapper", WeiboMapper.class);
+		//3.
+		Integer []userIds = {58,57,59,60};
+		List<Weibo> weibo = mapper.selectMany(userIds,0 ,10);
+		System.out.println(weibo.toString());
+		//4.
+		ac.close();
+	}
+	@Test
+	public void testSelectMany2() {
+		AbstractApplicationContext ac = new ClassPathXmlApplicationContext("application-dao.xml","application-service.xml");
+		IWeiboService service = ac.getBean("weiboService", IWeiboService.class);
+		Integer []userIds = {58,57,59,60};
+		List<Weibo> weibo = service.selectMany(userIds,0,10);
+		System.out.println(weibo);
+		ac.close();
+	}
+	@Test
 	public void testDel() {
 		//1.
 		AbstractApplicationContext ac = new ClassPathXmlApplicationContext("application-dao.xml");

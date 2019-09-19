@@ -97,4 +97,35 @@
 	delete from t_weibo where id=#{id}
 	</delete>
 	
+	<!-- //查询多个用户的微博并按照时间排序
+	List<Weibo> selectMany(Integer[] userIds); -->
+	<select id="selectMany" parameterType="java.lang.Integer" resultType="bean.Weibo">	
+	SELECT	
+		w.id,w.user_id as userId, w.post_time as postTime,w.content,w.pic1,w.pic2,w.pic3,
+		w.pic4,w.pic5,w.pic6,w.pic7,w.pic8,w.pic9,w.original,w.repost_id as repostId,
+		u.username, u.face
+		from t_weibo w
+		left join t_user u on u.id = w.user_id
+	where w.user_id in
+	<foreach collection="userIds" item="userId" index="index" open="(" close=")" separator=",">	  
+	#{userId}	
+	</foreach>
+	order by w.post_time desc
+	limit #{offset},#{count}
+	</select>
+
+<!-- 	//查询多个用户总共有多少条微博
+	Integer countMany(Integer[] userIds); -->
+	<select id="countMany" parameterType="java.lang.Integer" resultType="java.lang.Integer">	
+	SELECT	
+		count(1)
+		from t_weibo w
+		left join t_user u on u.id = w.user_id
+	where w.user_id in
+	<foreach collection="array" item="userIds" index="index" open="(" close=")" separator=",">	  
+	#{userIds}	
+	</foreach>
+	</select>
+	
+	
 	</mapper>
