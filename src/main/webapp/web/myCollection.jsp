@@ -23,6 +23,10 @@
 <link rel="stylesheet" type="text/css" href="../css/zoomify.min.css">
 <link rel="stylesheet" type="text/css" href="../css/upload.css">
 
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/login.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/style.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/comment.css">
+
 <!-- 百度下载插件 -->
 <link rel="stylesheet" type="text/css" href="../css/webuploader.css">
 <script type="text/javascript" src="../js/webuploader.js"></script>
@@ -31,7 +35,40 @@
 <!-- zoomify图片放大缩小的插件 -->
 <link rel="stylesheet" type="text/css" href="../css/zoomify.min.css">
 <script type="text/javascript " src="../js/zoomify.js"></script>
-
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#bt0").click(function() {
+			$("#com0").toggle();
+		});
+		$("#bt1").click(function() {
+			$("#com1").toggle();
+		});
+		$("#bt2").click(function() {
+			$("#com2").toggle();
+		});
+		$("#bt3").click(function() {
+			$("#com3").toggle();
+		});
+		$("#bt4").click(function() {
+			$("#com4").toggle();
+		});
+		$("#bt5").click(function() {
+			$("#com5").toggle();
+		});
+		$("#bt6").click(function() {
+			$("#com6").toggle();
+		});
+		$("#bt7").click(function() {
+			$("#com7").toggle();
+		});
+		$("#bt8").click(function() {
+			$("#com8").toggle();
+		});
+		$("#bt9").click(function() {
+			$("#com9").toggle();
+		});
+	});
+</script>
 </head>
 
 <body>

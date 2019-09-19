@@ -31,7 +31,40 @@
 <!-- zoomify图片放大缩小的插件 -->
 <link rel="stylesheet" type="text/css" href="../css/zoomify.min.css">
 <script type="text/javascript " src="../js/zoomify.js"></script>
-
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#bt0").click(function() {
+			$("#com0").toggle();
+		});
+		$("#bt1").click(function() {
+			$("#com1").toggle();
+		});
+		$("#bt2").click(function() {
+			$("#com2").toggle();
+		});
+		$("#bt3").click(function() {
+			$("#com3").toggle();
+		});
+		$("#bt4").click(function() {
+			$("#com4").toggle();
+		});
+		$("#bt5").click(function() {
+			$("#com5").toggle();
+		});
+		$("#bt6").click(function() {
+			$("#com6").toggle();
+		});
+		$("#bt7").click(function() {
+			$("#com7").toggle();
+		});
+		$("#bt8").click(function() {
+			$("#com8").toggle();
+		});
+		$("#bt9").click(function() {
+			$("#com9").toggle();
+		});
+	});
+</script>
 </head>
 
 <body>
@@ -86,9 +119,20 @@
 			<c:forEach items="${all}" var="weibo" varStatus="">
 			<!-- 头部 -->
 			<div class="container" style="width: 850px; padding-top: 34px; background-color: white;">
+			<input type="hidden" class="followWeiboId" value="${weibo.userId }">
 				<!-- 头像 -->
 				<div style="height: 50px; width: 50px; margin: 10px; float: left;">
-				<a href="../user/showOne.do?userId=${weibo.userId }">
+				<a href="../user/showOne.do?userId=${weibo.userId }"
+				class="bind_hover_card popover-show" data-toggle="popover"  
+					title="${weibo.username }" 
+					data-content=
+					"<form><ul><li><span aria-hidden='true' class='icon_globe'></span> <font>粉丝数:</font>7389223</li> 
+     <li><span aria-hidden='true' class='icon_piechart'></span> <font>关注:</font>265</li>
+     <li><span aria-hidden='true' class='icon_search_alt'></span> <font>微博:</font>645</li>
+     <li><span aria-hidden='true' class='icon_pens_alt'></span> <font>所在地:</font>${user.province}</li>
+     <input type='button' value='关注' id='guanzhu${weibo.userId }' onclick='guanzhu(${weibo.userId })'/></form>"
+					data-placement="bottom" data-trigger="hover">
+				
 					<img src="/imgUpload/${weibo.face}" width="50px" height="50px"
 						class="img-circle">
 				</a>
@@ -176,7 +220,17 @@
 					<!-- 头像 -->
 					<div
 						style="cursor: pointer; height: 30px; width: 30px; margin: 10px; float: left; margin-left: 100px;">
-					<a href="../user/showOne.do?userId=${weibo.repost.userId }">
+					<a href="../user/showOne.do?userId=${weibo.repost.userId }"
+					class="bind_hover_card popover-show" data-toggle="popover"  
+					title="${weibo.repost.username }" 
+					data-content=
+					"<form><ul><li><span aria-hidden='true' class='icon_globe'></span> <font>粉丝数:</font>7389223</li> 
+     						<li><span aria-hidden='true' class='icon_piechart'></span> <font>关注:</font>265</li>
+    						 <li><span aria-hidden='true' class='icon_search_alt'></span> <font>微博:</font>645</li>
+     						<li><span aria-hidden='true' class='icon_pens_alt'></span> <font>所在地:</font>${user.province}</li>
+     						<input type='button' value='关注' id='guanzhu${weibo.repost.userId }' onclick='guanzhuOther(${weibo.repost.userId })'/></form>"
+					data-placement="bottom" data-trigger="hover">
+					
 						<img
 							src="/imgUpload/${weibo.repost.face}" width="40px"
 							height="40px" class="img-circle">
@@ -185,6 +239,7 @@
 					<!-- 昵称+日期 -->
 					<div
 						style="text-align: left; margin: 10px; margin-left: 20px; float: left;">
+						<input type="hidden" class="followId" value="${weibo.repost.userId }">
 						<a style="color: #333; font-size: 14px" href="../user/showOne.do?userId=${weibo.repost.userId }">${weibo.repost.username }</a><br>
 						<span style="color: #333; font-size: 10px">${weibo.repost.postTime }</span>
 					</div>
@@ -337,6 +392,9 @@
 			</div>
 		</div>
 </div>
+
+<!-- 关注的相关js -->
+<script type="text/javascript " src="../js/follow.js"></script>
 
 	<!-- 页面加载时:查看是否已经被当前用户所收藏、点赞 -->
 	<script>

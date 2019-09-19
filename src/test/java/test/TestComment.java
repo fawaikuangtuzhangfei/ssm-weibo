@@ -38,7 +38,7 @@ public class TestComment {
 		//2.
 		CommentMapper mapper = ac.getBean("commentMapper", CommentMapper.class);
 		//3.
-		Integer weiboId = 22;
+		Integer weiboId = 151;
 		System.out.println(mapper.selectAll(weiboId));
 		//4.
 		ac.close();

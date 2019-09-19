@@ -29,6 +29,10 @@ public class Comment implements Serializable{
     private Date commentTime;
 
     private String commentContent;
+    
+    //t_user
+    private String username; //用户名
+    private String face; //头像
 
     public Integer getCommentId() {
         return commentId;
@@ -123,6 +127,22 @@ public class Comment implements Serializable{
 	public String toString() {
 		return "Comment [commentId=" + commentId + ", userId=" + userId + ", weiboId=" + weiboId + ", commentTime="
 				+ commentTime + ", commentContent=" + commentContent + "]";
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getFace() {
+		return face;
+	}
+
+	public void setFace(String face) {
+		this.face = face;
 	}
     
     
