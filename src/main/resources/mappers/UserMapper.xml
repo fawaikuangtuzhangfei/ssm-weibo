@@ -10,9 +10,9 @@
 	<!-- void insertUser(User user); 插入用户信息-->
 	<insert id="insertUser" parameterType="bean.User">
 		insert into t_user (
-		username, password, email, phone, created_user, created_time, modified_user, modified_time
+		username, password, email, phone, created_user, created_time, modified_user, modified_time, face
 		) values( 
-		#{username}, #{password}, #{email}, #{phone}, #{createdUser}, #{createdTime}, #{modifiedUser}, #{modifiedTime} 
+		#{username}, #{password}, #{email}, #{phone}, #{createdUser}, #{createdTime}, #{modifiedUser}, #{modifiedTime}, 'default.png'
 		)
 	</insert>	
 	

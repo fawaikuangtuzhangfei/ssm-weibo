@@ -127,13 +127,11 @@ public class WeiboController {
 			// 是否原创
 			Integer repostId = all.get(i).getRepostId();
 			Weibo repost = weiboService.selectByWeiboId(repostId, offset, 10);
-			log.info("展示所有微博->非原创微博" + i + ":" + repost);
 			all.get(i).setRepost(repost);
 		}
 		map.addAttribute("count", count);
 		map.addAttribute("pageSize", pageSize);
 		map.addAttribute("all", all);
-		log.info("实时微博:" + all);
 		map.addAttribute("curpage", page);
 		map.addAttribute("wz", "show.do");
 		return "now";
@@ -162,7 +160,6 @@ public class WeiboController {
 			Integer repostId = all.get(i).getRepostId();
 			Weibo repost = weiboService.selectByWeiboId(repostId, offset, 10);
 			all.get(i).setRepost(repost);
-			log.info("展示单用户微博->非原创微博" + i + ":" + repost);
 		}
 		map.addAttribute("all", all);
 		log.info(all);

@@ -35,23 +35,6 @@
 </head>
 
 <body>
-<script>
-
-$(function() { 
-  $("[data-toggle='popover']").popover({ 
-    html : true,  
-    title: 123,  
-    delay:{show:500, hide:1000}, 
-    content: function() { 
-     return 123;  
-    }  
-  }); 
-});
-
-//模拟悬浮框里面的按钮点击操作 
-
-
-</script>
 
 <body style="padding: 80px">
 	<nav class="navbar navbar-default navbar-fixed-top">
@@ -130,6 +113,7 @@ $(function() {
 			<c:forEach items="${all}" var="weibo" varStatus="">
 			<!-- 头部 -->
 			<div class="container" style="width: 800px; padding-top: 34px; background-color: white;">
+			<input type="hidden" class="followWeiboId" value="${weibo.userId }">
 				<!-- 头像 -->
 				<div style="height: 50px; width: 50px; margin: 10px; float: left;">
 					<a href="../user/showOne.do?userId=${user.id }" 
@@ -142,6 +126,7 @@ $(function() {
      <li><span aria-hidden='true' class='icon_pens_alt'></span> <font>所在地:</font>${user.province}</li>
      <input type='button' value='关注' id='guanzhu${weibo.userId }' onclick='guanzhu(${weibo.userId })'/></form>"
 					data-placement="bottom" data-trigger="hover">
+				
 						<img src="/imgUpload/${user.face}" width="50px" height="50px"
 						class="img-circle" >
 					</a>
@@ -413,6 +398,9 @@ $(function() {
 		</div>
 </div>
 
+<!-- 关注的相关js -->
+<script type="text/javascript " src="../js/follow.js"></script>
+
 	<!-- 页面加载时:查看是否已经被当前用户所收藏、点赞 -->
 	<script>
 
@@ -434,10 +422,7 @@ $(function() {
 
 	<!-- 查看是否已经被当前用户所收藏、点赞 -->
 	<script>
-    $(function () { $('.popover-show').on('shown.bs.popover', function () {
-        pdIsFollow();
- 		})
-});
+    
 //页面加载查询是不是已经关注、点赞、收藏
 //是否点赞
 function pdUserLikes(weiboId, userId) {
@@ -475,112 +460,11 @@ function pdUserCollection(weiboId, userId) {
     })
 
 }
-//是否关注
-function pdIsFollow(){
-	var btns = new Array();
-	//获取当前用户
-	var userId = $("#userId").val();
-	//遍历当前页面的所有用户
-	$(".followId").each(function(i,n){
-		  btns[i] = $(this).val();
-		  pdUserFollow(btns[i], userId);
-		  pdUserFollowOther(btns[i], userId);
-	  	});
-}
 
-function pdUserFollow(followId, userId) {
-  $.ajax({
-      type: "post",
-      url: "../relation/selectIsFollow.do",
-      data: { "followId": followId, "userId": userId },
-      dataType:"json",
-      success:function (obj) {
-          if (obj.state==1) {
-              $('#guanzhu'+ userId).val('取消关注');
-          } else {
-              $("#guanzhu"+ userId).val('关注');
-          }
-      }
-  })
-}
-function pdUserFollowOther(followId, userId) {
-	  $.ajax({
-	      type: "post",
-	      url: "../relation/selectIsFollow.do",
-	      data: { "followId": followId, "userId": userId },
-	      dataType:"json",
-	      success:function (obj) {
-	          if (obj.state==1) {
-	              $('#guanzhu'+ followId).val('取消关注');
-	          } else {
-	              $("#guanzhu"+ followId).val('关注');
-	          }
-	      }
-	  })
-	}
 </script>
 
 	<!-- 关注事件 收藏事件 点赞事件 -->
 <script>
-
-//关注-点击之后变为已关注  互相关注-关注
-function guanzhu(followId) {
-	  var userId = $("#userId").val();
-	  if($("#guanzhu"+ userId).val()=="关注"){
-		  $.ajax({
-            type: "POST",
-            url: "../relation/follow.do",
-            data: { "followId": followId, "userId": userId },
-            dataType: "json",
-            success: function (obj) {
-          	  if (obj.state==1) {
-          		  $("#guanzhu"+ userId).val('取消关注');
-                } 
-           }
-        })
-	  }else{
-		  $.ajax({
-            type: "POST",
-            url: "../relation/defollow.do",
-            data: { "followId": followId, "userId": userId },
-            dataType: "json",
-            success: function (obj) {
-          	  if (obj.state==0) {
-          		  $("#guanzhu"+ weiboId).val('关注');
-                } 
-           }
-        })
-	  }
-}
-
-function guanzhuOther(followId) {
-	  var userId = $("#userId").val();
-	  if($("#guanzhu"+ followId).val()=="关注"){
-		  $.ajax({
-          type: "POST",
-          url: "../relation/follow.do",
-          data: { "followId": followId, "userId": userId },
-          dataType: "json",
-          success: function (obj) {
-        	  if (obj.state==1) {
-        		  $("#guanzhu"+ followId).val('取消关注');
-              } 
-         }
-      })
-	  }else{
-		  $.ajax({
-          type: "POST",
-          url: "../relation/defollow.do",
-          data: { "followId": followId, "userId": userId },
-          dataType: "json",
-          success: function (obj) {
-        	  if (obj.state==0) {
-        		  $("#guanzhu"+ followId).val('关注');
-              } 
-         }
-      })
-	  }
-}
 
 //收藏-点击之后变为已收藏  已收藏-收藏
       function collect(weiboId) {
