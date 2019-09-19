@@ -96,7 +96,10 @@ public class CollectController {
 		for(int i=offset; i<count; i++){
 			log.info("当前用户收藏微博id=" + collects[i]);
 			Weibo allWeibo = weiboService.selectByWeiboId(collects[i], 0,10);
-			allCollects.add(allWeibo);
+			//必须加此判断否则若是删除了微博，就会存入空对象导致下面出差错
+			if(allWeibo != null){
+				allCollects.add(allWeibo);
+			}
 		}
 		// 一页上显示10个，总共几页
 		int pageSize = count % 10 == 0 ? count / 10 : count / 10 + 1;
@@ -107,6 +110,8 @@ public class CollectController {
 			allCollects.get(i).setRepost(repost);
 		}
 		log.info("所有收藏");
+		//实际的收藏数量
+		count = allCollects.size();
 		System.out.println(allCollects);
 		map.addAttribute("all", allCollects);
 		// 将页数和总数和当前页面放进session中

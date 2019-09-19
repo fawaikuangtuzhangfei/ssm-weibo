@@ -45,7 +45,7 @@
 				<a href="../weibo/showOne.do" class="navbar-link">我的首页</a>
 			</p>
 			<p class="navbar-text navbar-right">
-				<a href="#" class="navbar-link">好友圈</a>
+				<a href="../relation/showMyFriends.do" class="navbar-link">好友圈</a>
 			</p>
 			<!-- 用户信息 -->
 			<input type="hidden" value="${user.username }" id="username">
@@ -73,7 +73,7 @@
 		<div style="width: 8%; float: left; margin-right: 10px; background-color: #fff;">
 			<ul class="nav navbar-left nav-pills nav-stacked">
 				<li class="" style="width: 100%" ><a href="../weibo/showOne.do">首页</a></li>
-				<li style="width: 100%"><a href="#">好友圈</a></li>
+				<li style="width: 100%"><a href="../relation/showMyFriends.do">好友圈</a></li>
 				<li style="width: 100%"><a href="../like/showMyLike.do">我的赞</a></li>
 				<li style="width: 100%"><a href="../collect/showMyCollect.do">我的收藏</a></li>
 			</ul>

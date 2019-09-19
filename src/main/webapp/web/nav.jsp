@@ -13,7 +13,7 @@
 				<a href="../weibo/showOne.do" class="navbar-link">我的首页</a>
 			</p>
 			<p class="navbar-text navbar-right">
-				<a href="#" class="navbar-link">好友圈</a>
+				<a href="../relation/showMyFriends.do" class="navbar-link">好友圈</a>
 			</p>
 			<!-- 用户信息 -->
 			<input type="hidden" value="${user.username }" id="username">
