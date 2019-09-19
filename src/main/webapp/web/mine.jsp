@@ -649,11 +649,31 @@ function loadComment(weiboId){
 
 	<script>
 //删除当前行-评论
-$(document).on('click','.removeBlock',function (e) {  
-        var id=$(this).attr('id');
-        var url ="../weibo/removeById.do?weiboId="+id;
-		 window.location.href=url;
-    });
+
+
+//<!--删除评论块-->
+$('.commentAll').on('click', '.removeBlock', function(e) {
+	var id=$(this).attr('id');
+    var url ="../weibo/removeById.do?weiboId="+id;
+    $.ajax({
+		url : url,
+		data : {"123":123},
+		type : "post",
+		async: true,
+		success : function(obj) {
+			
+		}
+	});
+ var oT = $(this).parents('.date-dz-right').parents('.date-dz').parents('.all-pl-con');
+ if (oT.siblings('.all-pl-con').length >= 1) {
+     oT.remove();
+ } else {
+     $(this).parents('.date-dz-right').parents('.date-dz').parents('.all-pl-con').parents('.hf-list-con').css('display', 'none')
+     oT.remove();
+ }
+ $(this).parents('.date-dz-right').parents('.date-dz').parents('.comment-show-con-list').parents('.comment-show-con').remove();
+
+})
 </script>
 
 

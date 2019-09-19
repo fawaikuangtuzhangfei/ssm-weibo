@@ -50,9 +50,9 @@ public class CommentController {
 	
 	//单行删除
 	@RequestMapping("/removeById.do")
-	public String deleteComment(Integer weiboId){
+	@ResponseBody
+	public void deleteComment(Integer weiboId){
 		commentService.deleteComment(weiboId);
-		return "redirect:../weibo/showOne.do";
 	}
 	
 	//查看拥有多少评论数量
