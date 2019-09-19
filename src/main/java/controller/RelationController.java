@@ -103,10 +103,14 @@ public class RelationController {
 		List<Weibo> allFriendsWeibo = weiboService.selectMany(follows, offset, 10);
 		// 一页上显示10个，总共几页
 		int pageSize = count % 10 == 0 ? count / 10 : count / 10 + 1;
-		for (int i = offset; i < pageSize; i++) {
+		//本页上有几个
+		for (int i = 0; i < allFriendsWeibo.size(); i++) {
+			if(allFriendsWeibo.get(i) == null){
+				break;
+			}
 			// 是否原创
 			Integer repostId = allFriendsWeibo.get(i).getRepostId();
-			Weibo repost = weiboService.selectByWeiboId(repostId, i, 10);
+			Weibo repost = weiboService.selectByWeiboId(repostId, offset, 10);
 			allFriendsWeibo.get(i).setRepost(repost);
 		}
 		map.addAttribute("all", allFriendsWeibo);
