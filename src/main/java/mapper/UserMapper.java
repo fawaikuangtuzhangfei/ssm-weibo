@@ -34,6 +34,12 @@ public interface UserMapper {
 	void updateUser(User user);
 	
 	/**
+	 * 更新密码
+	 * @param user
+	 */
+	void updatePassword(User user);
+	
+	/**
 	 * 根据id查询用户全部信息
 	 * @param id
 	 * @return

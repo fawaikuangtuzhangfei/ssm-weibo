@@ -73,4 +73,13 @@
 			id=#{id}
 	</update>
 	
+	<!-- void updatePassword(User user); 更新密码 -->
+	<update id="updatePassword" parameterType="bean.User">
+		update t_user
+		set
+			password=#{password}
+		where
+			id=#{id}
+	</update>
+	
 	</mapper>

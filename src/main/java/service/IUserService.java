@@ -44,6 +44,12 @@ public interface IUserService {
 	void updateUser(User user);
 	
 	/**
+	 * 更新用户密码
+	 * @param user
+	 */
+	void updatePassword(User user);
+	
+	/**
 	 * 根据用户id查询用户全部信息
 	 * @param id
 	 * @return

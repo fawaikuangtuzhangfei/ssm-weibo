@@ -9,7 +9,9 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,13 +34,17 @@ import service.WeiboService;
 @RequestMapping("/user")
 @Controller
 public class UserController {
+	
+	//盐
+			@Value("#{config.salt}")
+			private String salt;
 
 	// 日志log4j
 	public final Logger log = Logger.getLogger(this.getClass());
 
 	@Resource
 	private UserService userService;
-	
+
 	@Resource
 	WeiboService weiboService;
 
@@ -156,6 +162,44 @@ public class UserController {
 		session.invalidate();
 		return "redirect:../user/showLogin.do";
 	}
+	
+	// 显示修改密码的页面
+	@RequestMapping("/showPassword.do")
+	public String showUpdatePassword(HttpSession session) {
+		log.info("进入修改密码页面");
+		return "password";
+	}	
+	
+	// 修改密码
+	@RequestMapping("/updatePassword.do")
+	@ResponseBody
+	public ResponseResult<Void> undatePassword(HttpSession session, HttpServletRequest request, @RequestParam("oldpw") String oldpw,
+			@RequestParam("newpw1") String newpw1, @RequestParam("newpw2") String newpw2) throws Exception {
+		ResponseResult<Void> rr = null;
+		int flag = 1;
+
+		// 判断原密码是否一致
+		User user = (User) session.getAttribute("user");
+		log.info(user.getUsername() + "," + user.getPassword());
+		try {
+			userService.login(user.getUsername(), oldpw);
+			rr = new ResponseResult<Void>(1, "正确");
+		} catch (RuntimeException ex) {
+			flag = 0;
+			rr = new ResponseResult<Void>(0, "错误");
+			request.setAttribute("error_old", "原密码不正确！");
+		}
+		if (flag == 0) {
+			return rr;
+		} else {
+			User u = new User();
+			u.setId(user.getId());
+			u.setPassword(DigestUtils.md5Hex(newpw1+salt));
+			userService.updatePassword(u);
+			request.setAttribute("updatepassword_success", "密码修改成功 请重新登录！");
+			return rr;
+		}
+	}
 
 	// 显示修改个人资料页面
 	@RequestMapping("/showUserinfo.do")
@@ -203,40 +247,40 @@ public class UserController {
 		userService.updateUser(user);
 		return "redirect:../weibo/showOne.do";
 	}
-	
-	//前往我的微博主页
-		@RequestMapping("/showOne.do")
-		public String showById(ModelMap map, HttpServletRequest request, Integer page, Integer userId) {
-			// 默认为当前页
-			if (page == null) {
-				page = 1;
-			}
-			// 一页展示10个 当前是第几个
-			Integer offset = (page - 1) * 10;
-			// 分页查询
-			List<Weibo> all = weiboService.selectById(userId, offset, 10);
-			//存放用户
-			User user = userService.selectById(userId);
-			map.addAttribute("usernow", user);
-			// 总微博数
-			Integer count = weiboService.countByUser(userId);
-			// 一页上显示10个，总共几页
-			int pageSize = count % 10 == 0 ? count / 10 : count / 10 + 1;
-			for (int i = 0; i < all.size(); i++) {
-				// 是否原创
-				Integer repostId = all.get(i).getRepostId();
-				Weibo repost = weiboService.selectByWeiboId(repostId, offset, 10);
-				all.get(i).setRepost(repost);
-				log.info("展示单用户微博->非原创微博" + i + ":" + repost);
-			}
-			map.addAttribute("all", all);
-			log.info(all);
-			// 将页数和总数和当前页面放进session中
-			map.addAttribute("count", count);
-			map.addAttribute("pageSize", pageSize);
-			map.addAttribute("curpage", page);
-			map.addAttribute("wz", "showOne.do?userId="+userId);
-			return "myWeibo";
+
+	// 前往我的微博主页
+	@RequestMapping("/showOne.do")
+	public String showById(ModelMap map, HttpServletRequest request, Integer page, Integer userId) {
+		// 默认为当前页
+		if (page == null) {
+			page = 1;
 		}
+		// 一页展示10个 当前是第几个
+		Integer offset = (page - 1) * 10;
+		// 分页查询
+		List<Weibo> all = weiboService.selectById(userId, offset, 10);
+		// 存放用户
+		User user = userService.selectById(userId);
+		map.addAttribute("usernow", user);
+		// 总微博数
+		Integer count = weiboService.countByUser(userId);
+		// 一页上显示10个，总共几页
+		int pageSize = count % 10 == 0 ? count / 10 : count / 10 + 1;
+		for (int i = 0; i < all.size(); i++) {
+			// 是否原创
+			Integer repostId = all.get(i).getRepostId();
+			Weibo repost = weiboService.selectByWeiboId(repostId, offset, 10);
+			all.get(i).setRepost(repost);
+			log.info("展示单用户微博->非原创微博" + i + ":" + repost);
+		}
+		map.addAttribute("all", all);
+		log.info(all);
+		// 将页数和总数和当前页面放进session中
+		map.addAttribute("count", count);
+		map.addAttribute("pageSize", pageSize);
+		map.addAttribute("curpage", page);
+		map.addAttribute("wz", "showOne.do?userId=" + userId);
+		return "myWeibo";
+	}
 
 }

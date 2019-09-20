@@ -93,5 +93,10 @@ public class UserService implements IUserService{
 		return mapper.selectById(id);
 	}
 
+	@Override
+	public void updatePassword(User user) {
+		mapper.updatePassword(user);
+	}
+
 
 }

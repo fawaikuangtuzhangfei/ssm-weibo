@@ -40,7 +40,7 @@
         <label for="inputPassword2" class="">再次输入密码:</label>
         <input type="password" name="inputPassword2" id="inputPassword2" class="form-control" minlength="6" maxlength="12"
         placeholder="再次输入密码" required>
-        <span class="msg-default hidden">密码长度在6到12位之间</span>
+        <span id="error_new" class="msg-default hidden">密码长度在6到12位之间</span>
         </div>
         
         <div class="form-group">
@@ -63,7 +63,17 @@
     </div> <!-- /container -->
 
 <script>
-  /*1.对用户名进行验证*/
+function check_password(){
+	var pw1 = $("#inputPassword").val();
+	var pw2 = $("#inputPassword2").val();
+	if(pw1 != pw2){
+		$("#error_new").text("两次输入的新密码不一致");
+		$("#error_new").removeClass().addClass("msg-error");
+	}
+}
+
+
+/*1.对用户名进行验证*/
   inputUsername.onfocus = function(){
     this.nextElementSibling.innerHTML = '用户名长度在6到9位之间';
     this.nextElementSibling.className = 'msg-default';
@@ -150,6 +160,7 @@
       this.nextElementSibling.className = 'msg-success';
       this.setCustomValidity('');
     }
+    check_password();
   }
   
   /*3.对邮箱地址进行验证*/
