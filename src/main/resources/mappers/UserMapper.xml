@@ -10,50 +10,58 @@
 	<!-- void insertUser(User user); 插入用户信息-->
 	<insert id="insertUser" parameterType="bean.User">
 		insert into t_user (
-		username, password, email, phone, created_user, created_time, modified_user, modified_time, face
+		username, password, email, phone, created_user, created_time, modified_user, modified_time, face, province, city
 		) values( 
-		#{username}, #{password}, #{email}, #{phone}, #{createdUser}, #{createdTime}, #{modifiedUser}, #{modifiedTime}, 'default.png'
+		#{username}, #{password}, #{email}, #{phone}, #{createdUser}, #{createdTime}, #{modifiedUser}, #{modifiedTime}, 'default.png', '00', '00'
 		)
 	</insert>	
 	
 	<!-- User selectById(Integer id); 根据用户id查询用户的全部信息-->
 	<select id="selectById" resultType="bean.User">
 		select 
-		id, username, password, nickname, bir, province, city, area,email, phone, face, sex,
-		created_user createdUser, created_time createdTime,
-		modified_user modifiedUser, modified_time modifiedTime
-		from t_user
-		where id=#{id}
+		u.id, u.username, u.password, u.nickname, u.bir, lp.name as province, lc.name as city, u.area, u.email, u.phone, u.face, u.sex,
+		u.created_user createdUser, u.created_time createdTime,
+		u.modified_user modifiedUser, u.modified_time modifiedTime
+		from t_user u
+		left join t_location lp on lp.id = u.province 
+		left join t_location lc on lc.id = u.city
+		where u.id=#{id}
 	</select>
 	
 	<!-- User seletByUsername(String username); 根据用户名查找用户 -->
 	<select id="selectByUsername" resultType="bean.User">
 		select 
-		id, username, password, nickname, bir, province, city, area,email, phone, face, sex,
-		created_user createdUser, created_time createdTime,
-		modified_user modifiedUser, modified_time modifiedTime
-		from t_user
-		where username=#{username}
+		u.id, u.username, u.password, u.nickname, u.bir, lp.name as province, lc.name as city, u.area, u.email, u.phone, u.face, u.sex,
+		u.created_user createdUser, u.created_time createdTime,
+		u.modified_user modifiedUser, u.modified_time modifiedTime
+		from t_user u
+		left join t_location lp on lp.id = u.province 
+		left join t_location lc on lc.id = u.city
+		where u.username=#{username}
 	</select>
 	
 	<!-- User selectByEmail(String email); 根据邮箱查找用户 -->
 	<select id="selectByEmail" resultType="bean.User">
 		select 
-		id, username, password, nickname, bir, province, city, area,email, phone, face, sex,
-		created_user createdUser, created_time createdTime,
-		modified_user modifiedUser, modified_time modifiedTime
-		from t_user
-		where email=#{email}
+		u.id, u.username, u.password, u.nickname, u.bir, lp.name as province, lc.name as city, u.area, u.email, u.phone, u.face, u.sex,
+		u.created_user createdUser, u.created_time createdTime,
+		u.modified_user modifiedUser, u.modified_time modifiedTime
+		from t_user u
+		left join t_location lp on lp.id = u.province 
+		left join t_location lc on lc.id = u.city
+		where u.email=#{email}
 	</select>
 	
 	<!-- User selectByPhone(String phone); 根据邮箱查找用户 -->
 	<select id="selectByPhone" resultType="bean.User">
 		select 
-		id, username, password, nickname, bir, province, city, area,email, phone, face, sex,
-		created_user createdUser, created_time createdTime,
-		modified_user modifiedUser, modified_time modifiedTime
-		from t_user
-		where phone=#{phone}
+		u.id, u.username, u.password, u.nickname, u.bir, lp.name as province, lc.name as city, u.area, u.email, u.phone, u.face, u.sex,
+		u.created_user createdUser, u.created_time createdTime,
+		u.modified_user modifiedUser, u.modified_time modifiedTime
+		from t_user u
+		left join t_location lp on lp.id = u.province 
+		left join t_location lc on lc.id = u.city
+		where u.phone=#{phone}
 	</select>
 	
 	<!-- void updateUser(User user); 更新个人资料 -->

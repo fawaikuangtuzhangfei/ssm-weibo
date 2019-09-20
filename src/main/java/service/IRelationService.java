@@ -45,4 +45,11 @@ public interface IRelationService {
 	 * @return
 	 */
 	Integer[] selectAll(Integer userId);
+	
+	/**
+	 * 查看当前用户的所有粉丝
+	 * @param userId
+	 * @return
+	 */
+	Integer[] selectFans(Integer userId);
 }

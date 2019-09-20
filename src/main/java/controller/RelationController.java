@@ -39,25 +39,27 @@ public class RelationController {
 	
 	@RequestMapping("/follow")
 	@ResponseBody
-	public ResponseResult<Void> follow(Integer userId, Integer followId){
+	public ResponseResult<Void> follow(Integer userId, Integer followId, HttpSession session){
 		log.info("关注成功:userId=" + userId + ",followId=" + followId); 
 		ResponseResult<Void> rr = new ResponseResult<Void>(1, "关注成功");
 		Relation relation = new Relation();
 		relation.setFollowId(followId);
 		relation.setUserId(userId);
 		relationService.relation(relation);
+		session.setAttribute("followCount", (Integer)(session.getAttribute("followCount"))+1);
 		return rr;
 	}
 	
 	@RequestMapping("/defollow")
 	@ResponseBody
-	public ResponseResult<Void> deFollow(Integer userId, Integer followId){
+	public ResponseResult<Void> deFollow(Integer userId, Integer followId, HttpSession session){
 		log.info("取消关注成功:userId=" + userId + ",followId=" + followId); 
 		ResponseResult<Void> rr = new ResponseResult<Void>(1, "取消关注成功");
 		Relation relation = new Relation();
 		relation.setFollowId(followId);
 		relation.setUserId(userId);
 		relationService.deRelation(relation);
+		session.setAttribute("followCount", (Integer)(session.getAttribute("followCount"))-1);
 		return rr;
 	}
 	

@@ -40,4 +40,11 @@ public interface RelationMapper {
 	 * @return
 	 */
 	Integer[] selectAll(@Param("userId")Integer userId);
+	
+	/**
+	 * 查询当前用户的所有粉丝
+	 * @param userId
+	 * @return
+	 */
+	Integer[] selectFans(@Param("userId")Integer userId);
 }

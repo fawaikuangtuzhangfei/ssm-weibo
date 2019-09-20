@@ -43,4 +43,9 @@ public class RelationService implements IRelationService{
 		return ralationMapper.selectIsRelation(userId, followId);
 	}
 
+	@Override
+	public Integer[] selectFans(Integer userId) {
+		return ralationMapper.selectFans(userId);
+	}
+
 }

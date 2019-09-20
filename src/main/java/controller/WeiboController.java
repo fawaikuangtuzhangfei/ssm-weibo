@@ -34,20 +34,19 @@ import service.WeiboService;
 @Controller
 public class WeiboController {
 
-	//日志log4j
+	// 日志log4j
 	public final Logger log = Logger.getLogger(this.getClass());
 	@Resource
 	WeiboService weiboService;
 
 	@Resource
 	UserService userService;
-	
-	
-	//转发微博
+
+	// 转发微博
 	@RequestMapping("/repost.do")
 	@ResponseBody
-	public ResponseResult<Weibo> post(Weibo weibo){
-		ResponseResult<Weibo> rr = new ResponseResult<Weibo>(1,"转发成功");
+	public ResponseResult<Weibo> post(Weibo weibo) {
+		ResponseResult<Weibo> rr = new ResponseResult<Weibo>(1, "转发成功");
 		weiboService.insertWeibo(weibo);
 		return rr;
 	}
@@ -56,13 +55,13 @@ public class WeiboController {
 	@RequestMapping("/post.do")
 	// 将form表单中的数据封装到weibo对象中
 	// **存在问题，文件无法获取到，由于jsp页面中from表单传值的问题
-	//仿照写法直接利用form的submit->然后重定向到我的首页showOne.do
+	// 仿照写法直接利用form的submit->然后重定向到我的首页showOne.do
 	public String post(HttpServletRequest request, HttpSession session) {
 		Weibo weibo = new Weibo();
 		String content = request.getParameter("content");
 		int count = 0;
 		for (int i = 1; i < 30; i++) {
-			//每上传一张图片，就会动态生成一个隐藏域->里面存放着文件的uuid(name)
+			// 每上传一张图片，就会动态生成一个隐藏域->里面存放着文件的uuid(name)
 			String pic = request.getParameter("pic_pic_" + i);
 			if (pic != null) {
 				count++;
@@ -104,8 +103,7 @@ public class WeiboController {
 		weibo.setContent(content);
 		weibo.setOriginal(1);
 
-		
-		//执行发送
+		// 执行发送
 		weiboService.insertWeibo(weibo);
 		return "redirect:showOne.do";
 	}
@@ -180,11 +178,11 @@ public class WeiboController {
 		}
 		// 一页展示10个 当前是第几个
 		Integer offset = (page - 1) * 10;
-		//有多少个符合条件的查询结果
+		// 有多少个符合条件的查询结果
 		Integer count = weiboService.selectByContentNoPage(userId, content);
-		
+
 		List<Weibo> all = weiboService.selectByContent(userId, content, offset, count);
-		
+
 		// 一页上显示10个，总共几页
 		int pageSize = count % 10 == 0 ? count / 10 : count / 10 + 1;
 		// 存放所有转发的微博
@@ -202,9 +200,9 @@ public class WeiboController {
 		map.addAttribute("wz", "selectByContent.do?userId=" + userId + "&content=" + content + "&");
 		return "mine";
 	}
-	
+
 	@RequestMapping("/delWeibo.do")
-	public String delWeibo(Integer id){
+	public String delWeibo(Integer id) {
 		weiboService.delWeibo(id);
 		log.info("删除当前微博成功,id=" + id);
 		return "redirect:showOne.do";

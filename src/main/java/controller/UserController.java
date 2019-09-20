@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import bean.ResponseResult;
 import bean.User;
 import bean.Weibo;
+import service.IRelationService;
 import service.UserService;
 import service.WeiboService;
 
@@ -34,10 +35,10 @@ import service.WeiboService;
 @RequestMapping("/user")
 @Controller
 public class UserController {
-	
-	//盐
-			@Value("#{config.salt}")
-			private String salt;
+
+	// 盐
+	@Value("#{config.salt}")
+	private String salt;
 
 	// 日志log4j
 	public final Logger log = Logger.getLogger(this.getClass());
@@ -46,7 +47,10 @@ public class UserController {
 	private UserService userService;
 
 	@Resource
-	WeiboService weiboService;
+	private WeiboService weiboService;
+	
+	@Resource
+	private IRelationService relationService;
 
 	// 异步提交登录
 	@RequestMapping("/login.do")
@@ -58,6 +62,20 @@ public class UserController {
 			User user = userService.login(username, password);
 			rr = new ResponseResult<Void>(1, "登录成功");
 			session.setAttribute("user", user);
+			//当前用户的id
+			Integer userId = user.getId();
+			//登录时就把用户拥有的微博数量给存入session中去
+			Integer[] userIds = {userId};
+			Integer countWeibo = weiboService.countMany(userIds);
+			session.setAttribute("countWeibo", countWeibo);
+			//把粉丝数量也存进去
+			Integer[] fans = relationService.selectFans(userId);
+			Integer fanCount = fans.length;
+			session.setAttribute("fanCount", fanCount);
+			//把关注数量也存进去
+			Integer[] follows = relationService.selectAll(userId);
+			Integer followCount = follows.length;
+			session.setAttribute("followCount", followCount);
 		} catch (RuntimeException ex) {
 			rr = new ResponseResult<Void>(0, ex.getMessage());
 		}
@@ -162,19 +180,20 @@ public class UserController {
 		session.invalidate();
 		return "redirect:../user/showLogin.do";
 	}
-	
+
 	// 显示修改密码的页面
 	@RequestMapping("/showPassword.do")
 	public String showUpdatePassword(HttpSession session) {
 		log.info("进入修改密码页面");
 		return "password";
-	}	
-	
+	}
+
 	// 修改密码
 	@RequestMapping("/updatePassword.do")
 	@ResponseBody
-	public ResponseResult<Void> undatePassword(HttpSession session, HttpServletRequest request, @RequestParam("oldpw") String oldpw,
-			@RequestParam("newpw1") String newpw1, @RequestParam("newpw2") String newpw2) throws Exception {
+	public ResponseResult<Void> undatePassword(HttpSession session, HttpServletRequest request,
+			@RequestParam("oldpw") String oldpw, @RequestParam("newpw1") String newpw1,
+			@RequestParam("newpw2") String newpw2) throws Exception {
 		ResponseResult<Void> rr = null;
 		int flag = 1;
 
@@ -194,9 +213,8 @@ public class UserController {
 		} else {
 			User u = new User();
 			u.setId(user.getId());
-			u.setPassword(DigestUtils.md5Hex(newpw1+salt));
+			u.setPassword(DigestUtils.md5Hex(newpw1 + salt));
 			userService.updatePassword(u);
-			request.setAttribute("updatepassword_success", "密码修改成功 请重新登录！");
 			return rr;
 		}
 	}

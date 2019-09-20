@@ -108,9 +108,9 @@
 			<br> <br>
 			<table align="center" style="table-layout: fixed;">
 				<tr>
-					<td><a href="queryUserPage.action?userId=${user.id}&pageNo=1">${user.id }微博&nbsp;</a></td>
-					<td><a href="listFollow.action?userId=${user.id }">${user.id }关注&nbsp;</a></td>
-					<td><a href="listFans.action?userId=${user.id }">${user.id }粉丝</td>
+					<td><a href="../weibo/showOne.do">${countWeibo }微博&nbsp;</a></td>
+					<td><a href="../relation/showMyFriends.do">${followCount }关注&nbsp;</a></td>
+					<td><a href="#">${fanCount }粉丝</td>
 				</tr>
 			</table>
 			<br>
@@ -120,8 +120,7 @@
 			<c:if test="${user.sex==1 }">
 				<span style="font-size: 15px">♂ </span>
 			</c:if>
-			<span style="font-size: 15px"> ${user.id } 岁 ${user.id }
-				${user.id }</span>
+			<span style="font-size: 15px"> ${user.province } | ${user.city } </span>
 		</div>
 
 
@@ -129,7 +128,7 @@
 <!-- 左侧导航栏 -->
 		<div style="width: 8%; float: left; margin-right: 10px; background-color: #fff;">
 			<ul class="nav navbar-left nav-pills nav-stacked">
-				<li style="width: 100%" ><a href="../weibo/showOne.do">首页</a></li>
+				<li style="width: 100%" ><a href="../weibo/showOne.do">我的首页</a></li>
 				<li style="width: 100%"><a href="../relation/showMyFriends.do">好友圈</a></li>
 				<li style="width: 100%"><a href="../like/showMyLike.do">我的赞</a></li>
 				<li style="width: 100%"><a href="../collect/showMyCollect.do">我的收藏</a></li>
