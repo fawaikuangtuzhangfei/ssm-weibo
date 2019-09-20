@@ -27,6 +27,7 @@
         dataType: 'json',
         success:function(data) {
         	var result = data.data;
+        	console.log(result);
         	$('#show'+weiboId).html("");
         	for(var i in result){
         		var date1 = new Date(result[i].commentTime);
@@ -57,12 +58,7 @@
               //删除
                 '<a href="javascript:;" class="removeBlock " id="'+ result[i].commentId +'">删除</a>' +
                 '</div></div><div class="hf-list-con " style="text-align: left;" id="123'+ result[i].commentId +'"></div><br>';
-                if(result[i].countReply == 0) {
-                	com = com + '</div></div></div>';
-                } else {
-                	com = com + '<a href="singleWeibo.action?weiboId='+ weiboId +'" style="color: #987">共'+ 0 +'条回复</a>'+
-                    			'</div></div></div>';
-                }
+                com = com + '</div></div></div>';
                 $('#show'+weiboId).prepend(com);
         	}
             

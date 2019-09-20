@@ -1,7 +1,6 @@
 package bean;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 发布微博的实体类 t_weibo
@@ -16,7 +15,7 @@ public class Weibo implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private Integer userId;
-	private Date postTime;
+	private String postTime;
 	private String content;
 	private String pic1;
 	private String pic2;
@@ -71,10 +70,10 @@ public class Weibo implements Serializable{
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
-	public Date getPostTime() {
+	public String getPostTime() {
 		return postTime;
 	}
-	public void setPostTime(Date postTime) {
+	public void setPostTime(String postTime) {
 		this.postTime = postTime;
 	}
 	public String getContent() {

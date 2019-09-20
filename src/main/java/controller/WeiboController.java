@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.File;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -42,6 +41,7 @@ public class WeiboController {
 
 	@Resource
 	UserService userService;
+	
 	
 	//转发微博
 	@RequestMapping("/repost.do")
@@ -104,9 +104,6 @@ public class WeiboController {
 		weibo.setContent(content);
 		weibo.setOriginal(1);
 
-		// 发送时间
-		Date postTime = new java.sql.Date(new java.util.Date().getTime());
-		weibo.setPostTime(postTime);
 		
 		//执行发送
 		weiboService.insertWeibo(weibo);
@@ -127,6 +124,7 @@ public class WeiboController {
 			// 是否原创
 			Integer repostId = all.get(i).getRepostId();
 			Weibo repost = weiboService.selectByWeiboId(repostId, offset, 10);
+			// 将date格式化 精确到s
 			all.get(i).setRepost(repost);
 		}
 		map.addAttribute("count", count);
