@@ -23,6 +23,8 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/style.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/comment.css">
 
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/mine.css">
+
 <link rel="stylesheet" href="../css/regist.css">
 <link rel="stylesheet" type="text/css" href="../css/zoomify.min.css">
 <link rel="stylesheet" type="text/css" href="../css/upload.css">
@@ -69,56 +71,19 @@
 		});
 	});
 </script>
+<!-- 导航栏 -->
+<jsp:include page="../web/nav.jsp"></jsp:include>
 </head>
 
-<body>
-
-<body style="padding: 80px">
-	<nav class="navbar navbar-default navbar-fixed-top">
-		<div class="container">
-			<p class="navbar-text navbar-right">
-				<a href="../weibo/show.do" class="navbar-link">实时微博</a>
-			</p>
-			<p class="navbar-text navbar-right">
-				<a href="../weibo/showOne.do" class="navbar-link">我的首页</a>
-			</p>
-			<p class="navbar-text navbar-right">
-				<a href="#" class="navbar-link">好友圈</a>
-			</p>
-			<!-- 用户信息 -->
-			<input type="hidden" value="${user.username }" id="username">
-			<input type="hidden" value="${user.face }" id="face">
-			<input type="hidden" value="${user}">
-			<div id="message"></div>
-			<div class="container">
-				<p class="navbar-text navbar-left">当前用户: ${user.username }</p>
-				<p class="navbar-text navbar-left">
-					<a href="../user/showUserinfo.do">修改个人资料</a>
-				</p>
-				<p class="navbar-text navbar-left">
-					<a href="../user/exit.do">退出登录</a>
-				</p>
-				<form id="form-souso" style="margin-top: 12px;"
-					action="../weibo/selectByContent.do" method="post">
-					<input name="userId" id="userId" type="hidden" value="${user.id }">
-					我的微博内容搜索:<input name="content" type="text" style="width: 50px">
-					<button type="submit" id="souso">搜索</button>
-				</form>
-			</div>
-		</div>
-	</nav>
-	<!-- 左侧导航栏 -->
-		<div style="width: 8%; float: left; margin-right: 10px; background-color: #fff;">
-			<ul class="nav navbar-left nav-pills nav-stacked">
-				<li class="" style="width: 100%" ><a href="../weibo/showOne.do">首页</a></li>
-				<li style="width: 100%"><a href="../relation/showMyFriends.do">好友圈</a></li>
-				<li style="width: 100%"><a href="../like/showMyLike.do">我的赞</a></li>
-				<li style="width: 100%"><a href="../collect/showMyCollect.do">我的收藏</a></li>
-			</ul>
-		</div>
+<body style="padding: 80px" >
+	
+	
+	
+		
+<!-- 微博内容 -->
 <div style="width: 70%; float: left;">
 <!-- 发送新微博 -->
-			<div class="container" style="background-color: #fff;">
+			<div class="container" style="width: auto; background-color: #fff;">
 				<p style="font-size: 40px; color: black" align="center">分享新鲜事</p>
 				<form method="post" action="../weibo/post.do">
 					<textarea class="form-control" rows="4"
@@ -149,7 +114,7 @@
 		<!-- 微博内容&转发微博内容 -->
 			<c:forEach items="${all}" var="weibo" varStatus="status">
 			<!-- 头部 -->
-			<div class="container" style="width: 800px; padding-top: 34px; background-color: white;">
+			<div class="container" style="width: auto; padding-top: 34px; background-color: white;">
 			<input type="hidden" class="followWeiboId" value="${weibo.userId }">
 				<!-- 头像 -->
 				<div style="height: 50px; width: 50px; margin: 10px; float: left;">
@@ -247,7 +212,7 @@
 			<c:if test="${weibo.original == 0 }">
 				<!-- 头部 -->
 				<div class="container"
-					style="width: 850px; background-color: #eaeaec;">
+					style="width: auto; background-color: #eaeaec;">
 					<!-- 头像 -->
 					<div
 						style="cursor: pointer; height: 30px; width: 30px; margin: 10px; float: left; margin-left: 100px;">
@@ -278,7 +243,7 @@
 				</div>
 				<!-- 正文 -->
 				<div class="container"
-					style="width: 850px; background-color: #eaeaec;">
+					style="width: auto; background-color: #eaeaec;">
 					<!-- 文字 -->
 					<div style="text-align: left; margin-left: 160px">
 						<p style="color: #333; font-size: 17px">${weibo.repost.content }</p>
@@ -334,7 +299,7 @@
 			</c:if>
 
 				<!-- 底部 -->
-				<div class="container" style="width: 955px; background-color: #fff;">
+				<div class="container" style="width: auto; background-color: #fff;">
 					<br>
 					<div class="btn-group" style="width: 100%">
 						<button type="button" id="shoucang${weibo.id}"
@@ -353,7 +318,7 @@
 
 				<!-- 评论区 -->
 				<div class="container "
-					style="width: 850px; background-color: #fff;">
+					style="width: auto; background-color: #fff;">
 					<div class="commentAll " id="com${status.index }" style="display: none;">
 						<!--评论区域 begin-->
 						<div class="reviewArea clearfix ">
@@ -648,5 +613,4 @@ $('#fabu').click(function(){
 		$('.example img').zoomify();
 </script>
 
-</body>
 </html>

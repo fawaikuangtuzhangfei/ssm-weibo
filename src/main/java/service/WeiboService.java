@@ -79,4 +79,14 @@ public class WeiboService implements IWeiboService{
 		return weiboMapper.countMany(userIds);
 	}
 
+	@Override
+	public List<Weibo> selectByContentS(String content, Integer offset, Integer count) {
+		return weiboMapper.selectByContents(content, offset, count);
+	}
+
+	@Override
+	public Integer selectByContentsNoPage(String content) {
+		return weiboMapper.selectByContentsNoPage(content);
+	}
+
 }

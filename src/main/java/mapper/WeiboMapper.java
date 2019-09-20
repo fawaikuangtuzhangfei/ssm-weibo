@@ -46,4 +46,11 @@ public interface WeiboMapper {
 	
 	//查询多个用户总共有多少条微博
 	Integer countMany(Integer[] userIds);
+	
+	//查询指定内容的微博
+	List<Weibo> selectByContents(@Param("content")String content,@Param("offset")Integer offset, @Param("count")Integer count);
+	
+	//查询当指定内容的指定微博-根据内容(不分页)的数量
+	Integer selectByContentsNoPage(@Param("content")String content);
+	
 }

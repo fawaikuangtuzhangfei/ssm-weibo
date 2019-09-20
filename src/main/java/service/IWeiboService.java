@@ -34,12 +34,28 @@ public interface IWeiboService {
 	List<Weibo> selectByContent(Integer userId, String content, Integer offset, Integer count);
 	
 	/**
+	 * 查询指定内容的微博
+	 * @param content
+	 * @param offset
+	 * @param count
+	 * @return
+	 */
+	List<Weibo> selectByContentS(String content, Integer offset, Integer count);
+	
+	/**
 	 * 查询当前用户指定内容的微博数量
 	 * @param userId
 	 * @param content
 	 * @return
 	 */
 	Integer selectByContentNoPage(Integer userId, String content);
+	
+	/**
+	 * 查询指定内容的微博数量
+	 * @param content
+	 * @return
+	 */
+	Integer selectByContentsNoPage(String content);
 	
 	/**
 	 * 查询所有微博总数

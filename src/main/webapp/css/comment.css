@@ -1,16 +1,16 @@
-/*初始化样式*/
+/*鍒濆鍖栨牱寮�*/
 /*body,h1,h2,h3,h4,h5,ul,li,a,div,p,span,table,tr,td,img{margin: 0;padding: 0;}*/
 ul{padding: 0;margin: 0;}
 li{list-style: none;}
 /*a{text-decoration: none;}*/
 img{outline: none;border: 0;}
-body{font-family: "Microsoft Yahei";}
-/*清除浮动*/
+body{font-family: "Microsoft Yahei"; text-align: center;}
+/*娓呴櫎娴姩*/
 .clearfix:before,
 .clearfix:after{content: " ";display: table;}
 .clearfix:after{clear: both;}
 .clearfix{zoom: 1;}
-/*浮动*/
+/*娴姩*/
 .pull-right{float: right !important;}
 .pull-left{float: left !important;}
 /*----------------------------------------------------------------------------------------------------------*/
@@ -20,7 +20,7 @@ body{font-family: "Microsoft Yahei";}
 .plBtn{width: 75px;height: 36px;line-height: 36px;background-color: #339b53;text-align: center;display: block;float: right;color: #FFFFFF;font-size: 12px;border-radius: 6px;margin-right: 2px;margin-top: 20px;}
 .plBtn:hover{background-color: #2f904d;}
 
-/*----------评论区域 begin----------*/
+/*----------璇勮鍖哄煙 begin----------*/
 .comment-show{margin-top: 20px;}
 .comment-show-con {
     width: 100%;
@@ -159,7 +159,7 @@ body{font-family: "Microsoft Yahei";}
 
 
 
-/*----------评论区域 end----------*/
+/*----------璇勮鍖哄煙 end----------*/
 
 
 

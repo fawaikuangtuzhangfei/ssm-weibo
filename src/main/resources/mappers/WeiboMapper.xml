@@ -67,12 +67,36 @@
 		limit #{offset},#{count}
 	</select>
 	
+	<!-- //查询指定内容的微博
+	List<Weibo> selectByContents(@Param("content")String content,@Param("offset")Integer offset, @Param("count")Integer count); -->
+	<select id="selectByContents"  resultType="bean.Weibo">
+		select
+		w.id,w.user_id as userId, w.post_time as postTime,w.content,w.pic1,w.pic2,w.pic3,
+		w.pic4,w.pic5,w.pic6,w.pic7,w.pic8,w.pic9,w.original,w.repost_id as repostId,
+		u.username, u.face
+		from t_weibo w
+		left join t_user u on u.id = w.user_id
+		where w.content like "%"#{content}"%"
+		order by w.post_time desc
+		limit #{offset},#{count}
+	</select>
+	
+	
 	<!-- Integer selectByContentNoPage(@Param("userId")Integer userId, @Param("content")String content); 查询当前用户-根据id 的指定微博-根据内容 -->
 	<select id="selectByContentNoPage"  resultType="java.lang.Integer">
 		select
 		count(1)
 		from t_weibo w
 		where w.user_id=#{userId} and w.content like "%"#{content}"%"
+	</select>
+	
+	<!-- //查询当指定内容的指定微博-根据内容(不分页)的数量
+	Integer selectByContentsNoPage(@Param("content")String content); -->
+	<select id="selectByContentsNoPage"  resultType="java.lang.Integer">
+		select
+		count(1)
+		from t_weibo w
+		where w.content like "%"#{content}"%"
 	</select>
 	
 	<!-- Integer count(); 查询共有多少条微博 ->用于分页使用-->
