@@ -123,7 +123,7 @@ public class WeiboController {
 		for (int i = 0; i < all.size(); i++) {
 			// 是否原创
 			Integer repostId = all.get(i).getRepostId();
-			Weibo repost = weiboService.selectByWeiboId(repostId, offset, 10);
+			Weibo repost = weiboService.selectByWeiboId(repostId, 0, 10);
 			// 将date格式化 精确到s
 			all.get(i).setRepost(repost);
 		}
@@ -131,7 +131,7 @@ public class WeiboController {
 		map.addAttribute("pageSize", pageSize);
 		map.addAttribute("all", all);
 		map.addAttribute("curpage", page);
-		map.addAttribute("wz", "show.do");
+		map.addAttribute("wz", "show.do?");
 		return "now";
 	}
 
@@ -156,7 +156,7 @@ public class WeiboController {
 		for (int i = 0; i < all.size(); i++) {
 			// 是否原创
 			Integer repostId = all.get(i).getRepostId();
-			Weibo repost = weiboService.selectByWeiboId(repostId, offset, 10);
+			Weibo repost = weiboService.selectByWeiboId(repostId, 0, 10);
 			all.get(i).setRepost(repost);
 		}
 		map.addAttribute("all", all);
@@ -190,7 +190,7 @@ public class WeiboController {
 		for (int i = offset; i < pageSize; i++) {
 			// 是否原创
 			Integer repostId = all.get(i).getRepostId();
-			Weibo repost = weiboService.selectByWeiboId(repostId, offset, 10);
+			Weibo repost = weiboService.selectByWeiboId(repostId, 0, 10);
 			all.get(i).setRepost(repost);
 		}
 		map.addAttribute("all", all);

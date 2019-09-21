@@ -53,16 +53,11 @@ public class SerchController {
 
 		// 一页上显示10个，总共几页
 		int pageSize = count % 10 == 0 ? count / 10 : count / 10 + 1;
-		//当前页有几个
-		int haveMany = page==pageSize? pageSize*10-count:10; 
-		if(count < 10){
-			haveMany = count;
-		}
 		// 存放所有转发的微博
-		for (int i = 0; i < haveMany; i++) {
+		for (int i = 0; i < all.size(); i++) {
 			// 是否原创
 			Integer repostId = all.get(i).getRepostId();
-			Weibo repost = weiboService.selectByWeiboId(repostId, offset, 10);
+			Weibo repost = weiboService.selectByWeiboId(repostId, 0, 10);
 			
 			all.get(i).setRepost(repost);
 		}
@@ -98,7 +93,7 @@ public class SerchController {
 		// 一页上显示10个，总共几页
 		int pageSize = count % 10 == 0 ? count / 10 : count / 10 + 1;
 		//当前页有几个
-		int haveMany = page==pageSize? pageSize*10-count:10; 
+		int haveMany = page==pageSize? pageSize*10-count:10;
 		if(pageSize == 1){
 			haveMany = 10;
 		}

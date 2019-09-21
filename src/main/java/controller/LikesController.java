@@ -102,7 +102,7 @@ public class LikesController {
 		//当前页有几个
 		int haveMany = page==pageSize? pageSize*10-count:10;
 		int j = 0;
-		if(pageSize == 1){
+		if(pageSize == 1 && count != 0){
 			haveMany = 10;
 		}
 		for(int i=offset; i<count; i++){
