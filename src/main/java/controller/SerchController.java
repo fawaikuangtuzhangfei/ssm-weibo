@@ -53,11 +53,17 @@ public class SerchController {
 
 		// 一页上显示10个，总共几页
 		int pageSize = count % 10 == 0 ? count / 10 : count / 10 + 1;
+		//当前页有几个
+		int haveMany = page==pageSize? pageSize*10-count:10; 
+		if(count < 10){
+			haveMany = count;
+		}
 		// 存放所有转发的微博
-		for (int i = offset; i < pageSize; i++) {
+		for (int i = 0; i < haveMany; i++) {
 			// 是否原创
 			Integer repostId = all.get(i).getRepostId();
 			Weibo repost = weiboService.selectByWeiboId(repostId, offset, 10);
+			
 			all.get(i).setRepost(repost);
 		}
 		map.addAttribute("all", all);
@@ -66,7 +72,7 @@ public class SerchController {
 		map.addAttribute("pageSize", pageSize);
 		map.addAttribute("curpage", page);
 		map.addAttribute("wz", "../serch/selectByContents.do?content=" + content + "&");
-		return "mine";
+		return "now";
 	}
 
 	// 前往我的微博主页
@@ -91,12 +97,16 @@ public class SerchController {
 		Integer count = weiboService.countByUser(userId);
 		// 一页上显示10个，总共几页
 		int pageSize = count % 10 == 0 ? count / 10 : count / 10 + 1;
-		for (int i = 0; i < all.size(); i++) {
+		//当前页有几个
+		int haveMany = page==pageSize? pageSize*10-count:10; 
+		if(pageSize == 1){
+			haveMany = 10;
+		}
+		for (int i = 0; i < haveMany; i++) {
 			// 是否原创
 			Integer repostId = all.get(i).getRepostId();
 			Weibo repost = weiboService.selectByWeiboId(repostId, offset, 10);
 			all.get(i).setRepost(repost);
-			log.info("展示单用户微博->非原创微博" + i + ":" + repost);
 		}
 		map.addAttribute("all", all);
 		log.info(all);

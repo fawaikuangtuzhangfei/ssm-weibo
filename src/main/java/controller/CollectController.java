@@ -37,6 +37,7 @@ public class CollectController {
 	@Resource
 	private ICollectService collectService;
 	
+	//是否被当前用户收藏
 	@RequestMapping("/selectByOne")
 	@ResponseBody
 	public ResponseResult<Integer> selectByOne(Integer userId, Integer weiboId){
@@ -50,6 +51,7 @@ public class CollectController {
 		return rr;
 	}
 	
+	//收藏
 	@RequestMapping("/collect")
 	@ResponseBody
 	public ResponseResult<Void> collect(Integer userId, Integer weiboId){
@@ -63,6 +65,7 @@ public class CollectController {
 		return rr;
 	}
 	
+	//取消收藏
 	@RequestMapping("/decollect")
 	@ResponseBody
 	public ResponseResult<Void> decollect(Integer userId, Integer weiboId){
@@ -76,6 +79,7 @@ public class CollectController {
 		return rr;
 	}
 	
+	//展示我的收藏列表
 	@RequestMapping("/showMyCollect")
 	public String showAll(HttpServletRequest request, ModelMap map, Integer page){
 		// 默认为当前页
@@ -91,18 +95,26 @@ public class CollectController {
 		Integer[] collects = collectService.selectAll(userId);
 		// 总收藏微博数
 		Integer count = collects.length;
+		// 一页上显示10个，总共几页
+		int pageSize = count % 10 == 0 ? count / 10 : count / 10 + 1;
+		//当前页有几个
+		int haveMany = page==pageSize? pageSize*10-count:10;
+		int j = 0;
+		if(pageSize == 1){
+			haveMany = 10;
+		}
 		//存放所有的收藏
 		List<Weibo> allCollects = new ArrayList<Weibo>();
 		for(int i=offset; i<count; i++){
 			log.info("当前用户收藏微博id=" + collects[i]);
 			Weibo allWeibo = weiboService.selectByWeiboId(collects[i], 0,10);
 			//必须加此判断否则若是删除了微博，就会存入空对象导致下面出差错
-			if(allWeibo != null){
+			if(allWeibo != null && j<haveMany){
+				j++;
 				allCollects.add(allWeibo);
 			}
 		}
-		// 一页上显示10个，总共几页
-		int pageSize = count % 10 == 0 ? count / 10 : count / 10 + 1;
+
 		for (int i = 0; i < allCollects.size(); i++) {
 			// 是否原创
 			Integer repostId = allCollects.get(i).getRepostId();
@@ -111,7 +123,6 @@ public class CollectController {
 		}
 		log.info("所有收藏");
 		//实际的收藏数量
-		count = allCollects.size();
 		System.out.println(allCollects);
 		map.addAttribute("all", allCollects);
 		// 将页数和总数和当前页面放进session中

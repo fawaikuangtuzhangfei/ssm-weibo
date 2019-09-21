@@ -97,17 +97,23 @@ public class LikesController {
 		Integer count = collects.length;
 		//存放所有的点赞
 		List<Weibo> allCollects = new ArrayList<Weibo>();
+		// 一页上显示10个，总共几页
+		int pageSize = count % 10 == 0 ? count / 10 : count / 10 + 1;
+		//当前页有几个
+		int haveMany = page==pageSize? pageSize*10-count:10;
+		int j = 0;
+		if(pageSize == 1){
+			haveMany = 10;
+		}
 		for(int i=offset; i<count; i++){
-			log.info("当前用户点赞微博id=" + collects[i]);
 			Weibo allWeibo = weiboService.selectByWeiboId(collects[i], 0,10);
 			//必须加此判断否则若是删除了微博，就会存入空对象导致下面出差错
-			if(allWeibo != null){
+			if(allWeibo != null && j<haveMany){
+				j++;
 				allCollects.add(allWeibo);
 			}
 		}
-		// 一页上显示10个，总共几页
-		int pageSize = count % 10 == 0 ? count / 10 : count / 10 + 1;
-		
+		log.info(allCollects.size());
 		for (int i = 0; i < allCollects.size(); i++) {
 			// 是否原创
 			Integer repostId = allCollects.get(i).getRepostId();
