@@ -237,7 +237,7 @@
 					"<form><ul><li><span aria-hidden='true' class='icon_globe'></span> <font>粉丝数:</font>7389223</li> 
      						<li><span aria-hidden='true' class='icon_piechart'></span> <font>关注:</font>265</li>
     						 <li><span aria-hidden='true' class='icon_search_alt'></span> <font>微博:</font>645</li>
-     						<li><span aria-hidden='true' class='icon_pens_alt'></span> <font>所在地:</font>${user.province}</li>
+     						<li><span aria-hidden='true' class='icon_pens_alt'></span> <font>所在地:</font>${user.nowProvince}</li>
      						<input type='button' value='关注' id='guanzhu${weibo.repost.userId }' onclick='guanzhuOther(${weibo.repost.userId })'/></form>"
 					data-placement="bottom" data-trigger="hover">
 						${weibo.repost.username }</a><br>

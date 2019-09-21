@@ -76,7 +76,8 @@
 <body>
 <body style="padding: 80px">
 <div style="width: 70%; float: left;">
-			<div class="container" style="width: auto; margin-top: 20px; background-color: #fff;">
+			<div class="container" style="width: auto; margin-top: 0px; background-color: #fff;">
+			<p style="font-size: 40px; color: black" align="center">我的点赞</p>
 				
 <!-- 微博正文部分 -->
 		<!-- 微博内容&转发微博内容 -->
@@ -93,7 +94,7 @@
 					"<form><ul><li><span aria-hidden='true' class='icon_globe'></span> <font>粉丝数:</font>7389223</li> 
      <li><span aria-hidden='true' class='icon_piechart'></span> <font>关注:</font>265</li>
      <li><span aria-hidden='true' class='icon_search_alt'></span> <font>微博:</font>645</li>
-     <li><span aria-hidden='true' class='icon_pens_alt'></span> <font>所在地:</font>${user.province}</li>
+     <li><span aria-hidden='true' class='icon_pens_alt'></span> <font>所在地:</font>${weibo.nowProvince}</li>
      <input type='button' value='关注' id='guanzhu${weibo.userId }' onclick='guanzhu(${weibo.userId })'/></form>"
 					data-placement="bottom" data-trigger="hover">
 					<img src="/imgUpload/${weibo.face}" width="50px" height="50px"
@@ -190,7 +191,7 @@
 					"<form><ul><li><span aria-hidden='true' class='icon_globe'></span> <font>粉丝数:</font>7389223</li> 
      						<li><span aria-hidden='true' class='icon_piechart'></span> <font>关注:</font>265</li>
     						 <li><span aria-hidden='true' class='icon_search_alt'></span> <font>微博:</font>645</li>
-     						<li><span aria-hidden='true' class='icon_pens_alt'></span> <font>所在地:</font>${user.province}</li>
+     						<li><span aria-hidden='true' class='icon_pens_alt'></span> <font>所在地:</font>${weibo.repost.nowProvince}</li>
      						<input type='button' value='关注' id='guanzhu${weibo.repost.userId }' onclick='guanzhuOther(${weibo.repost.userId })'/></form>"
 					data-placement="bottom" data-trigger="hover">
 						<img
