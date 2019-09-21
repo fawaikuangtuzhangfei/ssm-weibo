@@ -109,7 +109,7 @@
 			<table align="center" style="table-layout: fixed;">
 				<tr>
 					<td><a href="../weibo/showOne.do">${countWeibo }微博&nbsp;</a></td>
-					<td><a href="../relation/showMyFriends.do">${followCount }关注&nbsp;</a></td>
+					<td><a href="../relation/showFollowList.do?userId=${user.id }">${followCount }关注&nbsp;</a></td>
 					<td><a href="#">${fanCount }粉丝</td>
 				</tr>
 			</table>

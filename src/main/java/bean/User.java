@@ -19,7 +19,7 @@ public class User implements Serializable{
 	private String nickname;
 	private String face;
 	private Integer sex;
-	private Date bir;
+	private String bir;
 	private String province;
 	private String city;
 	private String area;
@@ -29,6 +29,10 @@ public class User implements Serializable{
 	private Date createdTime;
 	private String modifiedUser;
 	private Date modifiedTime;
+	
+	//t_relation
+	private Integer state; //关注状态
+	
 	public Integer getId() {
 		return id;
 	}
@@ -65,10 +69,10 @@ public class User implements Serializable{
 	public void setSex(Integer sex) {
 		this.sex = sex;
 	}
-	public Date getBir() {
+	public String getBir() {
 		return bir;
 	}
-	public void setBir(Date bir) {
+	public void setBir(String bir) {
 		this.bir = bir;
 	}
 	public String getProvince() {
@@ -244,7 +248,13 @@ public class User implements Serializable{
 				+ ", face=" + face + ", sex=" + sex + ", bir=" + bir + ", province=" + province + ", city=" + city
 				+ ", area=" + area + ", email=" + email + ", phone=" + phone + ", createdUser=" + createdUser
 				+ ", createdTime=" + createdTime + ", modifiedUser=" + modifiedUser + ", modifiedTime=" + modifiedTime
-				+ "]";
+				+ ", state=" + state + "]";
+	}
+	public Integer getState() {
+		return state;
+	}
+	public void setState(Integer state) {
+		this.state = state;
 	}
 	
 	

@@ -103,6 +103,8 @@ public class WeiboController {
 		weibo.setContent(content);
 		weibo.setOriginal(1);
 
+		//发布一条微博 微博总数+1
+		session.setAttribute("countWeibo", (Integer)session.getAttribute("countWeibo") + 1);
 		// 执行发送
 		weiboService.insertWeibo(weibo);
 		return "redirect:showOne.do";
@@ -158,7 +160,6 @@ public class WeiboController {
 			all.get(i).setRepost(repost);
 		}
 		map.addAttribute("all", all);
-		log.info(all);
 		// 将页数和总数和当前页面放进session中
 		map.addAttribute("count", count);
 		map.addAttribute("pageSize", pageSize);
@@ -202,9 +203,11 @@ public class WeiboController {
 	}
 
 	@RequestMapping("/delWeibo.do")
-	public String delWeibo(Integer id) {
+	public String delWeibo(Integer id, HttpSession session) {
 		weiboService.delWeibo(id);
 		log.info("删除当前微博成功,id=" + id);
+		//删除一条微博 微博总数-1
+		session.setAttribute("countWeibo", (Integer)session.getAttribute("countWeibo") - 1);
 		return "redirect:showOne.do";
 	}
 

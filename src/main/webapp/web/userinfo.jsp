@@ -75,14 +75,6 @@
 				</div>
 			</div>
 			<br>
-			<div class="form-group">
-				<label class="col-sm-4 control-label">出生日期</label>
-				<div class="col-sm-3">
-					<input type="text" value="${user.bir }"
-						name="1bir" id="date" class="form-control"
-						style="width: 123%;">
-				</div>
-			</div>
 			<br>
 
 			<!-- ——————————————所在地———————————— -->
@@ -157,8 +149,6 @@
 		src="${pageContext.request.contextPath }/js/bootstrap-datetimepicker.js"></script>
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath }/js/bootstrap-datetimepicker.zh-CN.js"></script>
-	<script type="text/javascript"
-		src="${pageContext.request.contextPath }/js/loadnav.js"></script>
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath }/js/date.js"></script>
 	<script type="text/javascript">

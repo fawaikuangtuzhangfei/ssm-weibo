@@ -45,7 +45,7 @@
 	<!-- Integer[] selectFans(@Param("userId")Integer userId); -->
 	<select id="selectFans" resultType="java.lang.Integer">
 		select 
-		c.follow_id as followId, c.user_id as userId, c.follow_time as followTime, c.state, c.relation_id as relationId
+		c.user_id as userId, c.follow_id as followId, c.follow_time as followTime, c.state, c.relation_id as relationId
 		from t_Relation c
 		where c.follow_id=#{userId}
 		order by c.follow_time desc
