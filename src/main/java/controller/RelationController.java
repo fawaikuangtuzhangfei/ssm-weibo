@@ -42,6 +42,7 @@ public class RelationController {
 	@Resource
 	private IRelationService relationService;// 关注
 
+	// 关注
 	@RequestMapping("/follow")
 	@ResponseBody
 	public ResponseResult<Void> follow(Integer userId, Integer followId, HttpSession session) {
@@ -55,6 +56,7 @@ public class RelationController {
 		return rr;
 	}
 
+	// 取消关注
 	@RequestMapping("/defollow")
 	@ResponseBody
 	public ResponseResult<Void> deFollow(Integer userId, Integer followId, HttpSession session) {
@@ -68,6 +70,7 @@ public class RelationController {
 		return rr;
 	}
 
+	// 查询是否被关注
 	@RequestMapping("/selectIsFollow")
 	@ResponseBody
 	public ResponseResult<Integer> selectIsFollow(Integer userId, Integer followId) {
@@ -117,7 +120,7 @@ public class RelationController {
 			}
 			// 是否原创
 			Integer repostId = allFriendsWeibo.get(i).getRepostId();
-			Weibo repost = weiboService.selectByWeiboId(repostId, offset, 10);
+			Weibo repost = weiboService.selectByWeiboId(repostId, 0, 10);
 			allFriendsWeibo.get(i).setRepost(repost);
 		}
 		map.addAttribute("all", allFriendsWeibo);
@@ -142,25 +145,59 @@ public class RelationController {
 		Integer[] fans = relationService.selectFans(userId);
 		// 存放查到的用户的所有信息
 		List<User> users = new ArrayList<User>();
-		//查看是否相互关注 如何是就4 不是就3
-		for(int followId : follows){
+		// 查看是否相互关注 如何是就4 不是就3
+		for (int followId : follows) {
 			User user = userService.selectById(followId);
 			if (user != null) {
 				users.add(user);
 				user.setState(3);
-				for(int fanId : fans){
-					if(fanId == followId){
+				for (int fanId : fans) {
+					if (fanId == followId) {
 						user.setState(4);
 						break;
 					}
 				}
 			}
 		}
-		
+
 		// 将查询到的用户的全部信息传入页面
 		map.addAttribute("followList", users);
 
 		return "followlist";
+	}
+
+	/**
+	 * 展示粉丝列表
+	 * 
+	 * @return
+	 */
+	@RequestMapping("showFanList")
+	public String showFanList(Integer userId, ModelMap map) {
+		// 查询到用户的所有关注-关注用户的id
+		Integer[] follows = relationService.selectAll(userId);
+		// 查询用户的所有粉丝-当前用户的id
+		Integer[] fans = relationService.selectFans(userId);
+		// 存放查到的用户的所有信息
+		List<User> users = new ArrayList<User>();
+		// 查看是否相互关注 如何是就4 不是就1
+		for (int fanId : fans) {
+			User user = userService.selectById(fanId);
+			if (user != null) {
+				users.add(user);
+				user.setState(1);
+				for (int followId : follows) {
+					if (fanId == followId) {
+						user.setState(4);
+						break;
+					}
+				}
+			}
+		}
+
+		// 将查询到的用户的全部信息传入页面
+		map.addAttribute("followList", users);
+
+		return "fanlist";
 	}
 
 }

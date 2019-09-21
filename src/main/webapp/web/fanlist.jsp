@@ -9,7 +9,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${user.username}的关注列表</title>
+<title>${user.username}的粉丝列表</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/bootstrap-datetimepicker.min.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/login.css">
@@ -202,10 +202,10 @@
 	//已关注——关注
 	function ex_follow1(userId) {
 		var text = $("#"+userId).text();
-		if(text=="关注") { //未关注——— 关注 ————>已关注
+		if(text=="关注") { //未关注——— 关注 ————>互相关注
 		$.get("${pageContext.request.contextPath }/relation/follow.do?userId=" + nowId + "&followId=" + userId,null,function(data){
-			$("#"+userId).attr("class","btn btn-success");
-			$("#"+userId).text("已关注");
+			$("#"+userId).attr("class","btn btn-warning");
+			$("#"+userId).text("互相关注");
 		});
 		} else if(text=="已关注"){ //已关注—— 取关 ——>关注
 		$.get("${pageContext.request.contextPath }/relation/defollow.do?userId=" + nowId + "&followId=" + userId,null,function(data){

@@ -124,7 +124,6 @@ public class WeiboController {
 			// 是否原创
 			Integer repostId = all.get(i).getRepostId();
 			Weibo repost = weiboService.selectByWeiboId(repostId, 0, 10);
-			// 将date格式化 精确到s
 			all.get(i).setRepost(repost);
 		}
 		map.addAttribute("count", count);
