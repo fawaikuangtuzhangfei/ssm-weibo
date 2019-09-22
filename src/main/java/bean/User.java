@@ -30,8 +30,13 @@ public class User implements Serializable{
 	private String modifiedUser;
 	private Date modifiedTime;
 	
+	//当前用户的省的中文
+	private String nowProvince;
+	
 	//t_relation
 	private Integer state; //关注状态
+	
+	
 	
 	public Integer getId() {
 		return id;
@@ -248,13 +253,19 @@ public class User implements Serializable{
 				+ ", face=" + face + ", sex=" + sex + ", bir=" + bir + ", province=" + province + ", city=" + city
 				+ ", area=" + area + ", email=" + email + ", phone=" + phone + ", createdUser=" + createdUser
 				+ ", createdTime=" + createdTime + ", modifiedUser=" + modifiedUser + ", modifiedTime=" + modifiedTime
-				+ ", state=" + state + "]";
+				+ ", nowProvince=" + nowProvince + ", state=" + state + "]";
 	}
 	public Integer getState() {
 		return state;
 	}
 	public void setState(Integer state) {
 		this.state = state;
+	}
+	public String getNowProvince() {
+		return nowProvince;
+	}
+	public void setNowProvince(String nowProvince) {
+		this.nowProvince = nowProvince;
 	}
 	
 	

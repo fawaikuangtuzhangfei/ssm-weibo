@@ -22,4 +22,11 @@ public interface CommentMapper {
 	
 	//该条微博下有多少条评论
 	Integer count(Integer weiboId);
+	
+	/**
+	 * 当前用户收到的所有评论
+	 * @param userId
+	 * @return
+	 */
+	Integer[] selectByUserId(Integer userId);
 }

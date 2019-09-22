@@ -35,7 +35,18 @@
     select count(*) as commentNum from t_comment
     where weibo_id = #{weiboId}
     </select>
-	
+    
+    <!-- Integer[] selectByUserId(Integer userId); 当前用户收到的所有评论 -->
+	<select id="selectByUserId" resultType="java.lang.Integer" >
+    select 
+		comment_id
+		from t_comment c
+		where c.weibo_id in(
+			select w.id 
+			from t_weibo w
+			where w.user_id=#{userId}
+	)
+    </select>
 	
 	
 	</mapper>

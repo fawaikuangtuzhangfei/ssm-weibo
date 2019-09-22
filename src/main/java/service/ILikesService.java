@@ -1,5 +1,7 @@
 package service;
 
+import java.util.List;
+
 import bean.Likes;
 
 /**
@@ -42,5 +44,12 @@ public interface ILikesService {
 	 * @return
 	 */
 	Integer[] selectAllLikes(Integer userId);
+	
+	/**
+	 * 查询当前用户的微博被哪些人点赞了->个人信息+简短微博信息
+	 * @param userId
+	 * @return
+	 */
+	List<Likes> selectAllBy(Integer userId);
 
 }

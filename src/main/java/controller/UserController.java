@@ -263,7 +263,7 @@ public class UserController {
 			user.setFace(newFileName);
 		}
 		userService.updateUser(user);
-		return "redirect:../weibo/showOne.do";
+		return "redirect:../user/showUserinfo.do";
 	}
 
 	// 前往我的微博主页

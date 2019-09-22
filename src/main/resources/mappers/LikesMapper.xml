@@ -48,4 +48,35 @@
 		order by c.like_time desc
 	</select>
 	
+	<!-- Integer selectLiked(Integer userId); 查询当前用户被点赞微博的数量 -->
+	<select id="selectLiked" resultType="java.lang.Integer">
+		select 
+		count(1)
+		from t_likes c
+		where c.weibo_id in(
+			select w.id 
+			from t_weibo w
+			where w.user_id=#{userId} 
+		)
+	</select>
+	
+	<!-- List<Likes> selectLikedBy(Integer userId); 查询当前用户的微博被哪些人点赞了->个人信息+简短微博信息 -->
+	<select id="selectLikedBy" resultType="bean.Likes">
+		select 
+		c.user_id as userId, c.weibo_id as weiboId, c.like_time as likeTime, 
+		u.username, u.face, u.id as nowUserId,
+		w.content
+		from t_likes c
+		left join t_user u on u.id = c.user_id
+		left join t_weibo w on w.id = c.weibo_id
+		where c.weibo_id in(
+			select w.id 
+			from t_weibo w
+			where w.user_id=#{userId} 
+		)
+		order by c.like_time desc
+		
+	</select>
+	
+	
 	</mapper>

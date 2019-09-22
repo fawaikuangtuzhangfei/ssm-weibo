@@ -10,6 +10,7 @@ import bean.User;
 import exception.PasswordErrorException;
 import exception.UserNotFoundException;
 import exception.UsernameAlreadyExistException;
+import mapper.MentionMapper;
 import mapper.UserMapper;
 
 /**
@@ -22,6 +23,8 @@ public class UserService implements IUserService{
 	
 	@Resource
 	private UserMapper mapper;
+	@Resource
+	private MentionMapper mentionMapper;
 	//盐
 	@Value("#{config.salt}")
 	private String salt;	
@@ -31,13 +34,13 @@ public class UserService implements IUserService{
 	public void addUser(User user) {
 		User user1 = mapper.selectByUsername(user.getUsername());
 		if(user1 == null) {
-			//获取页面密码
-			String pwd = user.getPassword();
-			//生成的密码密文
-			String md5Pwd = DigestUtils.md5Hex(pwd+salt);
-			//设置user的密码属性
-			user.setPassword(md5Pwd);
-			mapper.insertUser(user);
+			String pwd = user.getPassword();//获取页面密码
+			String md5Pwd = DigestUtils.md5Hex(pwd+salt);//生成的密码密文
+			user.setPassword(md5Pwd);//设置user的密码属性
+			mapper.insertUser(user);//插入用户
+			//创建与我相关
+			User user2 = mapper.selectByUsername(user.getUsername());
+			mentionMapper.insert(user2.getId());
 		}else {
 			throw new UsernameAlreadyExistException("用户名已经存在");
 		}

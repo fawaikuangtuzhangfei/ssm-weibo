@@ -1,5 +1,7 @@
 package service;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -41,6 +43,11 @@ public class LikesService implements ILikesService{
 	@Override
 	public Integer[] selectAllLikes(Integer userId) {
 		return likemapper.selectAllLikes(userId);
+	}
+
+	@Override
+	public List<Likes> selectAllBy(Integer userId) {
+		return likemapper.selectLikedBy(userId);
 	}
 	
 	

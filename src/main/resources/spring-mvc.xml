@@ -45,6 +45,7 @@
 			<mvc:mapping path="/collect/*"/>
 			<mvc:mapping path="/like/*"/>
 			<mvc:mapping path="/relation/*"/>
+			<mvc:mapping path="/mention/*"/>
 			<!-- 不拦截的资源 -->
 			<mvc:exclude-mapping path="/user/showLogin.do"/>
 			<mvc:exclude-mapping path="/user/showRegister.do"/>

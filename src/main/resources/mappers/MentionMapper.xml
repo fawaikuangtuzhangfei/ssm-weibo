@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+		"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+	
+	<!-- namespace表示命名空间，值必须为接口的名称(包括包名) -->
+	<mapper namespace="mapper.MentionMapper">
+	
+	<!-- void insert(Integer userId); 新增用户的同时新增一个mention -->
+	<insert id="insert" parameterType="bean.Mention">
+	insert into t_mention (
+		user_id, repostCount, commentCount, replyCount, likeCount, fansCount
+		) values( 
+		#{userId}, 0 ,0, 0, 0, 0
+		)
+	</insert>
+	
+	<!-- Integer selectFans(Integer userId); 查询t_mention中用户之前的粉丝数量-->
+	<select id="selectFans" resultType="java.lang.Integer">
+		select 
+		fansCount
+		from t_mention c
+		where c.user_id=#{userId}
+	</select>
+	
+	<!-- Mention selectByUserId(Integer userId); 查询某个用户的全部相关信息-->
+	<select id="selectByUserId" resultType="bean.Mention">
+		select 
+		mention_id as mentionId,user_id as userId, repostCount, commentCount, replyCount, likeCount, fansCount
+		from t_mention c
+		where c.user_id=#{userId}
+	</select>
+	
+	<!-- void updateLike(Integer userId, likeCount); 修改当前用户的收到的赞的数量 -->
+	<update id="updateLike" parameterType="bean.Mention">
+		update t_mention
+		set
+			likeCount=#{likeCount}
+		where 
+			user_id=#{userId}
+	</update>
+	
+	
+
+	
+	</mapper>

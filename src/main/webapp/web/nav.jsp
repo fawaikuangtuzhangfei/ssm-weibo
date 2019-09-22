@@ -67,7 +67,7 @@
 						<li><a href="#">回复<span
 								id="reply_badge" class="badge"
 								style="display: none; background-color: red"></span></a></li>
-						<li><a href="#">赞<span
+						<li><a href="../mention/showLiked.do">赞<span
 								id="like_badge" class="badge"
 								style="display: none; background-color: red"></span></a></li>
 						<li><a href="# }">新的粉丝<span

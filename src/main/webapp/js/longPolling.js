@@ -1,18 +1,19 @@
-var pollAction = "getNotice.action";
+var pollAction = "../mention/getNotice.do";
 
 var getNotice ={
 	type:'GET',
 	//async:false,
 	url:pollAction,
-	timeout:120000,
+	timeout:120000, //若超时，则去error
 	contentType: 'application/json;charset=utf-8',
     dataType: 'json',
 	success:function(data){
-		var repostcount = data['repostcount'];
-		var commentcount = data['commentcount'];
-		var replycount = data['replycount'];
-		var likecount = data['likecount'];
-		var fanscount = data['fanscount'];
+		console.log(data.data.fanscount);
+		var repostcount = data.data.repostcount;
+		var commentcount = data.data.commentcount;
+		var replycount = data.data.replycount;
+		var likecount = data.data.likecount;
+		var fanscount = data.data.fanscount;
 
 		//转发
 		if(repostcount > 0){
@@ -45,7 +46,7 @@ var getNotice ={
 			$("#badge").html(total);
 			$("#badge").css("display","inline-block");
 		}
-		$.ajax(getNotice);
+		$.ajax(getNotice); //不断的调用自己
 	},
 	 error: function (XMLHttpRequest, textStatus, errorThrown) {
          if (textStatus == "timeout") { // 请求超时

@@ -1,7 +1,6 @@
 package bean;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * t_likes 点赞
@@ -20,14 +19,22 @@ public class Likes implements Serializable{
 
 	private Integer weiboId;
 
-	private Date likeTime;
+	private String likeTime;
+	
+	//t_user
+	private String username;
+	private String face;
+	private Integer nowUserId;
 
-	public Date getLikeTime() {
-		return likeTime;
+	//t_weibo
+	private String content;
+
+	public String getUsername() {
+		return username;
 	}
 
-	public void setLikeTime(Date likeTime) {
-		this.likeTime = likeTime;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public Integer getLikesId() {
@@ -58,7 +65,7 @@ public class Likes implements Serializable{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((likeTime == null) ? 0 : likeTime.hashCode());
+		result = prime * result + ((getLikeTime() == null) ? 0 : getLikeTime().hashCode());
 		result = prime * result + ((likesId == null) ? 0 : likesId.hashCode());
 		result = prime * result + ((userId == null) ? 0 : userId.hashCode());
 		result = prime * result + ((weiboId == null) ? 0 : weiboId.hashCode());
@@ -74,10 +81,10 @@ public class Likes implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Likes other = (Likes) obj;
-		if (likeTime == null) {
-			if (other.likeTime != null)
+		if (getLikeTime() == null) {
+			if (other.getLikeTime() != null)
 				return false;
-		} else if (!likeTime.equals(other.likeTime))
+		} else if (!getLikeTime().equals(other.getLikeTime()))
 			return false;
 		if (likesId == null) {
 			if (other.likesId != null)
@@ -100,7 +107,48 @@ public class Likes implements Serializable{
 	@Override
 	public String toString() {
 		return "Likes [likesId=" + likesId + ", userId=" + userId + ", weiboId=" + weiboId + ", likeTime=" + likeTime
+				+ ", username=" + username + ", face=" + face + ", nowUserId=" + nowUserId + ", content=" + content
 				+ "]";
+	}
+
+	public String getLikeTime() {
+		return likeTime;
+	}
+
+	public void setLikeTime(String likeTime) {
+		this.likeTime = likeTime;
+	}
+
+	public String getUserName() {
+		return username;
+	}
+
+	public void setUserName(String username) {
+		this.username = username;
+	}
+
+	public String getFace() {
+		return face;
+	}
+
+	public void setFace(String face) {
+		this.face = face;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public Integer getNowUserId() {
+		return nowUserId;
+	}
+
+	public void setNowUserId(Integer nowUserId) {
+		this.nowUserId = nowUserId;
 	}
 	
 }

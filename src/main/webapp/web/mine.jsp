@@ -29,6 +29,10 @@
 <link rel="stylesheet" type="text/css" href="../css/zoomify.min.css">
 <link rel="stylesheet" type="text/css" href="../css/upload.css">
 
+<!-- 长轮询 -->
+<script type="text/javascript"
+	src="${pageContext.request.contextPath }/js/longPolling.js "></script>
+
 <!-- 百度下载插件 -->
 <link rel="stylesheet" type="text/css" href="../css/webuploader.css">
 <script type="text/javascript" src="../js/webuploader.js"></script>
@@ -611,6 +615,8 @@ $('#fabu').click(function(){
 </script>
 <script type="text/javascript">
 		$('.example img').zoomify();
+		// 长轮询
+		$.ajax(getNotice);
 </script>
 
 </html>

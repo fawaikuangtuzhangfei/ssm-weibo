@@ -1,5 +1,7 @@
 package mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 import bean.Likes;
@@ -45,5 +47,18 @@ public interface LikesMapper {
 	 */
 	Integer[] selectAllLikes(Integer userId);
 	
+	/**
+	 * 查询当前用户被点赞微博的数量
+	 * @param userId
+	 * @return
+	 */
+	Integer selectLiked(Integer userId);
+	
+	/**
+	 * 查询当前用户的微博被哪些人点赞了->个人信息+简短微博信息
+	 * @param userId
+	 * @return
+	 */
+	List<Likes> selectLikedBy(Integer userId);
 	
 }
