@@ -37,4 +37,11 @@ public interface ICommentService {
 	 * @return
 	 */
 	Integer countComments(Integer weiboId);
+	
+	/**
+	 * 查询当前用户收到的评论 ->个人信息+微博信息
+	 * @param userId
+	 * @return
+	 */
+	List<Comment> selectAlls(Integer userId);
 }

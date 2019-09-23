@@ -32,6 +32,27 @@ public interface IMentionService {
 	 */
 	void updateFans(Integer userId, Integer fanCount);	
 	
+	/**
+	 * 更新现在的转发数量
+	 * @param userId
+	 * @param repostCount
+	 */
+	void updateReposts(Integer userId, Integer repostCount);
+	
+	/**
+	 * 更新现在的评论数
+	 * @param userId
+	 * @param commentCount
+	 */
+	void updateComments(Integer userId, Integer commentCount);
+	
+	/**
+	 * 更新现在的回复数
+	 * @param userId
+	 * @param relyCount
+	 */
+	void updateRelys(Integer userId, Integer relyCount);
+	
 	//计算差值
 	/**
 	 * 用户新增的粉丝数量

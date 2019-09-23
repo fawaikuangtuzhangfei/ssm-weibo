@@ -88,7 +88,7 @@ public class MentionService implements IMentionService{
 		//当评论数量减少时->设置通知为0 同时修改mention的评论数量
 		if(comment < 0){
 			mention.setFanscount(0);
-//			mentionMapper.updateFans(userId, nowFansCount);
+			mentionMapper.updateComments(userId, nowComment);
 		}
 		
 		
@@ -103,6 +103,21 @@ public class MentionService implements IMentionService{
 	@Override
 	public void updateFans(Integer userId, Integer fanCount) {
 		mentionMapper.updateFans(userId, fanCount);
+	}
+
+	@Override
+	public void updateReposts(Integer userId, Integer repostCount) {
+		mentionMapper.updateReposts(userId, repostCount);
+	}
+
+	@Override
+	public void updateComments(Integer userId, Integer commentCount) {
+		mentionMapper.updateComments(userId, commentCount);
+	}
+
+	@Override
+	public void updateRelys(Integer userId, Integer relyCount) {
+		mentionMapper.updateRelys(userId, relyCount);
 	}
 
 }

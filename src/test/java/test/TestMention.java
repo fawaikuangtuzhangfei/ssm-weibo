@@ -62,6 +62,10 @@ public class TestMention {
 		MentionMapper mapper = ac.getBean("mentionMapper", MentionMapper.class);
 		//3.
 		mapper.updateFans(70,1);
+		mapper.updateComments(70, 1);
+		mapper.updateRelys(70, 1);
+		mapper.updateReposts(70, 1);
+		mapper.updateLike(70, 1);
 		//4.
 		ac.close();
 	}

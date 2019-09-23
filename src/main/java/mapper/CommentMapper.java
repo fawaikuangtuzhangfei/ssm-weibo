@@ -29,4 +29,11 @@ public interface CommentMapper {
 	 * @return
 	 */
 	Integer[] selectByUserId(Integer userId);
+	
+	/**
+	 * 当前用户收到的所有评论 ->个人信息+微博信息
+	 * @param userId
+	 * @return
+	 */
+	List<Comment> selectAllComments(Integer userId);
 }

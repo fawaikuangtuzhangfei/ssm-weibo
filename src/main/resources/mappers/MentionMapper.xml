@@ -48,7 +48,32 @@
 			user_id=#{userId}
 	</update>
 	
+	<!-- void updateComments(Integer userId, commentCount); 修改当前用户的收到的评论的数量 -->
+	<update id="updateComments" parameterType="bean.Mention">
+		update t_mention
+		set
+			commentCount=#{commentCount}
+		where 
+			user_id=#{userId}
+	</update>
 	
+	<!-- void updateReposts(Integer userId, repostCount); 修改当前用户的收到的转发的数量 -->
+	<update id="updateReposts" parameterType="bean.Mention">
+		update t_mention
+		set
+			repostCount=#{repostCount}
+		where 
+			user_id=#{userId}
+	</update>
+	
+	<!-- void updateRelys(Integer userId, relyCount); 修改当前用户的收到的回复的数量 -->
+	<update id="updateRelys" parameterType="bean.Mention">
+		update t_mention
+		set
+			replyCount=#{relyCount}
+		where 
+			user_id=#{userId}
+	</update>
 
 	
 	</mapper>

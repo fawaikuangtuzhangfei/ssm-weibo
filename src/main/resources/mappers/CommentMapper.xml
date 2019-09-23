@@ -47,6 +47,25 @@
 			where w.user_id=#{userId}
 	)
     </select>
+    
+	<!-- List<Comment> selectAllComments(Integer userId); 当前用户收到的所有评论 ->个人信息+微博信息 -->
+	<select id="selectAllComments" resultType="bean.Comment">
+		select 
+		c.user_id as userId, c.weibo_id as weiboId, c.comment_time as commentTime, 
+		c.comment_content as commentContent,
+		u.username, u.face, u.id as nowUserId,
+		w.content
+		from t_comment c
+		left join t_user u on u.id = c.user_id
+		left join t_weibo w on w.id = c.weibo_id
+		where c.weibo_id in(
+			select w.id 
+			from t_weibo w
+			where w.user_id=#{userId} 
+		)
+		order by c.comment_time desc
+		
+	</select>    
 	
 	
 	</mapper>

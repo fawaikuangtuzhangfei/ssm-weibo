@@ -45,4 +45,25 @@ public interface MentionMapper {
 	 */
 	void updateFans(@Param("userId")Integer userId, @Param("newFanCount")Integer newFanCount);
 	
+	/**
+	 * 修改当前用户的评论数量
+	 * @param userId
+	 * @param commentCount
+	 */
+	void updateComments(@Param("userId")Integer userId, @Param("commentCount")Integer commentCount);
+	
+	/**
+	 * 修改当前用户的转发数量
+	 * @param userId
+	 * @param repostCount
+	 */
+	void updateReposts(@Param("userId")Integer userId, @Param("repostCount")Integer repostCount);
+	
+	/**
+	 * 修改当前用户的回复数量
+	 * @param userId
+	 * @param relyCount
+	 */
+	void updateRelys(@Param("userId")Integer userId, @Param("relyCount")Integer relyCount);
+	
 }

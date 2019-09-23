@@ -43,6 +43,18 @@ public class TestComment {
 		//4.
 		ac.close();
 	}
+	
+	@Test
+	public void testSelectAlls() {
+		//1.
+		AbstractApplicationContext ac = new ClassPathXmlApplicationContext("application-dao.xml");
+		//2.
+		CommentMapper mapper = ac.getBean("commentMapper", CommentMapper.class);
+		//3.
+		System.out.println(mapper.selectAllComments(70));
+		//4.
+		ac.close();
+	}
 	@Test
 	public void testSelectAllComment() {
 		//1.

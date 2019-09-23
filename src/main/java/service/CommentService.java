@@ -40,6 +40,11 @@ public class CommentService implements ICommentService{
 	public Integer countComments(Integer weiboId) {
 		return commentMapper.count(weiboId);
 	}
+
+	@Override
+	public List<Comment> selectAlls(Integer userId) {
+		return commentMapper.selectAllComments(userId);
+	}
 	
 	
 

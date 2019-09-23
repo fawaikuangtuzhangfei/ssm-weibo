@@ -14,10 +14,12 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import bean.Comment;
 import bean.Likes;
 import bean.Mention;
 import bean.ResponseResult;
 import bean.User;
+import service.ICommentService;
 import service.ILikesService;
 import service.IMentionService;
 import service.IRelationService;
@@ -50,6 +52,9 @@ public class MentionController {
 	
 	@Resource
 	private ILikesService likesService;// 点赞
+	
+	@Resource
+	private ICommentService commentService;// 评论
 	
 	@RequestMapping("/getNotice.do")
 	@ResponseBody
@@ -184,6 +189,65 @@ public class MentionController {
 		map.addAttribute("followList", users);
 
 		return "fanlist";
+	}
+	
+	/**
+	 * 跳转到我收到的评论页面 ->同时修改mention中的评论的数量
+	 * @param request
+	 * @param map
+	 * @param page
+	 * @return
+	 */
+	@RequestMapping("/showComment")
+	public String showAllComment(HttpServletRequest request, ModelMap map, Integer page) {
+		// 默认为当前页
+		if (page == null) {
+			page = 1;
+		}
+		// 一页展示10个 当前是第几个
+		Integer offset = (page - 1) * 10;
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+		Integer userId = user.getId();
+		
+		// 查询当前用户被哪些评论了->个人信息+简短微博信息
+		List<Comment> commentsList = commentService.selectAlls(userId);
+		
+		// 总评论
+		Integer count = commentsList.size();
+		// 一页上显示10个，总共几页
+		int pageSize = count % 10 == 0 ? count / 10 : count / 10 + 1;
+		// 当前页有几个
+		int haveMany = page == pageSize ? pageSize * 10 - count : 10;
+		int j = 0;
+		if (pageSize == 1) {
+			haveMany = 10;
+		}
+		//当前页上显示多少个
+		List<Comment> pages = commentService.selectAlls(userId);
+		for(int i=offset; i<count; i++){
+			pages.add(commentsList.get(i));
+			j++;
+			if(j<haveMany){
+				break;
+			}
+		}
+		
+		
+		// 获取到当前mention的全部差值信息
+		List<Comment> comments = commentService.selectAlls(userId);
+		//目前的评论数目
+		Integer commentCount = comments.size();
+		//修改mention中的commentCount
+		mentionService.updateComments(userId, commentCount);
+
+		map.addAttribute("commentList", commentsList);
+		// 将页数和总数和当前页面放进session中
+		map.addAttribute("count", count);
+		map.addAttribute("pageSize", pageSize);
+		map.addAttribute("curpage", page);
+		map.addAttribute("wz", "showOne.do");
+		return "CommentPage";
 	}
 
 }

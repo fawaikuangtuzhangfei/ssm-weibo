@@ -8,7 +8,6 @@ var getNotice ={
 	contentType: 'application/json;charset=utf-8',
     dataType: 'json',
 	success:function(data){
-		console.log(data.data.fanscount);
 		var repostcount = data.data.repostcount;
 		var commentcount = data.data.commentcount;
 		var replycount = data.data.replycount;

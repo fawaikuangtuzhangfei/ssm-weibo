@@ -61,7 +61,7 @@
 						<li><a href="#">转发<span
 								id="repost_badge" class="badge"
 								style="display: none; background-color: red"></span></a></li>
-						<li><a href="#">评论<span
+						<li><a href="../mention/showComment.do">评论<span
 								id="comment_badge" class="badge"
 								style="display: none; background-color: red"></span></a></li>
 						<li><a href="#">回复<span

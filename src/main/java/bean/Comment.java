@@ -1,7 +1,6 @@
 package bean;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
@@ -26,15 +25,29 @@ public class Comment implements Serializable{
     private Integer weiboId;
 
     @JsonDeserialize(using = CustomJsonDateDeserializer.class)
-    private Date commentTime;
+    private String commentTime;
 
-    private String commentContent;
+    private String commentContent; //评论内容
     
     //t_user
     private String username; //用户名
     private String face; //头像
+    private Integer nowUserId; //当前用户id
 
-    public Integer getCommentId() {
+	//t_weibo
+	private String content;// 微博内容
+    
+
+	
+    public String getCommentTime() {
+		return commentTime;
+	}
+
+	public void setCommentTime(String commentTime) {
+		this.commentTime = commentTime;
+	}
+
+	public Integer getCommentId() {
         return commentId;
     }
 
@@ -56,14 +69,6 @@ public class Comment implements Serializable{
 
     public void setWeiboId(Integer weiboId) {
         this.weiboId = weiboId;
-    }
-
-    public Date getCommentTime() {
-        return commentTime;
-    }
-
-    public void setCommentTime(Date commentTime) {
-        this.commentTime = commentTime;
     }
 
     public String getCommentContent() {
@@ -126,7 +131,8 @@ public class Comment implements Serializable{
 	@Override
 	public String toString() {
 		return "Comment [commentId=" + commentId + ", userId=" + userId + ", weiboId=" + weiboId + ", commentTime="
-				+ commentTime + ", commentContent=" + commentContent + "]";
+				+ commentTime + ", commentContent=" + commentContent + ", username=" + username + ", face=" + face
+				+ ", nowUserId=" + nowUserId + ", content=" + content + "]";
 	}
 
 	public String getUsername() {
@@ -143,6 +149,22 @@ public class Comment implements Serializable{
 
 	public void setFace(String face) {
 		this.face = face;
+	}
+
+	public Integer getNowUserId() {
+		return nowUserId;
+	}
+
+	public void setNowUserId(Integer nowUserId) {
+		this.nowUserId = nowUserId;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
 	}
     
     
