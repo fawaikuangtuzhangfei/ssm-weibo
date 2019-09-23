@@ -17,6 +17,7 @@ import bean.Relation;
 import bean.ResponseResult;
 import bean.User;
 import bean.Weibo;
+import service.IMentionService;
 import service.IRelationService;
 import service.IUserService;
 import service.WeiboService;
@@ -41,6 +42,9 @@ public class RelationController {
 
 	@Resource
 	private IRelationService relationService;// 关注
+	
+	@Resource
+	private IMentionService mentionService;//与我相关
 
 	// 关注
 	@RequestMapping("/follow")

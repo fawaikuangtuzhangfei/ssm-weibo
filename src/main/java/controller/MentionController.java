@@ -1,6 +1,7 @@
 package controller;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -74,7 +75,7 @@ public class MentionController {
 				e.printStackTrace();
 			}
 			maxTime++;
-			if (maxTime == 1) {//让他x*3秒刷新一次
+			if (maxTime == 1) {//让他maxTime*3秒刷新一次
 				break;
 			}
 
@@ -145,5 +146,44 @@ public class MentionController {
 		return "LikePage";
 	}
 
+	/**
+	 * 跳转到我的粉丝页面-同时修改mention中的粉丝数量
+	 * @param userId
+	 * @param map
+	 * @return
+	 */
+	@RequestMapping("showFanList")
+	public String showFanList(Integer userId, ModelMap map) {
+		// 查询到用户的所有关注-关注用户的id
+		Integer[] follows = relationService.selectAll(userId);
+		// 查询用户的所有粉丝-当前用户的id
+		Integer[] fans = relationService.selectFans(userId);
+		// 存放查到的用户的所有信息
+		List<User> users = new ArrayList<User>();
+		// 查看是否相互关注 如何是就4 不是就1
+		for (int fanId : fans) {
+			User user = userService.selectById(fanId);
+			if (user != null) {
+				users.add(user);
+				user.setState(1);
+				for (int followId : follows) {
+					if (fanId == followId) {
+						user.setState(4);
+						break;
+					}
+				}
+			}
+		}
+		//获取到我目前的粉丝数量
+		Integer fanCount = relationService.selectFans(userId).length;
+		System.out.println(fanCount);
+		//修改mention中我的粉丝数量
+		mentionService.updateFans(userId, fanCount);
+
+		// 将查询到的用户的全部信息传入页面
+		map.addAttribute("followList", users);
+
+		return "fanlist";
+	}
 
 }

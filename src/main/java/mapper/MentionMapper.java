@@ -38,4 +38,11 @@ public interface MentionMapper {
 	 */
 	void updateLike(@Param("userId")Integer userId, @Param("likeCount")Integer likeCount);
 	
+	/**
+	 * 修改当前用户的粉丝的数量
+	 * @param userId
+	 * @param newFanCount
+	 */
+	void updateFans(@Param("userId")Integer userId, @Param("newFanCount")Integer newFanCount);
+	
 }

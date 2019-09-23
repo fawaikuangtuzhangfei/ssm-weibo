@@ -24,7 +24,13 @@ public interface IMentionService {
 	 * @param likeCount
 	 */
 	void updateLikes(Integer userId, Integer likeCount);
-	
+
+	/**
+	 * 更新现在的粉丝数量
+	 * @param userId
+	 * @param likeCount
+	 */
+	void updateFans(Integer userId, Integer fanCount);	
 	
 	//计算差值
 	/**

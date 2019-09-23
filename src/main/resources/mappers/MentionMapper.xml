@@ -39,6 +39,15 @@
 			user_id=#{userId}
 	</update>
 	
+	<!-- void updateFans(Integer userId, newFanCount); 修改当前用户的收到的赞的数量 -->
+	<update id="updateFans" parameterType="bean.Mention">
+		update t_mention
+		set
+			fansCount=#{newFanCount}
+		where 
+			user_id=#{userId}
+	</update>
+	
 	
 
 	

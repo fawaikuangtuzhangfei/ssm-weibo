@@ -55,6 +55,17 @@ public class TestMention {
 		ac.close();
 	}
 	@Test
+	public void testupdatefans() {
+		//1.
+		AbstractApplicationContext ac = new ClassPathXmlApplicationContext("application-dao.xml");
+		//2.
+		MentionMapper mapper = ac.getBean("mentionMapper", MentionMapper.class);
+		//3.
+		mapper.updateFans(70,1);
+		//4.
+		ac.close();
+	}
+	@Test
 	public void testSelectAll() {
 		//1.
 		AbstractApplicationContext ac = new ClassPathXmlApplicationContext("application-dao.xml");

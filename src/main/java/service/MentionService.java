@@ -59,16 +59,24 @@ public class MentionService implements IMentionService{
 		//粉丝的差值
 		Integer fans = nowFansCount - mention.getFanscount();
 		//设置与我相关粉丝数
-		if(fans > 0){
-			mention.setFanscount(fans);
+		mention.setFanscount(fans);
+		//当粉丝数量减少时->设置通知为0 同时修改mention的粉丝数量
+		if(fans < 0){
+			mention.setFanscount(0);
+			mentionMapper.updateFans(userId, nowFansCount);
 		}
 		
 		//现在的赞的数量
 		Integer nowLikes = likesMapper.selectLiked(userId);
 		//赞的差值
 		Integer likes = nowLikes - mention.getLikecount();
-		//设置与我相关粉丝数
+		//设置与我相关点赞数
 		mention.setLikecount(likes);
+		//当点赞数量减少时->设置通知为0 同时修改mention的点赞数量
+		if(likes < 0){
+			mention.setLikecount(0);
+			mentionMapper.updateLike(userId, nowLikes);
+		}
 		
 		//现在的评论的数量
 		Integer[] nowComments = commentMapper.selectByUserId(userId);
@@ -77,7 +85,11 @@ public class MentionService implements IMentionService{
 		Integer comment = nowComment - mention.getCommentcount();
 		//设置与我相关评论数
 		mention.setCommentcount(comment);
-		
+		//当评论数量减少时->设置通知为0 同时修改mention的评论数量
+		if(comment < 0){
+			mention.setFanscount(0);
+//			mentionMapper.updateFans(userId, nowFansCount);
+		}
 		
 		
 		return mention;
@@ -86,6 +98,11 @@ public class MentionService implements IMentionService{
 	@Override
 	public void updateLikes(Integer userId, Integer likeCount) {
 		mentionMapper.updateLike(userId, likeCount);
+	}
+
+	@Override
+	public void updateFans(Integer userId, Integer fanCount) {
+		mentionMapper.updateFans(userId, fanCount);
 	}
 
 }
