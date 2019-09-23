@@ -19,6 +19,7 @@ import bean.Likes;
 import bean.Mention;
 import bean.ResponseResult;
 import bean.User;
+import bean.Weibo;
 import service.ICommentService;
 import service.ILikesService;
 import service.IMentionService;
@@ -87,7 +88,6 @@ public class MentionController {
 		}
 		
 		
-		log.info(mention);
 		rr = new ResponseResult<Mention>(1, "查询成功", mention);
 		return rr;
 	}
@@ -250,4 +250,64 @@ public class MentionController {
 		return "CommentPage";
 	}
 
+	
+	/**
+	 * 跳转到我收到的转发页面 ->同时修改mention中的转发的数量
+	 * @param request
+	 * @param map
+	 * @param page
+	 * @return
+	 */
+	@RequestMapping("/showRepost")
+	public String showAllRepost(HttpServletRequest request, ModelMap map, Integer page) {
+		// 默认为当前页
+		if (page == null) {
+			page = 1;
+		}
+		// 一页展示10个 当前是第几个
+		Integer offset = (page - 1) * 10;
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+		Integer userId = user.getId();
+		
+		// 查询当前用户被哪些转发了->个人信息+简短微博信息
+		List<Weibo> repostList = weiboService.selectBy(userId);
+		
+		// 总转发的数量
+		Integer count = repostList.size();
+		// 一页上显示10个，总共几页
+		int pageSize = count % 10 == 0 ? count / 10 : count / 10 + 1;
+		// 当前页有几个
+		int haveMany = page == pageSize ? pageSize * 10 - count : 10;
+		int j = 0;
+		if (pageSize == 1) {
+			haveMany = 10;
+		}
+		//当前页上显示多少个
+		List<Weibo> pages = weiboService.selectBy(userId);
+		for(int i=offset; i<count; i++){
+			pages.add(repostList.get(i));
+			j++;
+			if(j<haveMany){
+				break;
+			}
+		}
+		
+		
+		// 获取到当前mention的全部差值信息
+		List<Weibo> repost = weiboService.selectBy(userId);
+		//目前的转发数目
+		Integer repostCount = repost.size();
+		//修改mention中的commentCount
+		mentionService.updateReposts(userId, repostCount);
+
+		map.addAttribute("RepostList", repostList);
+		// 将页数和总数和当前页面放进session中
+		map.addAttribute("count", count);
+		map.addAttribute("pageSize", pageSize);
+		map.addAttribute("curpage", page);
+		map.addAttribute("wz", "showOne.do");
+		return "RepostPage";
+	}
+	
 }

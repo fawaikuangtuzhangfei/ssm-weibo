@@ -157,5 +157,22 @@
 	</foreach>
 	</select>
 	
+	<!-- List<Weibo> selectBy(Integer userId); 查询当前用户被转发的微博-个人信息+微博内容 -->
+	<select id="selectBy" resultType="bean.Weibo">
+	select 
+		c.user_id as userId, c.id, c.post_time as postTime, 
+		c.content,
+		u.username, u.face, u.id as nowUserId
+		from t_weibo c
+		left join t_user u on u.id = c.user_id
+		where c.repost_id in(
+			select w.id 
+			from t_weibo w
+			where w.user_id=#{userId}
+		)
+		order by c.post_time desc
+		
+	</select>
+	
 	
 	</mapper>

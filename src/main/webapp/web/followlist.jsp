@@ -232,7 +232,11 @@
 		}
 	}
     </script>
-
+	
+	<script>
+	// 长轮询
+	$.ajax(getNotice);
+	</script>
 
 </body>
 

@@ -89,4 +89,9 @@ public class WeiboService implements IWeiboService{
 		return weiboMapper.selectByContentsNoPage(content);
 	}
 
+	@Override
+	public List<Weibo> selectBy(Integer userId) {
+		return weiboMapper.selectBy(userId);
+	}
+
 }

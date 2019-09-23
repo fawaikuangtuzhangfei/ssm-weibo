@@ -97,4 +97,11 @@ public interface IWeiboService {
 	 */
 	Integer countMany(Integer[] userIds);
 	
+	/**
+	 * 查询当前用户收到的转发->个人信息+微博内容
+	 * @param userId
+	 * @return
+	 */
+	List<Weibo> selectBy(Integer userId);
+	
 }

@@ -49,7 +49,7 @@ var getNotice ={
 	},
 	 error: function (XMLHttpRequest, textStatus, errorThrown) {
          if (textStatus == "timeout") { // 请求超时
-        	 $.ajax(getNotice); // 递归调用
+        	 //$.ajax(getNotice); // 递归调用
          } else { // 其他错误，如网络错误等
         	 $.ajax(getNotice);
          }

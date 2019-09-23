@@ -116,5 +116,12 @@ public interface WeiboMapper {
 	 */
 	Integer selectByContentsNoPage(@Param("content")String content);
 	
+	/**
+	 * 查询当前用户被转发的微博-个人信息+微博内容
+	 * @param userId
+	 * @return
+	 */
+	List<Weibo> selectBy(Integer userId);
+	
 	
 }

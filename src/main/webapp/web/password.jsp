@@ -17,6 +17,10 @@
 <script type="text/javascript " src="../js/comment.js"></script>
 <script type="text/javascript " src="../js/jquery.flexText.js "></script>
 
+<!-- 长轮询 -->
+<script type="text/javascript"
+	src="${pageContext.request.contextPath }/js/longPolling.js "></script>
+
 <!-- Bootstrap -->
 <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="../css/login.css">
@@ -194,6 +198,9 @@
         }
         check_password();
       }
+      
+		// 长轮询
+		$.ajax(getNotice);
     </script>
 </body>
 

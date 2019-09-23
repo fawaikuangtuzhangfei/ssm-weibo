@@ -38,3 +38,13 @@ body {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
+
+.bg {
+	background:url("../img/5cc02e6df08f6.jpg") no-repeat center 0;
+         background-attachment: fixed;
+         background-size: cover; 
+          -webkit-background-size: cover;  
+          -o-background-size: cover;  
+          -moz-background-size: cover;  
+          -ms-background-size: cover;
+}

@@ -58,7 +58,7 @@
 						class="badge" style="display: none; background-color: red"></span>
 				</a>
 					<ul class="dropdown-menu">
-						<li><a href="#">转发<span
+						<li><a href="../mention/showRepost.do">转发<span
 								id="repost_badge" class="badge"
 								style="display: none; background-color: red"></span></a></li>
 						<li><a href="../mention/showComment.do">评论<span

@@ -232,6 +232,11 @@
 		}
 	}
     </script>
+    
+    <script type="text/javascript">
+	// 长轮询
+	$.ajax(getNotice);
+    </script>
 
 
 </body>

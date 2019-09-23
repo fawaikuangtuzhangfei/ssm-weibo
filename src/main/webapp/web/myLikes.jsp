@@ -19,6 +19,10 @@
 <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="../css/login.css">
 
+<!-- 长轮询 -->
+<script type="text/javascript"
+	src="${pageContext.request.contextPath }/js/longPolling.js "></script>
+
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/login.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/style.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/comment.css">
@@ -573,6 +577,8 @@ $('#fabu').click(function(){
 </script>
 <script type="text/javascript">
 		$('.example img').zoomify();
+		// 长轮询
+		$.ajax(getNotice);
 </script>
 
 </body>
