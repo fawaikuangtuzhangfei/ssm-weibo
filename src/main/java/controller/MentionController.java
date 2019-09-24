@@ -1,6 +1,5 @@
 package controller;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,53 +46,53 @@ public class MentionController {
 
 	@Resource
 	private IRelationService relationService;// 关注
-	
+
 	@Resource
 	private IMentionService mentionService;// 关注
-	
+
 	@Resource
 	private ILikesService likesService;// 点赞
-	
+
 	@Resource
 	private ICommentService commentService;// 评论
-	
+
 	@RequestMapping("/getNotice.do")
 	@ResponseBody
-	public ResponseResult<Mention> getNotice(HttpServletRequest request){
+	public ResponseResult<Mention> getNotice(HttpServletRequest request) {
 		ResponseResult<Mention> rr = null;
-		
+
 		// 从session中取出user ->取出userId
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		Integer userId = user.getId();
-		
+
 		// 获取到当前mention的全部差值信息
 		Mention mention = mentionService.selectByUserId(userId);
-		
+
 		// 超时时间
 		int maxTime = 0;
 
 		while (true) {
 
 			try {
-				Thread.sleep(3000); 
+				Thread.sleep(3000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 			maxTime++;
-			if (maxTime == 1) {//让他maxTime*3秒刷新一次
+			if (maxTime == 1) {// 让他maxTime*3秒刷新一次
 				break;
 			}
 
 		}
-		
-		
+
 		rr = new ResponseResult<Mention>(1, "查询成功", mention);
 		return rr;
 	}
-	
+
 	/**
 	 * 跳转到我收到的赞页面 ->同时修改mention中的赞的数量
+	 * 
 	 * @param request
 	 * @param map
 	 * @param page
@@ -110,10 +109,10 @@ public class MentionController {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		Integer userId = user.getId();
-		
+
 		// 查询当前用户被哪些人点赞了->个人信息+简短微博信息
 		List<Likes> likesList = likesService.selectAllBy(userId);
-		
+
 		// 总点赞微博数
 		Integer count = likesList.size();
 		// 一页上显示10个，总共几页
@@ -124,22 +123,21 @@ public class MentionController {
 		if (pageSize == 1) {
 			haveMany = 10;
 		}
-		//当前页上显示多少个
+		// 当前页上显示多少个
 		List<Likes> pages = likesService.selectAllBy(userId);
-		for(int i=offset; i<count; i++){
+		for (int i = offset; i < count; i++) {
 			pages.add(likesList.get(i));
 			j++;
-			if(j<haveMany){
+			if (j < haveMany) {
 				break;
 			}
 		}
-		
-		
+
 		// 获取到当前mention的全部差值信息
 		List<Likes> likes = likesService.selectAllBy(userId);
-		//目前的点赞数目
+		// 目前的点赞数目
 		Integer likeCount = likes.size();
-		//修改mention中的likecount
+		// 修改mention中的likecount
 		mentionService.updateLikes(userId, likeCount);
 
 		map.addAttribute("likesList", likesList);
@@ -153,6 +151,7 @@ public class MentionController {
 
 	/**
 	 * 跳转到我的粉丝页面-同时修改mention中的粉丝数量
+	 * 
 	 * @param userId
 	 * @param map
 	 * @return
@@ -179,10 +178,10 @@ public class MentionController {
 				}
 			}
 		}
-		//获取到我目前的粉丝数量
+		// 获取到我目前的粉丝数量
 		Integer fanCount = relationService.selectFans(userId).length;
 		System.out.println(fanCount);
-		//修改mention中我的粉丝数量
+		// 修改mention中我的粉丝数量
 		mentionService.updateFans(userId, fanCount);
 
 		// 将查询到的用户的全部信息传入页面
@@ -190,9 +189,10 @@ public class MentionController {
 
 		return "fanlist";
 	}
-	
+
 	/**
 	 * 跳转到我收到的评论页面 ->同时修改mention中的评论的数量
+	 * 
 	 * @param request
 	 * @param map
 	 * @param page
@@ -209,10 +209,10 @@ public class MentionController {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		Integer userId = user.getId();
-		
+
 		// 查询当前用户被哪些评论了->个人信息+简短微博信息
 		List<Comment> commentsList = commentService.selectAlls(userId);
-		
+
 		// 总评论
 		Integer count = commentsList.size();
 		// 一页上显示10个，总共几页
@@ -223,22 +223,20 @@ public class MentionController {
 		if (pageSize == 1) {
 			haveMany = 10;
 		}
-		//当前页上显示多少个
+		// 当前页上显示多少个
 		List<Comment> pages = commentService.selectAlls(userId);
-		for(int i=offset; i<count; i++){
+		for (int i = offset; i < count; i++) {
 			pages.add(commentsList.get(i));
 			j++;
-			if(j<haveMany){
+			if (j < haveMany) {
 				break;
 			}
 		}
-		
-		
-		// 获取到当前mention的全部差值信息
+
+		// 目前的评论数目
 		List<Comment> comments = commentService.selectAlls(userId);
-		//目前的评论数目
 		Integer commentCount = comments.size();
-		//修改mention中的commentCount
+		// 修改mention中的commentCount
 		mentionService.updateComments(userId, commentCount);
 
 		map.addAttribute("commentList", commentsList);
@@ -250,9 +248,9 @@ public class MentionController {
 		return "CommentPage";
 	}
 
-	
 	/**
 	 * 跳转到我收到的转发页面 ->同时修改mention中的转发的数量
+	 * 
 	 * @param request
 	 * @param map
 	 * @param page
@@ -269,10 +267,10 @@ public class MentionController {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		Integer userId = user.getId();
-		
+
 		// 查询当前用户被哪些转发了->个人信息+简短微博信息
 		List<Weibo> repostList = weiboService.selectBy(userId);
-		
+
 		// 总转发的数量
 		Integer count = repostList.size();
 		// 一页上显示10个，总共几页
@@ -283,22 +281,21 @@ public class MentionController {
 		if (pageSize == 1) {
 			haveMany = 10;
 		}
-		//当前页上显示多少个
+		// 当前页上显示多少个
 		List<Weibo> pages = weiboService.selectBy(userId);
-		for(int i=offset; i<count; i++){
+		for (int i = offset; i < count; i++) {
 			pages.add(repostList.get(i));
 			j++;
-			if(j<haveMany){
+			if (j < haveMany) {
 				break;
 			}
 		}
-		
-		
+
 		// 获取到当前mention的全部差值信息
 		List<Weibo> repost = weiboService.selectBy(userId);
-		//目前的转发数目
+		// 目前的转发数目
 		Integer repostCount = repost.size();
-		//修改mention中的commentCount
+		// 修改mention中的commentCount
 		mentionService.updateReposts(userId, repostCount);
 
 		map.addAttribute("RepostList", repostList);
@@ -309,5 +306,5 @@ public class MentionController {
 		map.addAttribute("wz", "showOne.do");
 		return "RepostPage";
 	}
-	
+
 }

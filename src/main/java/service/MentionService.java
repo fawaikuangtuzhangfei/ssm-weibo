@@ -1,14 +1,18 @@
 package service;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
 import bean.Mention;
+import bean.Weibo;
 import mapper.CommentMapper;
 import mapper.LikesMapper;
 import mapper.MentionMapper;
 import mapper.RelationMapper;
+import mapper.WeiboMapper;
 
 /**
  * t_mention 与我相关
@@ -24,6 +28,8 @@ public class MentionService implements IMentionService{
 	private LikesMapper likesMapper; //点赞
 	@Resource
 	private CommentMapper commentMapper; //评论
+	@Resource
+	private WeiboMapper weiboMapper; //转发
 	@Resource
 	private MentionMapper mentionMapper;//mention
 
@@ -89,6 +95,19 @@ public class MentionService implements IMentionService{
 		if(comment < 0){
 			mention.setFanscount(0);
 			mentionMapper.updateComments(userId, nowComment);
+		}
+		
+		//现在的转发数量
+		List<Weibo> nowReposts = weiboMapper.selectBy(userId);
+		Integer nowRepost = nowReposts.size();
+		//转发的差值
+		Integer repost = nowRepost - mention.getRepostcount();
+		//设置与我相关的转发数量
+		mention.setRepostcount(repost);
+		//当转发的总数减少时->设置通知为0 同时修改mention的转发数量
+		if(repost < 0){
+			mention.setRepostcount(0);
+			mentionMapper.updateReposts(userId, repost);
 		}
 		
 		

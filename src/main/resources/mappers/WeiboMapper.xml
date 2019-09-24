@@ -162,9 +162,12 @@
 	select 
 		c.user_id as userId, c.id, c.post_time as postTime, 
 		c.content,
-		u.username, u.face, u.id as nowUserId
+		u.username, u.face, u.id as nowUserId,
+		w.content as oldContent, w.pic1,w.pic2,w.pic3,
+		w.pic4,w.pic5,w.pic6,w.pic7,w.pic8,w.pic9
 		from t_weibo c
 		left join t_user u on u.id = c.user_id
+		left join t_weibo w on w.id = c.repost_id
 		where c.repost_id in(
 			select w.id 
 			from t_weibo w

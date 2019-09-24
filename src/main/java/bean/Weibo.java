@@ -33,6 +33,8 @@ public class Weibo implements Serializable{
 	private Integer repostId;
 	//记录转发的微博
 	private Weibo repost;
+	//转发的原微博内容
+	private String oldContent;
 	
 	
 	//t_user
@@ -263,14 +265,20 @@ public class Weibo implements Serializable{
 		return "Weibo [id=" + id + ", userId=" + userId + ", postTime=" + postTime + ", content=" + content + ", pic1="
 				+ pic1 + ", pic2=" + pic2 + ", pic3=" + pic3 + ", pic4=" + pic4 + ", pic5=" + pic5 + ", pic6=" + pic6
 				+ ", pic7=" + pic7 + ", pic8=" + pic8 + ", pic9=" + pic9 + ", original=" + original + ", repostId="
-				+ repostId + ", repost=" + repost + ", username=" + username + ", face=" + face + ", nowProvince="
-				+ nowProvince + "]";
+				+ repostId + ", repost=" + repost + ", oldContent=" + oldContent + ", username=" + username + ", face="
+				+ face + ", nowProvince=" + nowProvince + "]";
 	}
 	public String getNowProvince() {
 		return nowProvince;
 	}
 	public void setNowProvince(String nowProvince) {
 		this.nowProvince = nowProvince;
+	}
+	public String getOldContent() {
+		return oldContent;
+	}
+	public void setOldContent(String oldContent) {
+		this.oldContent = oldContent;
 	}
 	
 	

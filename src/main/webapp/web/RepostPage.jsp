@@ -125,24 +125,19 @@
 	<!-- 头像 -->
 	<div style="cursor: pointer; height: 30px; width: 30px;	margin: 10px; float: left; margin-left: 100px;">
 		
-		<c:if test="${weibo.userId==user.id }">
-<img onclick="javascript:clickme();" src="/imgUpload/${user.face}" width="40px" height="40px" class="img-circle">
-		</c:if>
-		<c:if test="${weibo.userId!=user.id }">
-<img onclick="javascript:clickother(${weibo.userId});" src="/imgUpload/${weibo.face}" width="40px" height="40px" class="img-circle">
-		</c:if>
+<img onclick="javascript:clickother(${user.id});" src="/imgUpload/${user.face}" width="40px" height="40px" class="img-circle">
 	</div>
 	<!-- 昵称+日期 -->
 	<div
 		style="text-align: left; margin: 10px; margin-left: 20px; float: left;">
-		<a style="color: #333; font-size: 14px" href="javascrip:;">${weibo.username }</a><br>
+		<a style="color: #333; font-size: 14px" href="javascrip:;">${user.username }</a><br>
 	</div>
 </div>
 <div class="container" style="width: 850px; background-color: #eaeaec;">
 	<!-- 文字 -->
 	<!-- onclick="javascript:clickWeibo(${weibo.id});" -->
 	<div style="text-align: left; margin-left: 160px" >
-		<p style="color: #333; font-size: 17px">${weibo.content }</p>
+		<p style="color: #333; font-size: 17px">${weibo.oldContent }</p>
 	</div>
 	<!-- 图片 -->
 	<div class="example" style="margin-left: 160px; margin-bottom: 20px;">
@@ -211,59 +206,59 @@
 	
 		</div>
 	</div>
-	<script type="text/javascript">
+<script type="text/javascript">
 	//转发微博
-	function repost(id) {
-		$('#Modal'+id).modal('toggle');
+	function repost(weiboId) {
+		$('#Modal'+weiboId).modal('toggle');
 	}
 	
 	//跳至自己的主页
 	function clickme() {
-		window.location="queryMinePage.action";
+		window.location="../weibo/showOne.do";
 	}
 
 	//跳至userId的用户主页
 	function clickother(userId) {
-		var url = "queryUserPage.action?userId=" + userId;
+		var url = "../user/showOne.do?userId=" + userId;
 		window.location=url;
 	}
 	
 	//跳至所选微博页
-	function clickWeibo(id) {
-		var url = "singleWeibo.action?id=" + id;
+	function clickWeibo(weiboId) {
+		var url = "singleWeibo.action?weiboId=" + weiboId;
 		window.open(url);
 	}
 	
-	function likes(id) {
+	function likes(weiboId) {
 		//未赞——>已赞
-		var likeCount = $("#likeCount" + id).text();
-		if($("#likespan"+id).hasClass("glyphicon-heart-empty")){
-			$.get("${pageContext.request.contextPath }/like.action?id=" + id,null,function(data){
-				$("#likespan"+id).attr("class","glyphicon glyphicon-heart");
+		var likeCount = $("#likeCount" + weiboId).text();
+		if($("#likespan"+weiboId).hasClass("glyphicon-heart-empty")){
+			$.get("${pageContext.request.contextPath }/like.do?weiboId=" + weiboId,null,function(data){
+				$("#likespan"+weiboId).attr("class","glyphicon glyphicon-heart");
 				likeCount++;
-				$("#likeCount" + id).text(likeCount);
+				$("#likeCount" + weiboId).text(likeCount);
 			});
 		}
 		//已赞——>取消赞
 		else {
-			$.get("${pageContext.request.contextPath }/unlike.action?id=" + id,null,function(data){
-				$("#likespan"+id).attr("class","glyphicon glyphicon-heart-empty");
+			$.get("${pageContext.request.contextPath }/delike.action?weiboId=" + weiboId,null,function(data){
+				$("#likespan"+weiboId).attr("class","glyphicon glyphicon-heart-empty");
 				likeCount--;
-				$("#likeCount" + id).text(likeCount);
+				$("#likeCount" + weiboId).text(likeCount);
 			});
 		}
 	}
 
-	function collect(id) {
-		var text = $("#collect" + id).text();
+	function collect(weiboId) {
+		var text = $("#collect" + weiboId).text();
 		if(text == "收藏") {
-			$.get("${pageContext.request.contextPath }/collect.action?id=" + id,null,function(data){
-				$("#collect" + id).text("已收藏");
+			$.get("${pageContext.request.contextPath }/collect.action?weiboId=" + weiboId,null,function(data){
+				$("#collect" + weiboId).text("已收藏");
 			});
 		} 
 		if(text == "已收藏"){
-			$.get("${pageContext.request.contextPath }/uncollect.action?id=" + id,null,function(data){
-				$("#collect" + id).text("收藏");
+			$.get("${pageContext.request.contextPath }/decollect.action?weiboId=" + weiboId,null,function(data){
+				$("#collect" + weiboId).text("收藏");
 			});
 		}
 		
