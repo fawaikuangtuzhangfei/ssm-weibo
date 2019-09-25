@@ -70,7 +70,7 @@
 						<li><a href="../mention/showLiked.do">赞<span
 								id="like_badge" class="badge"
 								style="display: none; background-color: red"></span></a></li>
-						<li><a href="../mention/showFanList.do?userId=${user.id }">新的粉丝<span
+						<li><a href="../mention/showFanList.do?userId=${user.id }&nowId=${user.id}">新的粉丝<span
 								id="fans_badge" class="badge"
 								style="display: none; background-color: red"></span></a></li>
 					</ul></li>
@@ -109,8 +109,8 @@
 			<table align="center" style="table-layout: fixed;">
 				<tr>
 					<td><a href="../weibo/showOne.do">${countWeibo }微博&nbsp;</a></td>
-					<td><a href="../relation/showFollowList.do?userId=${user.id }">${followCount }关注&nbsp;</a></td>
-					<td><a href="../relation/showFanList.do?userId=${user.id }">${fanCount }粉丝</td>
+					<td><a href="../relation/showFollowList.do?userId=${user.id }&nowId=${user.id}">${followCount }关注&nbsp;</a></td>
+					<td><a href="../relation/showFanList.do?userId=${user.id }&nowId=${user.id}">${fanCount }粉丝</td>
 				</tr>
 			</table>
 			<br>

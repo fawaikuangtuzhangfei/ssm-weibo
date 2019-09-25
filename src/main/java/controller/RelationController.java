@@ -138,24 +138,45 @@ public class RelationController {
 
 	/**
 	 * 展示关注列表
+	 * userId是目前登录的用户
+	 * nowId是该主页用户
 	 * 
 	 * @return
 	 */
 	@RequestMapping("showFollowList")
-	public String showFollowList(Integer userId, ModelMap map) {
-		// 查询到用户的所有关注-关注用户的id
-		Integer[] follows = relationService.selectAll(userId);
-		// 查询用户的所有粉丝-当前用户的id
-		Integer[] fans = relationService.selectFans(userId);
+	public String showFollowList(Integer nowId, Integer userId, ModelMap map) {
+		log.info("关注列表");
+		// 查询到目前登录用户的所有关注-关注用户的id
+		Integer[] nowfollows = relationService.selectAll(userId);
+		// 查询目前登录用户的所有粉丝-当前用户的id
+		Integer[] nowfans = relationService.selectFans(userId);
+		// 查询当前userId用户的全部信息
+		User nowUser = userService.selectById(nowId);
+		// 查询当前userId的所有关注
+		Integer[] follows = relationService.selectAll(nowId);
+		// 查询目前nowId的所有粉丝-当前用户的id
+		Integer[] fans = relationService.selectFans(nowId);
 		// 存放查到的用户的所有信息
 		List<User> users = new ArrayList<User>();
-		// 查看是否相互关注 如何是就4 不是就3
+		/*
+		 * 目前nowId的关注 = 登录用户的关注 ->3关注
+		 * 目前nowId的关注 != 登录用户的关注 ->1陌生
+		 * 目前nowID的关注 = 登录用户的粉丝 ->4互相关注
+		 */
 		for (int followId : follows) {
 			User user = userService.selectById(followId);
 			if (user != null) {
 				users.add(user);
-				user.setState(3);
-				for (int fanId : fans) {
+				user.setState(1);
+				//目前nowId的关注 = 登录用户的关注 ->3关注
+				for(int nowfid : nowfollows){
+					if(nowfid == followId){
+						user.setState(3);
+						break;
+					}
+				}
+				//nowID的关注 = 登录用户的粉丝 ->4互相关注
+				for (int fanId : nowfans) {
 					if (fanId == followId) {
 						user.setState(4);
 						break;
@@ -163,9 +184,18 @@ public class RelationController {
 				}
 			}
 		}
-
+		
+		// 查询当前用户的微博总数
+		Integer nowWeiboCount = weiboService.countByUser(nowId);
+		
+		//将微博总数、粉丝总数、关注总数放入map中
+		map.addAttribute("nowWeiboCount", nowWeiboCount);
+		map.addAttribute("nowFansCount", fans.length);
+		map.addAttribute("nowFollowCount", follows.length);
 		// 将查询到的用户的全部信息传入页面
 		map.addAttribute("followList", users);
+		// 将现在的用户也存入
+		map.addAttribute("nowUser", nowUser);
 
 		return "followlist";
 	}
@@ -176,20 +206,30 @@ public class RelationController {
 	 * @return
 	 */
 	@RequestMapping("showFanList")
-	public String showFanList(Integer userId, ModelMap map) {
-		// 查询到用户的所有关注-关注用户的id
-		Integer[] follows = relationService.selectAll(userId);
-		// 查询用户的所有粉丝-当前用户的id
-		Integer[] fans = relationService.selectFans(userId);
+	public String showFanList(Integer userId, Integer nowId, ModelMap map) {
+		log.info("粉丝列表");
+		// 查询到目前登录用户的所有关注-关注用户的id
+		Integer[] nowfollows = relationService.selectAll(userId);
+		// 查询当前主页用户的全部信息
+		User nowUser = userService.selectById(nowId);
+		// 查询当前主页的所有关注
+		Integer[] follows = relationService.selectAll(nowId);
+		// 查询目前nowId的所有粉丝-当前用户的id
+		Integer[] fans = relationService.selectFans(nowId);
 		// 存放查到的用户的所有信息
 		List<User> users = new ArrayList<User>();
-		// 查看是否相互关注 如何是就4 不是就1
+		/*
+		 * 目前nowId的粉丝 = 登录用户的关注 ->4互相关注
+		 * 目前nowId的粉丝 != 登录用户的关注 ->1陌生
+		 * follows 主页的关注
+		 */
 		for (int fanId : fans) {
 			User user = userService.selectById(fanId);
 			if (user != null) {
 				users.add(user);
 				user.setState(1);
-				for (int followId : follows) {
+				//目前nowId的粉丝 = 登录用户的关注 ->4关注
+				for (int followId : nowfollows) {
 					if (fanId == followId) {
 						user.setState(4);
 						break;
@@ -197,10 +237,18 @@ public class RelationController {
 				}
 			}
 		}
-
+		
+		// 查询当前用户的微博总数
+		Integer nowWeiboCount = weiboService.countByUser(nowId);
+		
+		//将微博总数、粉丝总数、关注总数放入map中
+		map.addAttribute("nowWeiboCount", nowWeiboCount);
+		map.addAttribute("nowFansCount", fans.length);
+		map.addAttribute("nowFollowCount", follows.length);
 		// 将查询到的用户的全部信息传入页面
 		map.addAttribute("followList", users);
-
+		// 将现在的用户的信息也存入
+		map.addAttribute("nowUser", nowUser);
 		return "fanlist";
 	}
 

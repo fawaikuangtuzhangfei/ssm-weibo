@@ -20,14 +20,12 @@
 	src="${pageContext.request.contextPath }/js/longPolling.js "></script>
 
 <!-- Bootstrap -->
-<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="../css/login.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath }/css/bootstrap.min.css">
 
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/bootstrap-datetimepicker.min.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/login.css">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/style.css">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/comment.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/follow.css">
 
-<link rel="stylesheet" href="../css/regist.css">
 <link rel="stylesheet" type="text/css" href="../css/zoomify.min.css">
 <link rel="stylesheet" type="text/css" href="../css/upload.css">
 
@@ -75,20 +73,54 @@
 	
 </script>
 <!-- 导航栏 -->
-<jsp:include page="../web/nav.jsp"></jsp:include>
+<jsp:include page="../web/navNoLR.jsp"></jsp:include>
 </head>
 
-<body>
 <body style="padding: 80px">
-<div style="width: 70%; float: left;">
-			<div class="container" style="width: auto; margin-top: 0px; background-color: #fff;">
-			<p style="font-size: 40px; color: black" align="center">${usernow.username}的主页</p>
-				
+	<div class="container" style="width: 500px">
+		<div class="row">
+			<div class="leftbox" style="margin: 40px">
+				<!-- 头像 -->
+				<img src="/imgUpload/${usernow.face}" height="150px" width="150px"
+					class="img-circle" align="center">
+			</div>
+			<div class="rightbox">
+				<table width="100%">
+					<tr style="height: 60px; margin-left: 100px">
+						<td style="font-size: 40px"><span>${usernow.username}&nbsp;&nbsp;</span></td>
+					</tr>
+				</table>
+				<br>
+				<table width="100%" style="table-layout: fixed; font-size: 20px">
+					<tr>
+						<td><a href="../weibo/showOne.do">${nowWeiboCount }微博</a></td>
+                        <td><a href="../relation/showFollowList.do?userId=${user.id}&nowId=${usernow.id}">${nowFollowCount }关注</a></td>
+                        <td><a href="../relation/showFanList.do?userId=${user.id }&nowId=${usernow.id}">${nowFansCount }粉丝</a></td>
+					</tr>
+				</table>
+				<br>
+				<table style="font-size: 15px" align="center">
+					<tr>
+						<td>
+						<c:if test="${user.sex==1 }">
+						<span>♂</span>
+						</c:if>
+						<c:if test="${user.sex==0 }">
+						<span>♀</span>
+						</c:if>
+						<span>${user.province } ${user.city }</span>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+
 <!-- 微博正文部分 -->
 		<!-- 微博内容&转发微博内容 -->
 			<c:forEach items="${all}" var="weibo" varStatus="status">
 			<!-- 头部 -->
-			<div class="container" style="width: auto; padding-top: 34px; background-color: white;">
+			<div class="container" style="width: 850px; background-color: white;">
 			<input type="hidden" class="followWeiboId" value="${weibo.userId }">
 				<!-- 头像 -->
 				<div style="height: 50px; width: 50px; margin: 10px; float: left;">
@@ -129,6 +161,7 @@
 			</div>
 			<!-- 微博正文 -->
 				<!-- 文字 -->
+				<div class="container" style="width: 850px; background-color: #fff;">
 				<div style="text-align: left; margin-left: 85px;">
 					<p style="color: #333; font-size: 17px">${weibo.content }</p>
 				</div>
@@ -182,11 +215,12 @@
 					</table>
 				</div>
 			</c:if>
+			</div>
 			<!-- 非原创 转发微博 -->
 			<c:if test="${weibo.original == 0 }">
 				<!-- 头部 -->
 				<div class="container"
-					style="width: auto; background-color: #eaeaec;">
+					style="width: 850px; background-color: #eaeaec;">
 					<!-- 头像 -->
 					<div
 						style="cursor: pointer; height: 30px; width: 30px; margin: 10px; float: left; margin-left: 100px;">
@@ -215,7 +249,7 @@
 					</div>
 				</div>
 				<div class="container"
-					style="width: auto; background-color: #eaeaec;">
+					style="width: 850px; background-color: #eaeaec;">
 					<!-- 文字 -->
 					<div style="text-align: left; margin-left: 160px">
 						<p style="color: #333; font-size: 17px">${weibo.repost.content }</p>
@@ -271,7 +305,7 @@
 			</c:if>
 
 				<!-- 底部 -->
-				<div class="container" style="width: auto; background-color: #fff;">
+				<div class="container" style="width: 850px; background-color: #fff;">
 					<br>
 					<div class="btn-group" style="width: 100%">
 						<button type="button" id="shoucang${weibo.id}"
@@ -290,7 +324,7 @@
 
 				<!-- 评论区 -->
 				<div class="container "
-					style="width: auto; background-color: #fff;">
+					style="width: 850px; background-color: #fff;">
 					<div class="commentAll " id="com${status.index }" style="display: none;">
 						<!--评论区域 begin-->
 						<div class="reviewArea clearfix ">
@@ -330,7 +364,6 @@
 						${i} </a>
 				</c:forEach>
 			</div>
-		</div>
 
 
 		<!-- bootstrap模态框（Modal） -->
@@ -361,7 +394,6 @@
 				</div>
 			</div>
 		</div>
-</div>
 
 <!-- 关注的相关js -->
 <script type="text/javascript " src="../js/follow.js"></script>
@@ -585,5 +617,4 @@ $('#fabu').click(function(){
 		$.ajax(getNotice);
 </script>
 
-</body>
 </html>

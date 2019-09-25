@@ -157,32 +157,54 @@ public class MentionController {
 	 * @return
 	 */
 	@RequestMapping("showFanList")
-	public String showFanList(Integer userId, ModelMap map) {
-		// 查询到用户的所有关注-关注用户的id
-		Integer[] follows = relationService.selectAll(userId);
-		// 查询用户的所有粉丝-当前用户的id
-		Integer[] fans = relationService.selectFans(userId);
+	public String showFanList(Integer userId, Integer nowId, ModelMap map) {
+		log.info("粉丝列表");
+		// 查询到目前登录用户的所有关注-关注用户的id
+		Integer[] nowfollows = relationService.selectAll(userId);
+		// 查询当前主页用户的全部信息
+		User nowUser = userService.selectById(nowId);
+		// 查询当前主页的所有关注
+		Integer[] follows = relationService.selectAll(nowId);
+		// 查询目前nowId的所有粉丝-当前用户的id
+		Integer[] fans = relationService.selectFans(nowId);
 		// 存放查到的用户的所有信息
 		List<User> users = new ArrayList<User>();
-		// 查看是否相互关注 如何是就4 不是就1
+		/*
+		 * 目前nowId的粉丝 = 登录用户的关注 ->4互相关注
+		 * 目前nowId的粉丝 != 登录用户的关注 ->1陌生
+		 * follows 主页的关注
+		 */
 		for (int fanId : fans) {
 			User user = userService.selectById(fanId);
 			if (user != null) {
 				users.add(user);
 				user.setState(1);
-				for (int followId : follows) {
+				//目前nowId的粉丝 = 登录用户的关注 ->4互相关注
+				for (int followId : nowfollows) {
 					if (fanId == followId) {
-						user.setState(4);
+						user.setState(3);
 						break;
 					}
 				}
 			}
 		}
+		
 		// 获取到我目前的粉丝数量
 		Integer fanCount = relationService.selectFans(userId).length;
-		System.out.println(fanCount);
 		// 修改mention中我的粉丝数量
 		mentionService.updateFans(userId, fanCount);
+		
+		// 查询当前用户的微博总数
+		Integer nowWeiboCount = weiboService.countByUser(nowId);
+		
+		//将微博总数、粉丝总数、关注总数放入map中
+		map.addAttribute("nowWeiboCount", nowWeiboCount);
+		map.addAttribute("nowFansCount", fans.length);
+		map.addAttribute("nowFollowCount", follows.length);
+		// 将查询到的用户的全部信息传入页面
+		map.addAttribute("followList", users);
+		// 将现在的用户的信息也存入
+		map.addAttribute("nowUser", nowUser);
 
 		// 将查询到的用户的全部信息传入页面
 		map.addAttribute("followList", users);

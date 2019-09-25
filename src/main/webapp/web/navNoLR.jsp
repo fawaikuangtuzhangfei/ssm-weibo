@@ -70,7 +70,7 @@
 						<li><a href="../mention/showLiked.do">赞<span
 								id="like_badge" class="badge"
 								style="display: none; background-color: red"></span></a></li>
-						<li><a href="../mention/showFanList.do?userId=${user.id } ">新的粉丝<span
+						<li><a href="../mention/showFanList.do?userId=${user.id }&nowId=${user.id} ">新的粉丝<span
 								id="fans_badge" class="badge"
 								style="display: none; background-color: red"></span></a></li>
 					</ul></li>

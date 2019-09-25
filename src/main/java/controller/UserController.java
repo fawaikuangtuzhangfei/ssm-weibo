@@ -298,6 +298,14 @@ public class UserController {
 		map.addAttribute("pageSize", pageSize);
 		map.addAttribute("curpage", page);
 		map.addAttribute("wz", "showOne.do?userId=" + userId);
+		// 查询当前用户的微博总数、粉丝总数、关注总数
+		Integer nowWeiboCount = weiboService.countByUser(userId);
+		Integer[] fans = relationService.selectFans(userId);
+		Integer[] follows = relationService.selectAll(userId);
+		//将微博总数、粉丝总数、关注总数放入map中
+		map.addAttribute("nowWeiboCount", nowWeiboCount);
+		map.addAttribute("nowFansCount", fans.length);
+		map.addAttribute("nowFollowCount", follows.length);
 		return "myWeibo";
 	}
 

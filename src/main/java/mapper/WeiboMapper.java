@@ -22,7 +22,7 @@ public interface WeiboMapper {
 	boolean insert(Weibo weibo);
 	
 	/**
-	 * 查询共有多少条微博 ->用于分页使用
+	 * 查询共有多少条微博 ->用于实时微博分页使用
 	 * @return
 	 */
 	Integer count();

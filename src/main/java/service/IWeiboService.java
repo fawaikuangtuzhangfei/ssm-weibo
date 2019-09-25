@@ -58,7 +58,7 @@ public interface IWeiboService {
 	Integer selectByContentsNoPage(String content);
 	
 	/**
-	 * 查询所有微博总数
+	 * 查询所有微博总数-实时微博分页用
 	 * @return
 	 */
 	Integer count();

@@ -327,8 +327,8 @@
 						<!--评论区域 begin-->
 						<div class="reviewArea clearfix ">
 							<form id="form-pinglun${weibo.id}">
-								<input type="hidden" value="${user.id}" name="userId"> <input
-									type="hidden" value="${weibo.id}" name="weiboId">
+								<input type="hidden" value="${user.id}" name="userId"> 
+								<input type="hidden" value="${weibo.id}" name="weiboId">
 								<textarea class="content comment-input " id="pinglunContent"
 									placeholder="等待输入......." onkeyup="keyUP(this) "
 									name="commentContent"></textarea>

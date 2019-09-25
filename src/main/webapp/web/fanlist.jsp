@@ -9,7 +9,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${user.username}的粉丝列表</title>
+<title>${nowUser.username}的粉丝列表</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/bootstrap-datetimepicker.min.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/login.css">
@@ -24,13 +24,13 @@
 		<div class="row">
 			<div class="leftbox" style="margin: 40px">
 				<!-- 头像 -->
-				<img src="/imgUpload/${user.face}" height="150px" width="150px"
+				<img src="/imgUpload/${nowUser.face}" height="150px" width="150px"
 					class="img-circle" align="center">
 			</div>
 			<div class="rightbox">
 				<table width="100%">
 					<tr style="height: 60px; margin-left: 100px">
-						<td style="font-size: 40px"><span>${user.username}&nbsp;&nbsp;</span></td>
+						<td style="font-size: 40px"><span>${nowUser.username}&nbsp;&nbsp;</span></td>
 						<td>
 						<!-- 相互关注 4； 我关注他 3； 他关注我 2； 陌生 1 -->
 						<c:if test="${user.id!=user.id }">
@@ -61,22 +61,22 @@
 				<br>
 				<table width="100%" style="table-layout: fixed; font-size: 20px">
 					<tr>
-						<td><a href="../weibo/showOne.do">${countWeibo }微博</a></td>
-                        <td><a href="../relation/showFollowList.do?userId=${user.id}">${followCount }关注</a></td>
-                        <td><a href="../relation/showFanList.do?userId=${user.id }">${fanCount }粉丝</a></td>
+						<td><a href="../weibo/showOne.do">${nowWeiboCount }微博</a></td>
+                        <td><a href="../relation/showFollowList.do?userId=${user.id}&nowId=${nowUser.id}">${nowFollowCount }关注</a></td>
+                        <td><a href="../relation/showFanList.do?userId=${user.id}&nowId=${nowUser.id}">${nowFansCount }粉丝</a></td>
 					</tr>
 				</table>
 				<br>
 				<table style="font-size: 15px" align="center">
 					<tr>
 						<td>
-						<c:if test="${user.sex==1 }">
+						<c:if test="${nowUser.sex==1 }">
 						<span>♂</span>
 						</c:if>
-						<c:if test="${user.sex==0 }">
+						<c:if test="${nowUser.sex==0 }">
 						<span>♀</span>
 						</c:if>
-						<span>${user.province } ${user.city }</span>
+						<span>${nowUser.province } ${nowUser.city }</span>
 						</td>
 					</tr>
 				</table>

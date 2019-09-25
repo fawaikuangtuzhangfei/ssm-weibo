@@ -74,8 +74,8 @@
 			<table align="center" style="table-layout: fixed;">
 				<tr>
 					<td><a href="../weibo/showOne.do">${countWeibo }微博&nbsp;</a></td>
-					<td><a href="../relation/showFollowList.do?userId=${user.id }">${followCount }关注&nbsp;</a></td>
-					<td><a href="../relation/showFanList.do?userId=${user.id }">${fanCount }粉丝</td>
+					<td><a href="../relation/showFollowList.do?userId=${user.id }&nowId=${user.id}">${followCount }关注&nbsp;</a></td>
+					<td><a href="../relation/showFanList.do?userId=${user.id }&nowId=${user.id}">${fanCount }粉丝</td>
 				</tr>
 			</table>
 			<br> 
@@ -94,16 +94,37 @@
 			</div>
 			<br>
 			<c:forEach items="${RepostList }" var="weibo" varStatus="status">
+			<input type="hidden" class="followId" value="${weibo.userId }">
 				<div id="weiboItem">
 					<!-- 头部 -->
 					<div class="container" style="width: 850px; background-color: white;">
 						<!-- 头像 -->
 						<div style="cursor: pointer; height: 50px; width: 50px; margin: 10px; float: left;">
 						<c:if test="${weibo.userId==user.id}">
-<img onclick="javascript:clickme();" src="/imgUpload/${weibo.face}" width="50px" height="50px" class="img-circle">
+<img onclick="javascript:clickme();" src="/imgUpload/${weibo.face}" width="50px" height="50px" 
+						class="img-circle bind_hover_card popover-show" data-toggle="popover"  
+					title="${weibo.username }" 
+					data-content=
+					"<form><ul><li><span aria-hidden='true' class='icon_globe'></span> <font>粉丝数:</font>7389223</li> 
+     <li><span aria-hidden='true' class='icon_piechart'></span> <font>关注:</font>265</li>
+     <li><span aria-hidden='true' class='icon_search_alt'></span> <font>微博:</font>645</li>
+     <li><span aria-hidden='true' class='icon_pens_alt'></span> <font>所在地:</font>${weibo.nowProvince}</li>
+     <input type='button' value='关注' id='guanzhu${weibo.userId }' onclick='guanzhu(${weibo.userId })'/></form>"
+					data-placement="bottom" data-trigger="hover">
+
 						</c:if>
 						<c:if test="${weibo.userId!=user.id}">
-<img onclick="javascript:clickother(${weibo.userId});" src="/imgUpload/${weibo.face}" width="50px" height="50px" class="img-circle">
+<img onclick="javascript:clickother(${weibo.userId});" src="/imgUpload/${weibo.face}" width="50px" height="50px" 
+						class="img-circle bind_hover_card popover-show" data-toggle="popover"  
+					title="${weibo.username }" 
+					data-content=
+					"<form><ul><li><span aria-hidden='true' class='icon_globe'></span> <font>粉丝数:</font>7389223</li> 
+     <li><span aria-hidden='true' class='icon_piechart'></span> <font>关注:</font>265</li>
+     <li><span aria-hidden='true' class='icon_search_alt'></span> <font>微博:</font>645</li>
+     <li><span aria-hidden='true' class='icon_pens_alt'></span> <font>所在地:</font>${weibo.nowProvince}</li>
+     <input type='button' value='关注' id='guanzhu${weibo.userId }' onclick='guanzhu(${weibo.userId })'/></form>"
+					data-placement="bottom" data-trigger="hover">
+					
 						</c:if>
 						</div>
 						<!-- 昵称+日期 -->
@@ -207,11 +228,7 @@
 		</div>
 	</div>
 <script type="text/javascript">
-	//转发微博
-	function repost(weiboId) {
-		$('#Modal'+weiboId).modal('toggle');
-	}
-	
+
 	//跳至自己的主页
 	function clickme() {
 		window.location="../weibo/showOne.do";
@@ -229,43 +246,10 @@
 		window.open(url);
 	}
 	
-	function likes(weiboId) {
-		//未赞——>已赞
-		var likeCount = $("#likeCount" + weiboId).text();
-		if($("#likespan"+weiboId).hasClass("glyphicon-heart-empty")){
-			$.get("${pageContext.request.contextPath }/like.do?weiboId=" + weiboId,null,function(data){
-				$("#likespan"+weiboId).attr("class","glyphicon glyphicon-heart");
-				likeCount++;
-				$("#likeCount" + weiboId).text(likeCount);
-			});
-		}
-		//已赞——>取消赞
-		else {
-			$.get("${pageContext.request.contextPath }/delike.action?weiboId=" + weiboId,null,function(data){
-				$("#likespan"+weiboId).attr("class","glyphicon glyphicon-heart-empty");
-				likeCount--;
-				$("#likeCount" + weiboId).text(likeCount);
-			});
-		}
-	}
+</script>
 
-	function collect(weiboId) {
-		var text = $("#collect" + weiboId).text();
-		if(text == "收藏") {
-			$.get("${pageContext.request.contextPath }/collect.action?weiboId=" + weiboId,null,function(data){
-				$("#collect" + weiboId).text("已收藏");
-			});
-		} 
-		if(text == "已收藏"){
-			$.get("${pageContext.request.contextPath }/decollect.action?weiboId=" + weiboId,null,function(data){
-				$("#collect" + weiboId).text("收藏");
-			});
-		}
-		
-	}
-
-	</script>
-
+<!-- 关注的相关js -->
+<script type="text/javascript " src="../js/follow.js"></script>
 	<script type="text/javascript "	src="${pageContext.request.contextPath }/js/jquery-3.3.1.js "></script>
 	<script type="text/javascript "	src="${pageContext.request.contextPath }/js/bootstrap.js "></script>
 	<script type="text/javascript "	src="${pageContext.request.contextPath }/js/bootstrap-datetimepicker.js "></script>
