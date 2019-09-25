@@ -216,7 +216,7 @@
 				共${count}条转发消息|共${pageSize}页|
 				<c:forEach var="i" begin="1" end="${pageSize}">
 					<a
-						href="../weibo/${wz}page=${i}"
+						href="../mention/${wz}page=${i}"
 						<c:if test="${curpage==i}">
 			  style="color: red"
 			</c:if>>

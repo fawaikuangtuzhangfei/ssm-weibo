@@ -124,11 +124,11 @@ public class MentionController {
 			haveMany = 10;
 		}
 		// 当前页上显示多少个
-		List<Likes> pages = likesService.selectAllBy(userId);
+		List<Likes> pages = new ArrayList<Likes>();
 		for (int i = offset; i < count; i++) {
 			pages.add(likesList.get(i));
 			j++;
-			if (j < haveMany) {
+			if (j >= haveMany) {
 				break;
 			}
 		}
@@ -140,12 +140,12 @@ public class MentionController {
 		// 修改mention中的likecount
 		mentionService.updateLikes(userId, likeCount);
 
-		map.addAttribute("likesList", likesList);
+		map.addAttribute("likesList", pages);
 		// 将页数和总数和当前页面放进session中
 		map.addAttribute("count", count);
 		map.addAttribute("pageSize", pageSize);
 		map.addAttribute("curpage", page);
-		map.addAttribute("wz", "showOne.do");
+		map.addAttribute("wz", "showLiked.do?");
 		return "LikePage";
 	}
 
@@ -246,11 +246,11 @@ public class MentionController {
 			haveMany = 10;
 		}
 		// 当前页上显示多少个
-		List<Comment> pages = commentService.selectAlls(userId);
+		List<Comment> pages = new ArrayList<Comment>();
 		for (int i = offset; i < count; i++) {
 			pages.add(commentsList.get(i));
 			j++;
-			if (j < haveMany) {
+			if (j >= haveMany) {
 				break;
 			}
 		}
@@ -261,12 +261,12 @@ public class MentionController {
 		// 修改mention中的commentCount
 		mentionService.updateComments(userId, commentCount);
 
-		map.addAttribute("commentList", commentsList);
+		map.addAttribute("commentList", pages);
 		// 将页数和总数和当前页面放进session中
 		map.addAttribute("count", count);
 		map.addAttribute("pageSize", pageSize);
 		map.addAttribute("curpage", page);
-		map.addAttribute("wz", "showOne.do");
+		map.addAttribute("wz", "showComment.do?");
 		return "CommentPage";
 	}
 
@@ -280,6 +280,7 @@ public class MentionController {
 	 */
 	@RequestMapping("/showRepost")
 	public String showAllRepost(HttpServletRequest request, ModelMap map, Integer page) {
+		log.info("跳转到我收到的转发页面");
 		// 默认为当前页
 		if (page == null) {
 			page = 1;
@@ -304,11 +305,11 @@ public class MentionController {
 			haveMany = 10;
 		}
 		// 当前页上显示多少个
-		List<Weibo> pages = weiboService.selectBy(userId);
+		List<Weibo> pages = new ArrayList<Weibo>();
 		for (int i = offset; i < count; i++) {
 			pages.add(repostList.get(i));
 			j++;
-			if (j < haveMany) {
+			if (j >= haveMany) {
 				break;
 			}
 		}
@@ -320,12 +321,12 @@ public class MentionController {
 		// 修改mention中的commentCount
 		mentionService.updateReposts(userId, repostCount);
 
-		map.addAttribute("RepostList", repostList);
+		map.addAttribute("RepostList", pages);
 		// 将页数和总数和当前页面放进session中
 		map.addAttribute("count", count);
 		map.addAttribute("pageSize", pageSize);
 		map.addAttribute("curpage", page);
-		map.addAttribute("wz", "showOne.do");
+		map.addAttribute("wz", "showRepost.do?");
 		return "RepostPage";
 	}
 

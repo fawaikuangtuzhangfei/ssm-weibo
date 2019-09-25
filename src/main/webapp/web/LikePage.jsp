@@ -140,7 +140,7 @@
 				共${count}条消息|共${pageSize}页|
 				<c:forEach var="i" begin="1" end="${pageSize}">
 					<a
-						href="../weibo/${wz}page=${i}"
+						href="../mention/${wz}page=${i}"
 						<c:if test="${curpage==i}">
 			  style="color: red"
 			</c:if>>
@@ -173,40 +173,6 @@
 		window.open(url);
 	}
 	
-	function likes(weiboId) {
-		//未赞——>已赞
-		var likeCount = $("#likeCount" + weiboId).text();
-		if($("#likespan"+weiboId).hasClass("glyphicon-heart-empty")){
-			$.get("${pageContext.request.contextPath }/like.do?weiboId=" + weiboId,null,function(data){
-				$("#likespan"+weiboId).attr("class","glyphicon glyphicon-heart");
-				likeCount++;
-				$("#likeCount" + weiboId).text(likeCount);
-			});
-		}
-		//已赞——>取消赞
-		else {
-			$.get("${pageContext.request.contextPath }/delike.action?weiboId=" + weiboId,null,function(data){
-				$("#likespan"+weiboId).attr("class","glyphicon glyphicon-heart-empty");
-				likeCount--;
-				$("#likeCount" + weiboId).text(likeCount);
-			});
-		}
-	}
-
-	function collect(weiboId) {
-		var text = $("#collect" + weiboId).text();
-		if(text == "收藏") {
-			$.get("${pageContext.request.contextPath }/collect.action?weiboId=" + weiboId,null,function(data){
-				$("#collect" + weiboId).text("已收藏");
-			});
-		} 
-		if(text == "已收藏"){
-			$.get("${pageContext.request.contextPath }/decollect.action?weiboId=" + weiboId,null,function(data){
-				$("#collect" + weiboId).text("收藏");
-			});
-		}
-		
-	}
 
 	</script>
 
