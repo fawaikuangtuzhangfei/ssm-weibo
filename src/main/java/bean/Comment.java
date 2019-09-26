@@ -1,6 +1,7 @@
 package bean;
 
 import java.io.Serializable;
+import java.util.List;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
@@ -36,8 +37,10 @@ public class Comment implements Serializable{
 
 	//t_weibo
 	private String content;// 微博内容
+	
+	//t_reply
+	private List<Reply> reply; //回复
     
-
 	
     public String getCommentTime() {
 		return commentTime;
@@ -132,7 +135,7 @@ public class Comment implements Serializable{
 	public String toString() {
 		return "Comment [commentId=" + commentId + ", userId=" + userId + ", weiboId=" + weiboId + ", commentTime="
 				+ commentTime + ", commentContent=" + commentContent + ", username=" + username + ", face=" + face
-				+ ", nowUserId=" + nowUserId + ", content=" + content + "]";
+				+ ", nowUserId=" + nowUserId + ", content=" + content + ", reply=" + reply + "]";
 	}
 
 	public String getUsername() {
@@ -165,6 +168,14 @@ public class Comment implements Serializable{
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	public List<Reply> getReply() {
+		return reply;
+	}
+
+	public void setReply(List<Reply> reply) {
+		this.reply = reply;
 	}
     
     

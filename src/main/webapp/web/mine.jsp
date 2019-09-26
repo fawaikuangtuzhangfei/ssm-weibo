@@ -397,6 +397,8 @@
 
 <!-- 关注的相关js -->
 <script type="text/javascript " src="../js/follow.js"></script>
+<!-- 评论相关的js -->
+<script type="text/javascript " src="../js/comment.js"></script>
 
 	<!-- 页面加载时:查看是否已经被当前用户所收藏、点赞 -->
 	<script>

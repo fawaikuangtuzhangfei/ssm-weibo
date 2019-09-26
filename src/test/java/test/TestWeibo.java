@@ -96,7 +96,7 @@ public class TestWeibo {
 		//2.
 		WeiboMapper mapper = ac.getBean("weiboMapper", WeiboMapper.class);
 		//3.
-		Weibo weibo = mapper.selectByWeiboId(118, 0, 10);
+		Weibo weibo = mapper.selectByWeiboId(185, 0, 10);
 		System.out.println(weibo.toString());
 		//4.
 		ac.close();

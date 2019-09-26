@@ -57,6 +57,21 @@
 		limit #{offset},#{count}
 	</select>
 	
+	<!-- List<Weibo> selectComment(@Param("weiboId")Integer weiboId); 查询指定微博的全部评论->根据微博id查询 -->
+	<select id="selectComment" resultType="bean.Weibo">
+		select
+		w.id,w.user_id as userId, w.post_time as postTime,w.content,w.pic1,w.pic2,w.pic3,
+		w.pic4,w.pic5,w.pic6,w.pic7,w.pic8,w.pic9,w.original,w.repost_id as repostId,
+		u.username, u.face, lp.name as nowProvince,
+		c.comment_id as commentId
+		from t_weibo w
+		left join t_user u on u.id = w.user_id
+		left join t_comment c on c.weibo_id = w.id
+		left join t_location lp on lp.id = u.province
+		where w.id=#{weiboId}
+		order by post_time desc
+	</select>
+	
 	<!-- List<Weibo> selectByContent(Integer userId, String content); 查询当前用户-根据id 的指定微博-根据内容 -->
 	<select id="selectByContent"  resultType="bean.Weibo">
 		select

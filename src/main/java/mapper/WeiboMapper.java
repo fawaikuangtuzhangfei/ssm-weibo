@@ -58,6 +58,13 @@ public interface WeiboMapper {
 	Weibo selectByWeiboId(@Param("weiboId")Integer weiboId,@Param("offset")Integer offset, @Param("count")Integer count);
 	
 	/**
+	 * 查询指定微博的全部评论->根据微博id查询
+	 * @param weiboId
+	 * @return
+	 */
+	List<Weibo> selectComment(@Param("weiboId")Integer weiboId);
+	
+	/**
 	 * 查询当前用户的所有微博-根据id 
 	 * @param userId
 	 * @param offset

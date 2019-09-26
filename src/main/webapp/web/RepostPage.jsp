@@ -242,7 +242,7 @@
 	
 	//跳至所选微博页
 	function clickWeibo(weiboId) {
-		var url = "singleWeibo.action?weiboId=" + weiboId;
+		var url = "../weibo/showSingle.do?weiboId=" + weiboId;
 		window.open(url);
 	}
 	

@@ -94,4 +94,9 @@ public class WeiboService implements IWeiboService{
 		return weiboMapper.selectBy(userId);
 	}
 
+	@Override
+	public List<Weibo> selectComment(Integer weiboId) {
+		return weiboMapper.selectComment(weiboId);
+	}
+
 }

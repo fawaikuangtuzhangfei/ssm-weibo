@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,10 +18,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import bean.Comment;
+import bean.Reply;
 import bean.ResponseResult;
 import bean.User;
 import bean.Weibo;
 import net.sf.json.JSONObject;
+import service.ICommentService;
+import service.IReplyService;
 import service.UserService;
 import service.WeiboService;
 
@@ -37,10 +42,16 @@ public class WeiboController {
 	// 日志log4j
 	public final Logger log = Logger.getLogger(this.getClass());
 	@Resource
-	WeiboService weiboService;
+	private WeiboService weiboService;// 微博
 
 	@Resource
-	UserService userService;
+	private UserService userService;// 用户
+	
+	@Resource
+	private IReplyService replyService;// 回复
+	
+	@Resource
+	private ICommentService commentService;// 评论
 
 	// 转发微博
 	@RequestMapping("/repost.do")
@@ -165,6 +176,44 @@ public class WeiboController {
 		map.addAttribute("curpage", page);
 		map.addAttribute("wz", "showOne.do?");
 		return "mine";
+	}
+	
+	// 显示指定微博的全部内容
+	@RequestMapping("/showSingle.do")
+	public String showSingle(ModelMap map, Integer weiboId) {
+		//查出该条微博的全部内容
+		Weibo weibo = weiboService.selectByWeiboId(weiboId, 0, 1);
+		
+		// 是否原创 ->并设置非原创微博的全部信息
+		Integer repostId = weibo.getRepostId();
+		Weibo repost = weiboService.selectByWeiboId(repostId, 0, 10);
+		weibo.setRepost(repost);
+		
+		//查出该条微博所有的评论
+		List<Comment> comment = commentService.selectAll(weiboId);
+		//存储所有的评论
+		List<Comment> commentList = new ArrayList<Comment>();
+		
+		for(int i=0; i<comment.size(); i++){
+			Comment c = comment.get(i);
+			Integer id = c.getCommentId();
+			List<Reply> replys = replyService.selectAllReply(id);
+			//存储评论下的回复
+			List<Reply> replyList = new ArrayList<Reply>();
+			for(int j=0; j< replys.size(); j++){
+				log.info(replys.get(j));
+				replyList.add(replys.get(j));
+			}
+			//将该条评论下的所有回复都放入
+			c.setReply(replyList);
+			//再将这条评论放入
+			commentList.add(c);
+		}
+		map.addAttribute("commentList", commentList);
+		System.out.println(commentList);
+		
+		map.addAttribute("weibo", weibo);
+		return "single";
 	}
 
 	// 显示指定用户的指定微博

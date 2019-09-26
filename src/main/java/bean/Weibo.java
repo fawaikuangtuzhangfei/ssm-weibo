@@ -43,6 +43,9 @@ public class Weibo implements Serializable{
 	//当前微博用户的省
 	private String nowProvince;
 	
+	//t_reply t_comment
+	private Integer commentId; // 评论的id
+	
 	
 	
 	public String getFace() {
@@ -266,7 +269,7 @@ public class Weibo implements Serializable{
 				+ pic1 + ", pic2=" + pic2 + ", pic3=" + pic3 + ", pic4=" + pic4 + ", pic5=" + pic5 + ", pic6=" + pic6
 				+ ", pic7=" + pic7 + ", pic8=" + pic8 + ", pic9=" + pic9 + ", original=" + original + ", repostId="
 				+ repostId + ", repost=" + repost + ", oldContent=" + oldContent + ", username=" + username + ", face="
-				+ face + ", nowProvince=" + nowProvince + "]";
+				+ face + ", nowProvince=" + nowProvince + ", commentId=" + commentId + "]";
 	}
 	public String getNowProvince() {
 		return nowProvince;
@@ -279,6 +282,12 @@ public class Weibo implements Serializable{
 	}
 	public void setOldContent(String oldContent) {
 		this.oldContent = oldContent;
+	}
+	public Integer getCommentId() {
+		return commentId;
+	}
+	public void setCommentId(Integer commentId) {
+		this.commentId = commentId;
 	}
 	
 	

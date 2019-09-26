@@ -78,6 +78,13 @@ public interface IWeiboService {
 	Weibo selectByWeiboId(Integer weiboId, Integer offset, Integer count);
 	
 	/**
+	 * 查询指定微博的全部评论->根据微博id查询
+	 * @param weiboId
+	 * @return
+	 */
+	List<Weibo> selectComment(Integer weiboId);
+	
+	/**
 	 * 删除掉此条微博
 	 * @param id
 	 */

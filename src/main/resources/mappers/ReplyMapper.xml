@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+		"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+	
+	<!-- namespace表示命名空间，值必须为接口的名称(包括包名) -->
+	<mapper namespace="mapper.ReplyMapper">
+	
+	<!-- void insert(Reply reply); 新增回复-->
+	<insert id="insert" parameterType="bean.Reply">
+		insert into t_reply (
+		comment_id, from_id, to_id, reply_content, time
+		) values( 
+		#{commentId}, #{fromId},#{toId}, #{replyContent}, #{time} 
+		)
+	</insert>	
+	
+	<!-- List<Reply> select(Integer commentId); 查看该条评论的全部回复 -->
+	<select id="select" resultType="bean.Reply" >
+		select 
+		r.reply_id as replyId, r.comment_id as commentId, r.from_id as fromId, r.to_id as toId,
+		r.reply_content as replyContent, r.time,
+		u1.username as fromUsername, u2.username as toUsername
+		from 
+		t_reply r
+		left join t_user u1 on u1.id=r.from_id
+		left join t_user u2 on u2.id=r.to_id
+		where r.comment_id=#{commentId}
+	</select>
+	
+	<!-- void delete(Integer replyId); 删除该条回复 -->
+	<delete id="delete">
+		delete from t_reply where reply_id=#{replyId}
+	</delete>
+	
+	<!-- Integer count(Integer weiboId); 该条微博下共有多少条评论 -->
+	<select id="count" parameterType="bean.Comment" resultType="java.lang.Integer" >
+    select count(*) as commentNum from t_comment
+    where weibo_id = #{weiboId}
+    </select>
+    
+    <!-- Integer[] selectByUserId(Integer userId); 当前用户收到的所有评论 -->
+	<select id="selectByUserId" resultType="java.lang.Integer" >
+    select 
+		comment_id
+		from t_comment c
+		where c.weibo_id in(
+			select w.id 
+			from t_weibo w
+			where w.user_id=#{userId}
+	)
+    </select>
+    
+	<!-- List<Comment> selectAllComments(Integer userId); 当前用户收到的所有评论 ->个人信息+微博信息 -->
+	<select id="selectAllComments" resultType="bean.Comment">
+		select 
+		c.user_id as userId, c.weibo_id as weiboId, c.comment_time as commentTime, 
+		c.comment_content as commentContent,
+		u.username, u.face, u.id as nowUserId,
+		w.content
+		from t_comment c
+		left join t_user u on u.id = c.user_id
+		left join t_weibo w on w.id = c.weibo_id
+		where c.weibo_id in(
+			select w.id 
+			from t_weibo w
+			where w.user_id=#{userId} 
+		)
+		order by c.comment_time desc
+		
+	</select>    
+	
+	
+	</mapper>

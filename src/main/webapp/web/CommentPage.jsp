@@ -133,7 +133,7 @@
 					<div style="background-color: #eaeaec;float: left;margin-left: 85px; margin-bottom: 10px;">
 						<span style="color: #999;">评论了我的微博</span>
 						<span style="color: #333;">&nbsp;:&nbsp;</span>
-						<a style="color: #333; font-size: 15px" href="singleWeibo.action?weiboId=${comment.weiboId}">${comment.content }</a>
+						<a style="color: #333; font-size: 15px" href="../weibo/showSingle.do?weiboId=${comment.weiboId}">${comment.content }</a>
 					</div>
 				</div>
 				<br>
@@ -175,7 +175,7 @@
 	
 	//跳至所选微博页
 	function clickWeibo(weiboId) {
-		var url = "singleWeibo.action?weiboId=" + weiboId;
+		var url = "../weibo/showSingle.do?weiboId=" + weiboId;
 		window.open(url);
 	}
 	
