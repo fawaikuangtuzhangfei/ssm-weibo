@@ -328,7 +328,135 @@
 		src="${pageContext.request.contextPath }/js/comment.js"></script>
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath }/js/longPolling.js "></script>
+
+<!-- 页面加载时:查看是否已经被当前用户所收藏、点赞 -->
+<script>
+
+//页面加载
+      $(document).ready(function () {
+    	  var userId = $("#userId").val();
+    	  var btns = new Array();
+    	  $(".weiboId").each(function(i,n){
+    		  //获取到所有的weiboId
+    		  btns[i] = $(this).val();
+    		  
+    		//查询现状
+    		  pdUserCollection(btns[i], userId);
+    		  pdUserLikes(btns[i], userId);
+    	  });
+      });
+
+</script>
 		
+<!-- 查看是否已经被当前用户所收藏、点赞 -->
+<script>
+//页面加载查询是不是已经关注、点赞
+//点赞
+function pdUserLikes(weiboId, userId) {
+          $.ajax({
+              type: "post",
+              url: "../like/selectByOne.do",
+              data: { "weiboId": weiboId, "userId": userId },
+              dataType:"json",
+              success:function (obj) {
+                  if (obj.state==1) {
+                	  $("#dianzan"+weiboId).attr("class","btn btn-danger glyphicon glyphicon-heart");
+                      $("#dianzan"+ weiboId).text('取消点赞 ' + obj.data);
+                  } else {
+                	  $("#dianzan"+weiboId).attr("class","btn btn-danger glyphicon glyphicon-heart-empty");
+                      $("#dianzan"+ weiboId).text('点赞 '+ obj.data);
+                  }
+              }
+          })
+
+      }
+//收藏
+function pdUserCollection(weiboId, userId) {
+    $.ajax({
+        type: "post",
+        url: "../collect/selectByOne.do",
+        data: { "weiboId": weiboId, "userId": userId },
+        dataType:"json",
+        success:function (obj) {
+            if (obj.state==1) {
+                $("#shoucang"+ weiboId).text('取消收藏');
+            } else {
+                $("#shoucang"+ weiboId).text('收藏');
+            }
+        }
+    })
+
+}
+</script>
+
+<!-- 收藏事件 点赞事件-->
+<script>
+
+//收藏-点击之后变为已收藏  已收藏-收藏
+      function collect(weiboId) {
+    	  var userId = $("#userId").val();
+    	  if($("#shoucang"+ weiboId).text()=="收藏"){
+    		  $.ajax({
+                  type: "POST",
+                  url: "../collect/collect.do",
+                  data: { "weiboId": weiboId, "userId": userId },
+                  dataType: "json",
+                  success: function (obj) {
+                	  if (obj.state==1) {
+                          $("#shoucang"+ weiboId).text('取消收藏');
+                      } 
+                 }
+              })
+    	  }else{
+    		  $.ajax({
+                  type: "POST",
+                  url: "../collect/decollect.do",
+                  data: { "weiboId": weiboId, "userId": userId },
+                  dataType: "json",
+                  success: function (obj) {
+                	  if (obj.state==1) {
+                          $("#shoucang"+ weiboId).text('收藏');
+                      } 
+                 }
+              })
+    	  }
+          
+      }
+      
+    //点赞-点击之后变为已点赞  已点赞-点赞
+      function like(weiboId) {
+    	  var userId = $("#userId").val();
+    	  if($("#dianzan"+weiboId).hasClass("glyphicon-heart")){
+    		  $.ajax({
+                  type: "POST",
+                  url: "../like/delike.do",
+                  data: { "weiboId": weiboId, "userId": userId },
+                  dataType: "json",
+                  success: function (obj) {
+                	  if (obj.state==1) {
+                		  $("#dianzan"+weiboId).attr("class","btn btn-danger glyphicon glyphicon-heart-empty");
+                          $("#dianzan"+ weiboId).text('点赞 ' + obj.data);
+                      } 
+                 }
+              })
+    	  }else{
+    		  $.ajax({
+                  type: "POST",
+                  url: "../like/like.do",
+                  data: { "weiboId": weiboId, "userId": userId },
+                  dataType: "json",
+                  success: function (obj) {
+                	  if (obj.state==1) {
+                		  $("#dianzan"+weiboId).attr("class","btn btn-danger  glyphicon glyphicon-heart");
+                          $("#dianzan"+ weiboId).text('取消点赞 ' + obj.data);
+                      } 
+                 }
+              })
+    	  }
+          
+      }
+</script>
+
 <!-- 评论相关 -->
 <script>
 //评论
@@ -341,32 +469,21 @@ $('.pinglun').click(function(){
     		type:"post",
     		dataType:"json",
     		success:function(obj){
+    			window.location.reload();
     		}
     	});
   })
 
-//删除评论
+//删除评论、回复
 $('.commentAll').on('click', '.removeBlock', function(e) {
-	var id=$(this).attr('id');
-    var url ="../weibo/removeById.do?weiboId="+id;
-    $.ajax({
-		url : url,
-		data : {"123":123},
-		type : "post",
-		async: true,
-		success : function(obj) {
-			
-		}
-	});
- var oT = $(this).parents('.date-dz-right').parents('.date-dz').parents('.all-pl-con');
- if (oT.siblings('.all-pl-con').length >= 1) {
-     oT.remove();
- } else {
-     $(this).parents('.date-dz-right').parents('.date-dz').parents('.all-pl-con').parents('.hf-list-con').css('display', 'none')
-     oT.remove();
- }
- $(this).parents('.date-dz-right').parents('.date-dz').parents('.comment-show-con-list').parents('.comment-show-con').remove();
-
+	 var oT = $(this).parents('.date-dz-right').parents('.date-dz').parents('.all-pl-con');
+	 if (oT.siblings('.all-pl-con').length >= 1) {
+	     oT.remove();
+	 } else {
+	     $(this).parents('.date-dz-right').parents('.date-dz').parents('.all-pl-con').parents('.hf-list-con').css('display', 'none')
+	     oT.remove();
+	 }
+	 $(this).parents('.date-dz-right').parents('.date-dz').parents('.comment-show-con-list').parents('.comment-show-con').remove();
 })  
 </script>
 

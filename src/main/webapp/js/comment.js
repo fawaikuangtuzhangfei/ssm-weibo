@@ -58,7 +58,13 @@
               //删除
                 '<a href="javascript:;" class="removeBlock " id="'+ result[i].commentId +'">删除</a>' +
                 '</div></div><div class="hf-list-con " style="text-align: left;" id="123'+ result[i].commentId +'"></div><br>';
-                com = com + '</div></div></div>';
+        		console.log(result[i].countReply);
+        		if(result[i].countReply == 0) {
+                	com = com + '</div></div></div>';
+                } else {
+                	com = com + '<a href="../weibo/showSingle.do?weiboId='+ weiboId +'" style="color: #987">共'+ result[i].countReply +'条回复</a>'+
+                    			'</div></div></div>';
+                }
                 $('#show'+weiboId).prepend(com);
         	}
             
@@ -185,3 +191,19 @@ $('.comment-show').on('click', '.hf-pl', function() {
        });
    }
 });
+
+//<!--点赞-->
+$('.comment-show').on('click', '.date-dz-z', function() {
+ var zNum = $(this).find('.z-num').html();
+ if ($(this).is('.date-dz-z-click')) {
+     zNum--;
+     $(this).removeClass('date-dz-z-click red');
+     $(this).find('.z-num').html(zNum);
+     $(this).find('.date-dz-z-click-red').removeClass('red');
+ } else {
+     zNum++;
+     $(this).addClass('date-dz-z-click');
+     $(this).find('.z-num').html(zNum);
+     $(this).find('.date-dz-z-click-red').addClass('red');
+ }
+})

@@ -40,6 +40,7 @@ public class Comment implements Serializable{
 	
 	//t_reply
 	private List<Reply> reply; //回复
+	private Integer countReply; //回复总数
     
 	
     public String getCommentTime() {
@@ -135,7 +136,8 @@ public class Comment implements Serializable{
 	public String toString() {
 		return "Comment [commentId=" + commentId + ", userId=" + userId + ", weiboId=" + weiboId + ", commentTime="
 				+ commentTime + ", commentContent=" + commentContent + ", username=" + username + ", face=" + face
-				+ ", nowUserId=" + nowUserId + ", content=" + content + ", reply=" + reply + "]";
+				+ ", nowUserId=" + nowUserId + ", content=" + content + ", reply=" + reply + ", countReply="
+				+ countReply + "]";
 	}
 
 	public String getUsername() {
@@ -176,6 +178,14 @@ public class Comment implements Serializable{
 
 	public void setReply(List<Reply> reply) {
 		this.reply = reply;
+	}
+
+	public Integer getCountReply() {
+		return countReply;
+	}
+
+	public void setCountReply(Integer countReply) {
+		this.countReply = countReply;
 	}
     
     

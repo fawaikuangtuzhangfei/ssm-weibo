@@ -399,9 +399,11 @@
 
 <!-- 关注的相关js -->
 <script type="text/javascript " src="../js/follow.js"></script>
+<!-- 评论相关的js -->
+<script type="text/javascript " src="../js/comment.js"></script>
 
-	<!-- 页面加载时:查看是否已经被当前用户所收藏、点赞 -->
-	<script>
+<!-- 页面加载时:查看是否已经被当前用户所收藏、点赞 -->
+<script>
 
 //页面加载
       $(document).ready(function () {
@@ -419,8 +421,8 @@
 
 </script>
 
-	<!-- 查看是否已经被当前用户所收藏、点赞 -->
-	<script>
+<!-- 查看是否已经被当前用户所收藏、点赞 -->
+<script>
 //页面加载查询是不是已经关注、点赞
 //点赞
 function pdUserLikes(weiboId, userId) {
@@ -460,7 +462,7 @@ function pdUserCollection(weiboId, userId) {
 }
 </script>
 
-	<!-- 收藏事件 点赞事件-->
+<!-- 收藏事件 点赞事件-->
 <script>
 
 //收藏-点击之后变为已收藏  已收藏-收藏

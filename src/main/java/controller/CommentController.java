@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import bean.Comment;
+import bean.Reply;
 import bean.ResponseResult;
 import service.CommentService;
+import service.IReplyService;
 
 /**
  * t_comment 评论
@@ -23,7 +25,10 @@ import service.CommentService;
 public class CommentController {
 
 	@Resource
-	private CommentService commentService;
+	private CommentService commentService; //评论
+	
+	@Resource
+	private IReplyService replyService; //回复
 	
 	//发布评论
 	@RequestMapping("/postComment.do")
@@ -39,7 +44,13 @@ public class CommentController {
 	public ResponseResult<List<Comment>> selectAll(ModelMap map, Integer weiboId){
 		List<Comment> allComments = commentService.selectAll(weiboId);
 		map.addAttribute("allComments", allComments);
+		// 查询该条微博下有多少条评论
+		for(int i=0; i<allComments.size(); i++){
+			List<Reply> replys = replyService.selectAllReply(allComments.get(i).getCommentId());
+			allComments.get(i).setCountReply(replys.size());
+		}
 		ResponseResult<List<Comment>> rr = null;
+		System.out.println(allComments);
 		if(allComments.size() < 1){
 			rr =  new ResponseResult<List<Comment>>(1,"查询成功");
 		}else{
