@@ -9,7 +9,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>收到的评论</title>
+<title>收到的回复</title>
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath }/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css"
@@ -61,6 +61,7 @@
 		});
 	})
 </script>
+
 <!-- 导航栏 -->
 <jsp:include page="../web/navNoLR.jsp"></jsp:include>
 </head>
@@ -96,87 +97,86 @@
 
 		<div style="width: 80%; float: left;">
 			<div class="container" style="width: 850px; background-color: #fff;" align="left">
-		<h2 style="color: #333; margin:1px;">收到的评论<span style="color: #f00;" class="glyphicon glyphicon-comment"></span></h2>
+		<h2 style="color: #333; margin:1px;">收到的回复<span style="color: #f00;" class="glyphicon glyphicon-comment"></span></h2>
 			</div>
 			<br>
-			<c:forEach items="${commentList }" var="comment" varStatus="status">
+			<c:forEach items="${replyList }" var="reply" varStatus="status">
 				<!-- 头部 -->
 				<div class="container" style="width: 850px; background-color: white;">
 					<!-- 头像 -->
 					<div
 						style="cursor: pointer; height: 50px; width: 50px; margin: 10px; float: left;">
-						<c:if test="${comment.nowUserId==user.id}">
+						<c:if test="${reply.fromId==user.id}">
 							<img onclick="javascript:clickme();"
-								src="/imgUpload/${comment.face}" width="50px" height="50px"
+								src="/imgUpload/${reply.fromFace}" width="50px" height="50px"
 								class="img-circle">
 						</c:if>
-						<c:if test="${comment.nowUserId!=user.id}">
-							<img onclick="javascript:clickother(${comment.nowUserId});"
-								src="/imgUpload/${comment.face}" width="50px" height="50px"
+						<c:if test="${reply.fromId!=user.id}">
+							<img onclick="javascript:clickother(${reply.fromId});"
+								src="/imgUpload/${reply.fromFace}" width="50px" height="50px"
 								class="img-circle">
 						</c:if>
 					</div>
 					<div style="text-align: left; margin: 10px; float: left;">
 						<!-- 昵称 -->
-						<a style="color: #333; font-size: 15px" href="javascrip:;">${comment.username }</a>
+						<a style="color: #333; font-size: 15px" href="#" onclick="javascript:clickother(${reply.fromId});">${reply.fromUsername }</a>
 						<!-- 时间 -->
-						<p style="color: #999; font-size: 15px">${comment.commentTime }</p>
+						<p style="color: #999; font-size: 15px">${reply.time }</p>
 					</div>
 				</div>
 				<div class="container" style="width: 850px; background-color: #fff; margin-bottom: 10px;">
-					<!-- 文字 -->
+					<!-- 回复内容 -->
 					<div style="text-align: left; margin-left: 85px" >
-						<p style="color: #333; font-size: 15px; text-align: left;">${comment.commentContent }</p>
+						<!-- 回复人 -->
+						<span style="color: #333; float: left;">回复</span>
+						<a href="#" onclick="javascript:clickother(${user.id});" style="float: left;">@${reply.toUsername }</a>
+						<span style="color: #333; float: left;">&nbsp;:&nbsp;</span>
+						<p style="color: #333; font-size: 15px; text-align: left;">${reply.replyContent }</p>
 					</div>
 					<!-- 源微博 -->
 					<!-- 简略微博内容 -->
 					<div style="background-color: #eaeaec;float: left;margin-left: 85px; margin-bottom: 10px;">
-						<span style="color: #999;">评论了我的微博</span>
+						<span style="color: #999;">回复我在微博</span>
 						<span style="color: #333;">&nbsp;:&nbsp;</span>
-						<a style="color: #333; font-size: 15px" href="../weibo/showSingle.do?weiboId=${comment.weiboId}">${comment.content }</a>
+						<a style="color: #333; font-size: 15px" href="../weibo/showSingle.do?weiboId=${reply.weibo.id}">${reply.weibo.content }</a>
 					</div>
 				</div>
 				<br>
 			</c:forEach>
 			<div class="container" style="width: 850px;">
-			<!-- 分页 -->
-			<div align="center" style="font-size: 20px">
-				共${count}条消息|共${pageSize}页|
-				<c:forEach var="i" begin="1" end="${pageSize}">
-					<a
-						href="../mention/${wz}page=${i}"
-						<c:if test="${curpage==i}">
-			  style="color: red"
-			</c:if>>
-						${i} </a>
-				</c:forEach>
+				<!-- 分页 -->
+				<div align="center" style="font-size: 20px">
+					共${count}条消息|共${pageSize}页|
+					<c:forEach var="i" begin="1" end="${pageSize}">
+						<a
+							href="../mention/${wz}page=${i}"
+							<c:if test="${curpage==i}">
+				  style="color: red"
+				</c:if>>
+							${i} </a>
+					</c:forEach>
+				</div>
 			</div>
 
 		</div>
 	</div>
 	<script type="text/javascript">
-	//转发微博
-	function repost(weiboId) {
-		$('#Modal'+weiboId).modal('toggle');
-	}
-	
-	//跳至自己的主页
-	function clickme() {
-		window.location="../weibo/showOne.do";
-	}
+		//跳至自己的主页
+		function clickme() {
+			window.location="../weibo/showOne.do";
+		}
 
-	//跳至userId的用户主页
-	function clickother(userId) {
-		var url = "../user/showOne.do?userId=" + userId;
-		window.location=url;
-	}
-	
-	//跳至所选微博页
-	function clickWeibo(weiboId) {
-		var url = "../weibo/showSingle.do?weiboId=" + weiboId;
-		window.open(url);
-	}
-	
+		//跳至userId的用户主页
+		function clickother(userId) {
+			var url = "../user/showOne.do?userId=" + userId;
+			window.location=url;
+		}
+		
+		//跳至所选微博页
+		function clickWeibo(weiboId) {
+			var url = "../weibo/showSingle.do?weiboId=" + weiboId;
+			window.open(url);
+		}
 
 	</script>
 

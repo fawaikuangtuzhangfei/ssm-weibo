@@ -7,11 +7,13 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import bean.Mention;
+import bean.Reply;
 import bean.Weibo;
 import mapper.CommentMapper;
 import mapper.LikesMapper;
 import mapper.MentionMapper;
 import mapper.RelationMapper;
+import mapper.ReplyMapper;
 import mapper.WeiboMapper;
 
 /**
@@ -32,6 +34,8 @@ public class MentionService implements IMentionService{
 	private WeiboMapper weiboMapper; //转发
 	@Resource
 	private MentionMapper mentionMapper;//mention
+	@Resource
+	private ReplyMapper replyMapper;//mention
 
 	//处于废弃状态 ->下面的方法可以完全替代这个
 	@Override
@@ -108,6 +112,19 @@ public class MentionService implements IMentionService{
 		if(repost < 0){
 			mention.setRepostcount(0);
 			mentionMapper.updateReposts(userId, repost);
+		}
+		
+		//现在的回复数量
+		List<Reply> nowReplys = replyMapper.selectAllReply(userId);
+		Integer nowReply = nowReplys.size();
+		//回复的差值
+		Integer reply = nowReply - mention.getReplycount();
+		//设置与我相关的转发数量
+		mention.setReplycount(reply);
+		//当转发的总数减少时->设置通知为0 同时修改mention的转发数量
+		if(repost < 0){
+			mention.setReplycount(0);
+			mentionMapper.updateRelys(userId, nowReply);
 		}
 		
 		

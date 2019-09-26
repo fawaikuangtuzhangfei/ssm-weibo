@@ -58,7 +58,7 @@ public class SerchController {
 			// 是否原创
 			Integer repostId = all.get(i).getRepostId();
 			Weibo repost = weiboService.selectByWeiboId(repostId, 0, 10);
-			
+
 			all.get(i).setRepost(repost);
 		}
 		map.addAttribute("all", all);
@@ -92,7 +92,7 @@ public class SerchController {
 		Integer count = weiboService.countByUser(userId);
 		// 一页上显示10个，总共几页
 		int pageSize = count % 10 == 0 ? count / 10 : count / 10 + 1;
-		for (int i = 0; i < count; i++) {
+		for (int i = 0; i < all.size(); i++) {
 			// 是否原创
 			Integer repostId = all.get(i).getRepostId();
 			Weibo repost = weiboService.selectByWeiboId(repostId, 0, 10);
@@ -115,11 +115,11 @@ public class SerchController {
 		session.setAttribute("user", user);
 		return "user404";
 	}
-	
-	//查询当前用户共有多少条微博
+
+	// 查询当前用户共有多少条微博
 	@RequestMapping("/countWeibo.do")
-	public void countWeibo(ModelMap map, Integer userId){
-		Integer[] userIds = {userId};
+	public void countWeibo(ModelMap map, Integer userId) {
+		Integer[] userIds = { userId };
 		Integer countWeibo = weiboService.countMany(userIds);
 		map.addAttribute("countWeibo", countWeibo);
 	}

@@ -3,6 +3,7 @@ package service;
 import java.util.List;
 
 import bean.Comment;
+import bean.Weibo;
 
 /**
  * t_comment 评论
@@ -44,4 +45,11 @@ public interface ICommentService {
 	 * @return
 	 */
 	List<Comment> selectAlls(Integer userId);
+	
+	/**
+	 * 根据评论id查询微博的内容
+	 * @param commentId
+	 * @return
+	 */
+	Weibo selectByComment(Integer commentId);
 }

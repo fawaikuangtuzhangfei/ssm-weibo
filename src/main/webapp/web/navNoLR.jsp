@@ -64,7 +64,7 @@
 						<li><a href="../mention/showComment.do">评论<span
 								id="comment_badge" class="badge"
 								style="display: none; background-color: red"></span></a></li>
-						<li><a href="#">回复<span
+						<li><a href="../mention/showReply.do">回复<span
 								id="reply_badge" class="badge"
 								style="display: none; background-color: red"></span></a></li>
 						<li><a href="../mention/showLiked.do">赞<span

@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import bean.Comment;
+import bean.Weibo;
 import mapper.CommentMapper;
 
 /**
@@ -44,6 +45,11 @@ public class CommentService implements ICommentService{
 	@Override
 	public List<Comment> selectAlls(Integer userId) {
 		return commentMapper.selectAllComments(userId);
+	}
+
+	@Override
+	public Weibo selectByComment(Integer commentId) {
+		return commentMapper.selectByComment(commentId);
 	}
 	
 	

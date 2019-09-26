@@ -25,9 +25,29 @@ public class Reply implements Serializable{
     
     private String time;
     
-    //
+    //t_user
     private String fromUsername;
     private String toUsername;
+    private String fromFace;
+    
+    //t_weibo
+    private Weibo weibo;
+    
+	public String getFromFace() {
+		return fromFace;
+	}
+
+	public void setFromFace(String fromFace) {
+		this.fromFace = fromFace;
+	}
+
+	public Weibo getWeibo() {
+		return weibo;
+	}
+
+	public void setWeibo(Weibo weibo) {
+		this.weibo = weibo;
+	}
 
 	public Integer getReplyId() {
 		return replyId;
@@ -129,7 +149,7 @@ public class Reply implements Serializable{
 	public String toString() {
 		return "Reply [replyId=" + replyId + ", commentId=" + commentId + ", fromId=" + fromId + ", toId=" + toId
 				+ ", replyContent=" + replyContent + ", time=" + time + ", fromUsername=" + fromUsername
-				+ ", toUsername=" + toUsername + "]";
+				+ ", toUsername=" + toUsername + ", fromFace=" + fromFace + ", weibo=" + weibo + "]";
 	}
 
 	public String getReplyContent() {

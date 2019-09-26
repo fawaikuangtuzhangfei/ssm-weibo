@@ -67,5 +67,18 @@
 		
 	</select>    
 	
+	<!-- Weibo selectByComment(Integer commentId); 根据评论id查询微博的内容 -->
+	<select id="selectByComment" resultType="bean.Weibo">
+	select 
+		c.user_id as userId, c.weibo_id as weiboId, c.comment_time as commentTime, 
+		c.comment_content as commentContent,
+		u.username, u.face, u.id as nowUserId,
+		w.content, w.id
+		from t_comment c
+		left join t_user u on u.id = c.user_id
+		left join t_weibo w on w.id = c.weibo_id
+		where c.comment_id=#{commentId}
+		order by c.comment_time desc
+	</select>
 	
 	</mapper>

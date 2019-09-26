@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import bean.Comment;
 import bean.Likes;
 import bean.Mention;
+import bean.Reply;
 import bean.ResponseResult;
 import bean.User;
 import bean.Weibo;
@@ -23,6 +24,7 @@ import service.ICommentService;
 import service.ILikesService;
 import service.IMentionService;
 import service.IRelationService;
+import service.IReplyService;
 import service.IUserService;
 import service.WeiboService;
 
@@ -55,6 +57,9 @@ public class MentionController {
 
 	@Resource
 	private ICommentService commentService;// 评论
+	
+	@Resource
+	private IReplyService replyService;// 回复
 
 	@RequestMapping("/getNotice.do")
 	@ResponseBody
@@ -268,6 +273,68 @@ public class MentionController {
 		map.addAttribute("curpage", page);
 		map.addAttribute("wz", "showComment.do?");
 		return "CommentPage";
+	}
+	
+	/**
+	 * 跳转到我收到的回复页面 ->同时修改mention中的回复的数量
+	 * 
+	 * @param request
+	 * @param map
+	 * @param page
+	 * @return
+	 */
+	@RequestMapping("/showReply")
+	public String showAllReply(HttpServletRequest request, ModelMap map, Integer page) {
+		// 默认为当前页
+		if (page == null) {
+			page = 1;
+		}
+		// 一页展示10个 当前是第几个
+		Integer offset = (page - 1) * 10;
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+		Integer userId = user.getId();
+
+		// 查询当前用户所有的回复
+		List<Reply> replyList = replyService.selectAllReplys(userId);
+
+		// 总回复
+		Integer count = replyList.size();
+		// 一页上显示10个，总共几页
+		int pageSize = count % 10 == 0 ? count / 10 : count / 10 + 1;
+		// 当前页有几个
+		int haveMany = page == pageSize ? pageSize * 10 - count : 10;
+		int j = 0;
+		if (pageSize == 1) {
+			haveMany = 10;
+		}
+		// 当前页上显示多少个
+		List<Reply> pages = new ArrayList<Reply>();
+		for (int i = offset; i < count; i++) {
+			//获取该条微博的内容
+			Reply r = replyList.get(i);
+			Integer commentId = r.getCommentId();
+			Weibo w = commentService.selectByComment(commentId);
+			r.setWeibo(w);
+			pages.add(r);
+			j++;
+			if (j >= haveMany) {
+				break;
+			}
+		}
+
+		// 目前的回复数目
+		Integer replyCount = replyList.size();
+		// 修改mention中的commentCount
+		mentionService.updateRelys(userId, replyCount);
+
+		map.addAttribute("replyList", pages);
+		// 将页数和总数和当前页面放进session中
+		map.addAttribute("count", count);
+		map.addAttribute("pageSize", pageSize);
+		map.addAttribute("curpage", page);
+		map.addAttribute("wz", "showReply.do?");
+		return "replyPage";
 	}
 
 	/**

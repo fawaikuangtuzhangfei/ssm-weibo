@@ -50,24 +50,21 @@
 	)
     </select>
     
-	<!-- List<Comment> selectAllComments(Integer userId); 当前用户收到的所有评论 ->个人信息+微博信息 -->
-	<select id="selectAllComments" resultType="bean.Comment">
+	<!-- List<Reply> selectAllReply(Integer userId); 当前用户收到的所有回复 ->回复信息+微博信息+个人信息 -->
+	<select id="selectAllReply" resultType="bean.Reply">
 		select 
-		c.user_id as userId, c.weibo_id as weiboId, c.comment_time as commentTime, 
-		c.comment_content as commentContent,
-		u.username, u.face, u.id as nowUserId,
-		w.content
-		from t_comment c
-		left join t_user u on u.id = c.user_id
-		left join t_weibo w on w.id = c.weibo_id
-		where c.weibo_id in(
-			select w.id 
-			from t_weibo w
-			where w.user_id=#{userId} 
-		)
-		order by c.comment_time desc
+		r.reply_id as replyId, r.comment_id as commentId, r.from_id as fromId, r.to_id as toId,
+		r.reply_content as replyContent, r.time,
+		u1.username as fromUsername, u1.face as fromFace,
+		u2.username as toUsername, u2.face as toFace
+		from t_reply r
+		left join t_user u1 on u1.id=r.from_id
+		left join t_user u2 on u2.id=r.to_id
+		where r.to_id=#{userId}
+		order by r.time desc
 		
-	</select>    
+	</select>  
+	
 	
 	
 	</mapper>

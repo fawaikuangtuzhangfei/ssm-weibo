@@ -36,4 +36,9 @@ public class ReplyService implements IReplyService{
 		replyMapper.delete(replyId);
 	}
 
+	@Override
+	public List<Reply> selectAllReplys(Integer userId) {
+		return replyMapper.selectAllReply(userId);
+	}
+
 }

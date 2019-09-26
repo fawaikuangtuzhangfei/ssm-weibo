@@ -45,6 +45,18 @@ public class TestComment {
 	}
 	
 	@Test
+	public void testSelectAlsl() {
+		//1.
+		AbstractApplicationContext ac = new ClassPathXmlApplicationContext("application-dao.xml");
+		//2.
+		CommentMapper mapper = ac.getBean("commentMapper", CommentMapper.class);
+		//3.
+		System.out.println(mapper.selectByComment(102));
+		//4.
+		ac.close();
+	}
+	
+	@Test
 	public void testSelectAlls() {
 		//1.
 		AbstractApplicationContext ac = new ClassPathXmlApplicationContext("application-dao.xml");
