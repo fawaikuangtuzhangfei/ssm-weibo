@@ -111,6 +111,7 @@
 			</div>
 			<br>
 			<c:forEach items="${commentList }" var="comment" varStatus="status">
+				<input type="hidden" class="followId" value="${comment.nowUserId }">
 				<!-- 头部 -->
 				<div class="container" style="width: 850px; background-color: white;">
 					<!-- 头像 -->
@@ -119,15 +120,35 @@
 						<c:if test="${comment.nowUserId==user.id}">
 							<img onclick="javascript:clickme();"
 								src="/imgUpload/${comment.face}" width="50px" height="50px"
-								class="img-circle">
+								class="img-circle bind_hover_card popover-show" data-toggle="popover"  
+					title="${comment.username }" 
+					data-content=
+					"<form><ul><li><span aria-hidden='true' class='icon_globe'></span> <font>粉丝数:</font>7389223</li> 
+     <li><span aria-hidden='true' class='icon_piechart'></span> <font>关注:</font>265</li>
+     <li><span aria-hidden='true' class='icon_search_alt'></span> <font>微博:</font>645</li>
+     <li><span aria-hidden='true' class='icon_pens_alt'></span> <font>所在地:</font>${comment.province}</li>
+     <input type='button' value='关注' id='guanzhu${comment.nowUserId }' onclick='guanzhu(${comment.nowUserId })'/></form>"
+					data-placement="bottom" data-trigger="hover">
+								
+								
 						</c:if>
 						<c:if test="${comment.nowUserId!=user.id}">
 							<img onclick="javascript:clickother(${comment.nowUserId});"
 								src="/imgUpload/${comment.face}" width="50px" height="50px"
-								class="img-circle">
+								class="img-circle bind_hover_card popover-show" data-toggle="popover"  
+					title="${comment.username }" 
+					data-content=
+					"<form><ul><li><span aria-hidden='true' class='icon_globe'></span> <font>粉丝数:</font>7389223</li> 
+     <li><span aria-hidden='true' class='icon_piechart'></span> <font>关注:</font>265</li>
+     <li><span aria-hidden='true' class='icon_search_alt'></span> <font>微博:</font>645</li>
+     <li><span aria-hidden='true' class='icon_pens_alt'></span> <font>所在地:</font>${comment.province}</li>
+     <input type='button' value='关注' id='guanzhu${comment.nowUserId }' onclick='guanzhu(${comment.nowUserId })'/></form>"
+					data-placement="bottom" data-trigger="hover">
 						</c:if>
 					</div>
 					<div style="text-align: left; margin: 10px; float: left;">
+						<!-- 当前用户的id -->
+						<input type="hidden" value="${comment.nowUserId}" name="userId">
 						<!-- 昵称 -->
 						<a style="color: #333; font-size: 15px" href="javascrip:;">${comment.username }</a>
 						<!-- 时间 -->
@@ -190,6 +211,9 @@
 	
 
 	</script>
+	
+	<!-- 关注的相关js -->
+	<script type="text/javascript " src="../js/follow.js"></script>
 
 	<script type="text/javascript "
 		src="${pageContext.request.contextPath }/js/jquery-3.3.1.js "></script>

@@ -86,7 +86,7 @@
 			<c:if test="${user.sex==1 }">
 				<span style="font-size: 15px">♂ </span>
 			</c:if>
-			<span style="font-size: 15px"> ${user.province } | ${user.city } </span>
+			<span style="font-size: 15px"> ${user.nowProvince } | ${user.nowCity } </span>
 		</div>
 
 		<div style="width: 80%; float: left;">
@@ -249,8 +249,8 @@
 	
 </script>
 
-<!-- 关注的相关js -->
-<script type="text/javascript " src="../js/follow.js"></script>
+	<!-- 关注的相关js -->
+	<script type="text/javascript " src="../js/follow.js"></script>
 	<script type="text/javascript "	src="${pageContext.request.contextPath }/js/jquery-3.3.1.js "></script>
 	<script type="text/javascript "	src="${pageContext.request.contextPath }/js/bootstrap.js "></script>
 	<script type="text/javascript "	src="${pageContext.request.contextPath }/js/bootstrap-datetimepicker.js "></script>

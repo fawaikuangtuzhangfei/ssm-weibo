@@ -25,6 +25,7 @@ public class Likes implements Serializable{
 	private String username;
 	private String face;
 	private Integer nowUserId;
+	private String province;
 
 	//t_weibo
 	private String content;
@@ -107,8 +108,8 @@ public class Likes implements Serializable{
 	@Override
 	public String toString() {
 		return "Likes [likesId=" + likesId + ", userId=" + userId + ", weiboId=" + weiboId + ", likeTime=" + likeTime
-				+ ", username=" + username + ", face=" + face + ", nowUserId=" + nowUserId + ", content=" + content
-				+ "]";
+				+ ", username=" + username + ", face=" + face + ", nowUserId=" + nowUserId + ", province=" + province
+				+ ", content=" + content + "]";
 	}
 
 	public String getLikeTime() {
@@ -149,6 +150,14 @@ public class Likes implements Serializable{
 
 	public void setNowUserId(Integer nowUserId) {
 		this.nowUserId = nowUserId;
+	}
+
+	public String getProvince() {
+		return province;
+	}
+
+	public void setProvince(String province) {
+		this.province = province;
 	}
 	
 }

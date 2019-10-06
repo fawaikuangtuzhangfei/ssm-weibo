@@ -29,6 +29,8 @@ public class Reply implements Serializable{
     private String fromUsername;
     private String toUsername;
     private String fromFace;
+    private String fromProvince;
+    private String toProvince;
     
     //t_weibo
     private Weibo weibo;
@@ -149,7 +151,8 @@ public class Reply implements Serializable{
 	public String toString() {
 		return "Reply [replyId=" + replyId + ", commentId=" + commentId + ", fromId=" + fromId + ", toId=" + toId
 				+ ", replyContent=" + replyContent + ", time=" + time + ", fromUsername=" + fromUsername
-				+ ", toUsername=" + toUsername + ", fromFace=" + fromFace + ", weibo=" + weibo + "]";
+				+ ", toUsername=" + toUsername + ", fromFace=" + fromFace + ", fromProvince=" + fromProvince
+				+ ", toProvince=" + toProvince + ", weibo=" + weibo + "]";
 	}
 
 	public String getReplyContent() {
@@ -174,6 +177,22 @@ public class Reply implements Serializable{
 
 	public void setToUsername(String toUsername) {
 		this.toUsername = toUsername;
+	}
+
+	public String getFromProvince() {
+		return fromProvince;
+	}
+
+	public void setFromProvince(String fromProvince) {
+		this.fromProvince = fromProvince;
+	}
+
+	public String getToProvince() {
+		return toProvince;
+	}
+
+	public void setToProvince(String toProvince) {
+		this.toProvince = toProvince;
 	}
     
 }

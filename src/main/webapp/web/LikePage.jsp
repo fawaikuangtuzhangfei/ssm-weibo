@@ -110,7 +110,9 @@
 		<h2 style="color: #333; margin:1px;">收到的赞<span style="color: #f00;" class="glyphicon glyphicon-heart"></span></h2>
 			</div>
 			<br>
+			<input type="hidden" value="${user.id}" name="userId"> 
 			<c:forEach items="${likesList }" var="like" varStatus="status">
+			<input type="hidden" class="followId" value="${like.nowUserId }">
 				<!-- 头部 -->
 				<div class="container" style="width: 850px; height: 95px; background-color: white;">
 					<!-- 头像 -->
@@ -119,12 +121,30 @@
 						<c:if test="${like.nowUserId==user.id}">
 							<img onclick="javascript:clickme();"
 								src="/imgUpload/${like.face}" width="50px" height="50px"
-								class="img-circle">
+								class="img-circle bind_hover_card popover-show" data-toggle="popover"  
+					title="${like.username }" 
+					data-content=
+					"<form><ul><li><span aria-hidden='true' class='icon_globe'></span> <font>粉丝数:</font>7389223</li> 
+     <li><span aria-hidden='true' class='icon_piechart'></span> <font>关注:</font>265</li>
+     <li><span aria-hidden='true' class='icon_search_alt'></span> <font>微博:</font>645</li>
+     <li><span aria-hidden='true' class='icon_pens_alt'></span> <font>所在地:</font>${like.province}</li>
+     <input type='button' value='关注' id='guanzhu${like.nowUserId }' onclick='guanzhu(${like.nowUserId })'/></form>"
+					data-placement="bottom" data-trigger="hover">
+					
 						</c:if>
 						<c:if test="${like.nowUserId!=user.id}">
 							<img onclick="javascript:clickother(${like.nowUserId});"
 								src="/imgUpload/${like.face}" width="50px" height="50px"
-								class="img-circle">
+								class="img-circle bind_hover_card popover-show" data-toggle="popover"  
+					title="${like.username }" 
+					data-content=
+					"<form><ul><li><span aria-hidden='true' class='icon_globe'></span> <font>粉丝数:</font>7389223</li> 
+     <li><span aria-hidden='true' class='icon_piechart'></span> <font>关注:</font>265</li>
+     <li><span aria-hidden='true' class='icon_search_alt'></span> <font>微博:</font>645</li>
+     <li><span aria-hidden='true' class='icon_pens_alt'></span> <font>所在地:</font>${like.province}</li>
+     <input type='button' value='关注' id='guanzhu${like.nowUserId }' onclick='guanzhu(${like.nowUserId })'/></form>"
+					data-placement="bottom" data-trigger="hover">
+					
 						</c:if>
 					</div>
 					<div style="text-align: left; margin: 10px;">
@@ -137,7 +157,7 @@
 						<div style="background-color: #eaeaec;float: left;">
 							<a style="color: #333; float: left; font-size: 15px;">@${user.username }</a>
 							<span style="color: #333;">&nbsp;:&nbsp;</span>
-							<a style="color: #333; font-size: 15px" href="singleWeibo.action?weiboId=${ like.weiboId}">${like.content }</a>
+							<a style="color: #333; font-size: 15px" href="../weibo/showSingle.do?weiboId=${like.weiboId}">${like.content }</a>
 						</div>
 					</div>
 				</div>
@@ -186,7 +206,8 @@
 	
 
 	</script>
-
+	<!-- 关注的相关js -->
+	<script type="text/javascript " src="../js/follow.js"></script>	
 	<script type="text/javascript "
 		src="${pageContext.request.contextPath }/js/jquery-3.3.1.js "></script>
 	<script type="text/javascript "

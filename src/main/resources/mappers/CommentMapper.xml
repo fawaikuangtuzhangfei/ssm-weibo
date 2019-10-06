@@ -54,10 +54,13 @@
 		c.user_id as userId, c.weibo_id as weiboId, c.comment_time as commentTime, 
 		c.comment_content as commentContent,
 		u.username, u.face, u.id as nowUserId,
+		lp.name as province, lc.name as city,
 		w.content
 		from t_comment c
 		left join t_user u on u.id = c.user_id
 		left join t_weibo w on w.id = c.weibo_id
+		left join t_location lp on lp.id = u.province 
+		left join t_location lc on lc.id = u.city
 		where c.weibo_id in(
 			select w.id 
 			from t_weibo w

@@ -34,6 +34,7 @@ public class Comment implements Serializable{
     private String username; //用户名
     private String face; //头像
     private Integer nowUserId; //当前用户id
+    private String province; //当前用户id
 
 	//t_weibo
 	private String content;// 微博内容
@@ -136,8 +137,8 @@ public class Comment implements Serializable{
 	public String toString() {
 		return "Comment [commentId=" + commentId + ", userId=" + userId + ", weiboId=" + weiboId + ", commentTime="
 				+ commentTime + ", commentContent=" + commentContent + ", username=" + username + ", face=" + face
-				+ ", nowUserId=" + nowUserId + ", content=" + content + ", reply=" + reply + ", countReply="
-				+ countReply + "]";
+				+ ", nowUserId=" + nowUserId + ", province=" + province + ", content=" + content + ", reply=" + reply
+				+ ", countReply=" + countReply + "]";
 	}
 
 	public String getUsername() {
@@ -186,6 +187,14 @@ public class Comment implements Serializable{
 
 	public void setCountReply(Integer countReply) {
 		this.countReply = countReply;
+	}
+
+	public String getProvince() {
+		return province;
+	}
+
+	public void setProvince(String province) {
+		this.province = province;
 	}
     
     

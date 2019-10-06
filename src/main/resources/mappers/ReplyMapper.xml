@@ -55,11 +55,17 @@
 		select 
 		r.reply_id as replyId, r.comment_id as commentId, r.from_id as fromId, r.to_id as toId,
 		r.reply_content as replyContent, r.time,
+		lp1.name as fromProvince, lc1.name as fromCity,
+		lp2.name as toProvince, lc2.name as toCity,
 		u1.username as fromUsername, u1.face as fromFace,
 		u2.username as toUsername, u2.face as toFace
 		from t_reply r
 		left join t_user u1 on u1.id=r.from_id
+		left join t_location lp1 on lp1.id = u1.province 
+		left join t_location lc1 on lc1.id = u1.city
 		left join t_user u2 on u2.id=r.to_id
+		left join t_location lp2 on lp2.id = u2.province 
+		left join t_location lc2 on lc2.id = u2.city
 		where r.to_id=#{userId}
 		order by r.time desc
 		

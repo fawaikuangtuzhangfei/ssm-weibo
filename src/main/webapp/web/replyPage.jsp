@@ -111,7 +111,9 @@
 		<h2 style="color: #333; margin:1px;">收到的回复<span style="color: #f00;" class="glyphicon glyphicon-comment"></span></h2>
 			</div>
 			<br>
+			<input type="hidden" value="${user.id}" name="userId"> 
 			<c:forEach items="${replyList }" var="reply" varStatus="status">
+			<input type="hidden" class="followId" value="${reply.fromId }">
 				<!-- 头部 -->
 				<div class="container" style="width: 850px; background-color: white;">
 					<!-- 头像 -->
@@ -120,12 +122,30 @@
 						<c:if test="${reply.fromId==user.id}">
 							<img onclick="javascript:clickme();"
 								src="/imgUpload/${reply.fromFace}" width="50px" height="50px"
-								class="img-circle">
+								class="img-circle bind_hover_card popover-show" data-toggle="popover"  
+					title="${reply.fromUsername }" 
+					data-content=
+					"<form><ul><li><span aria-hidden='true' class='icon_globe'></span> <font>粉丝数:</font>7389223</li> 
+     <li><span aria-hidden='true' class='icon_piechart'></span> <font>关注:</font>265</li>
+     <li><span aria-hidden='true' class='icon_search_alt'></span> <font>微博:</font>645</li>
+     <li><span aria-hidden='true' class='icon_pens_alt'></span> <font>所在地:</font>${reply.fromProvince}</li>
+     <input type='button' value='关注' id='guanzhu${reply.fromId }' onclick='guanzhu(${reply.fromId })'/></form>"
+					data-placement="bottom" data-trigger="hover">
+					
 						</c:if>
 						<c:if test="${reply.fromId!=user.id}">
 							<img onclick="javascript:clickother(${reply.fromId});"
 								src="/imgUpload/${reply.fromFace}" width="50px" height="50px"
-								class="img-circle">
+								class="img-circle bind_hover_card popover-show" data-toggle="popover"  
+					title="${reply.fromUsername }" 
+					data-content=
+					"<form><ul><li><span aria-hidden='true' class='icon_globe'></span> <font>粉丝数:</font>7389223</li> 
+     <li><span aria-hidden='true' class='icon_piechart'></span> <font>关注:</font>265</li>
+     <li><span aria-hidden='true' class='icon_search_alt'></span> <font>微博:</font>645</li>
+     <li><span aria-hidden='true' class='icon_pens_alt'></span> <font>所在地:</font>${reply.fromProvince}</li>
+     <input type='button' value='关注' id='guanzhu${reply.fromId }' onclick='guanzhu(${reply.fromId })'/></form>"
+					data-placement="bottom" data-trigger="hover">
+					
 						</c:if>
 					</div>
 					<div style="text-align: left; margin: 10px; float: left;">
@@ -190,7 +210,8 @@
 		}
 
 	</script>
-
+	<!-- 关注的相关js -->
+	<script type="text/javascript " src="../js/follow.js"></script>	
 	<script type="text/javascript "
 		src="${pageContext.request.contextPath }/js/jquery-3.3.1.js "></script>
 	<script type="text/javascript "
