@@ -130,7 +130,6 @@
      <input type='button' value='关注' id='guanzhu${comment.nowUserId }' onclick='guanzhu(${comment.nowUserId })'/></form>"
 					data-placement="bottom" data-trigger="hover">
 								
-								
 						</c:if>
 						<c:if test="${comment.nowUserId!=user.id}">
 							<img onclick="javascript:clickother(${comment.nowUserId});"
@@ -150,7 +149,7 @@
 						<!-- 当前用户的id -->
 						<input type="hidden" value="${comment.nowUserId}" name="userId">
 						<!-- 昵称 -->
-						<a style="color: #333; font-size: 15px" href="javascrip:;">${comment.username }</a>
+						<a style="color: #333; font-size: 15px" href="javascript:clickother(${comment.nowUserId});">${comment.username }</a>
 						<!-- 时间 -->
 						<p style="color: #999; font-size: 15px">${comment.commentTime }</p>
 					</div>

@@ -130,7 +130,7 @@
 						</div>
 						<!-- 昵称+日期 -->
 						<div style="text-align: left; margin: 15px; float: left;">
-							<a style="color: #333; font-size: 15px" href="javascrip:;">${weibo.username }</a><br>
+							<a style="color: #333; font-size: 15px" href="javascript:clickother(${weibo.userId});">${weibo.username }</a><br>
 							<span style="color: #fd00009c; font-size: 15px ">转发于&nbsp;&nbsp;&nbsp;&nbsp;${weibo.postTime }</span>
 						</div>
 					</div>
@@ -152,7 +152,7 @@
 	<!-- 昵称+日期 -->
 	<div
 		style="text-align: left; margin: 10px; margin-left: 20px; float: left;">
-		<a style="color: #333; font-size: 14px" href="javascrip:;">${user.username }</a><br>
+		<a style="color: #333; font-size: 14px" href="javascript:clickother(${user.id});">${user.username }</a><br>
 	</div>
 </div>
 <div class="container" style="width: 850px; background-color: #eaeaec;">

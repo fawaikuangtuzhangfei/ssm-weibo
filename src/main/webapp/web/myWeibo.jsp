@@ -91,7 +91,7 @@
 
 <body style="padding: 80px" class="bgImg">
 	<div class="container" style="width: 500px">
-		<div class="row">
+		<div class="row" style="margin-left: -134px;">
 			<div class="leftbox" style="margin: 40px">
 				<!-- 头像 -->
 				<img src="/imgUpload/${usernow.face}" height="150px" width="150px"
