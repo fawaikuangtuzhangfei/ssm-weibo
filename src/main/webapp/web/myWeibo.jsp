@@ -9,6 +9,7 @@
 <title>${usernow.username}的主页</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="../icons/sina_weibo.ico">
 <script src="../js/jquery-1.12.0.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
 
@@ -76,9 +77,19 @@
 </script>
 <!-- 导航栏 -->
 <jsp:include page="../web/navNoLR.jsp"></jsp:include>
+
+    <!-- 背景图片 -->
+    <style>
+    .bgImg {
+    	background-image: url("../images/s2.jpg");
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
+    </style>
+
 </head>
 
-<body style="padding: 80px">
+<body style="padding: 80px" class="bgImg">
 	<div class="container" style="width: 500px">
 		<div class="row">
 			<div class="leftbox" style="margin: 40px">
@@ -110,7 +121,7 @@
 						<c:if test="${user.sex==0 }">
 						<span>♀</span>
 						</c:if>
-						<span>${user.province } ${user.city }</span>
+						<span>${user.nowProvince } ${user.nowCity }</span>
 						</td>
 					</tr>
 				</table>

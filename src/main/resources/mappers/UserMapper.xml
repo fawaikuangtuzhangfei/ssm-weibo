@@ -31,8 +31,9 @@
 	<!-- User seletByUsername(String username); 根据用户名查找用户 -->
 	<select id="selectByUsername" resultType="bean.User">
 		select 
-		u.id, u.username, u.password, u.nickname, u.bir, lp.name as province, lc.name as city, u.area, u.email, u.phone, u.face, u.sex,
+		u.id, u.username, u.password, u.nickname, u.bir, lp.name as nowProvince, lc.name as nowCity, u.area, u.email, u.phone, u.face, u.sex,
 		u.created_user createdUser, u.created_time createdTime,
+		u.province as province, u.city as city,
 		u.modified_user modifiedUser, u.modified_time modifiedTime
 		from t_user u
 		left join t_location lp on lp.id = u.province 

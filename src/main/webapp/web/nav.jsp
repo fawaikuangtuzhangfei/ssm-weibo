@@ -120,7 +120,7 @@
 			<c:if test="${user.sex==1 }">
 				<span style="font-size: 15px">♂ </span>
 			</c:if>
-			<span style="font-size: 15px"> ${user.province } | ${user.city } </span>
+			<span style="font-size: 15px"> ${user.nowProvince } | ${user.nowCity } </span>
 		</div>
 
 

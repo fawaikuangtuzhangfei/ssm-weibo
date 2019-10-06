@@ -9,6 +9,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="../icons/sina_weibo.ico">
 <title>用户信息</title>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath }/css/bootstrap.min.css">
@@ -19,9 +20,18 @@
 <script src="${pageContext.request.contextPath }/js/city.js"></script>
 <script src="${pageContext.request.contextPath }/js/longPolling.js"></script>
 
+    <!-- 背景图片 -->
+    <style>
+    .bgImg {
+    	background-image: url("../images/userinfo.jpg");
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
+    </style>
+
 </head>
-<body style="padding: 80px">
-	<h1 class="cover-heading" style="margin-left: 350px">现在您可以更改信息！或者<a href="../weibo/showOne.do" >取消修改</a></h1>
+<body style="padding: 80px" class="bgImg">
+	<h1 class="cover-heading" style="margin-left: 350px">现在您可以更改信息！或者<a href="../weibo/showOne.do" >完成修改</a></h1>
 	<br>
 	<div class="cover-container">
 		<form class="form-horizontal" method="post"
@@ -76,7 +86,6 @@
 			</div>
 			<br>
 			<br>
-
 			<!-- ——————————————所在地———————————— -->
 			<div class="form-group" style="margin-top: 10px">
 				<label class="col-sm-4 control-label">所在地</label> <input

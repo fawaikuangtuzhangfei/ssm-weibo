@@ -9,6 +9,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="../icons/sina_weibo.ico">
 <title>微博详情</title>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath }/css/bootstrap.min.css">
@@ -24,8 +25,18 @@
 	href="${pageContext.request.contextPath }/css/comment.css">
 <!-- 导航栏 -->
 <jsp:include page="../web/navNoLR.jsp"></jsp:include>
+
+    <!-- 背景图片 -->
+    <style>
+    .bgImg {
+    	background-image: url("../images/like.jpg");
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
+    </style>
+    
 </head>
-<body style="padding: 80px;">
+<body style="padding: 80px;" class="bgImg">
 
 	<!-- 头部 -->
 	<div id=${weibo.id }>

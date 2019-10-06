@@ -48,7 +48,7 @@ public class UserController {
 
 	@Resource
 	private WeiboService weiboService;
-	
+
 	@Resource
 	private IRelationService relationService;
 
@@ -62,17 +62,17 @@ public class UserController {
 			User user = userService.login(username, password);
 			rr = new ResponseResult<Void>(1, "登录成功");
 			session.setAttribute("user", user);
-			//当前用户的id
+			// 当前用户的id
 			Integer userId = user.getId();
-			//登录时就把用户拥有的微博数量给存入session中去
-			Integer[] userIds = {userId};
+			// 登录时就把用户拥有的微博数量给存入session中去
+			Integer[] userIds = { userId };
 			Integer countWeibo = weiboService.countMany(userIds);
 			session.setAttribute("countWeibo", countWeibo);
-			//把粉丝数量也存进去
+			// 把粉丝数量也存进去
 			Integer[] fans = relationService.selectFans(userId);
 			Integer fanCount = fans.length;
 			session.setAttribute("fanCount", fanCount);
-			//把关注数量也存进去
+			// 把关注数量也存进去
 			Integer[] follows = relationService.selectAll(userId);
 			Integer followCount = follows.length;
 			session.setAttribute("followCount", followCount);
@@ -302,7 +302,7 @@ public class UserController {
 		Integer nowWeiboCount = weiboService.countByUser(userId);
 		Integer[] fans = relationService.selectFans(userId);
 		Integer[] follows = relationService.selectAll(userId);
-		//将微博总数、粉丝总数、关注总数放入map中
+		// 将微博总数、粉丝总数、关注总数放入map中
 		map.addAttribute("nowWeiboCount", nowWeiboCount);
 		map.addAttribute("nowFansCount", fans.length);
 		map.addAttribute("nowFollowCount", follows.length);

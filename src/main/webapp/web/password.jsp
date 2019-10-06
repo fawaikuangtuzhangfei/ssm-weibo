@@ -9,6 +9,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="../icons/sina_weibo.ico">
     <title>修改密码</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="../js/jquery-1.12.0.min.js"></script>
@@ -46,8 +47,18 @@
 
 <!-- 导航栏 -->
 <jsp:include page="../web/navNoLR.jsp"></jsp:include>
+
+    <!-- 背景图片 -->
+    <style>
+    .bgImg {
+    	background-image: url("../images/s5.jpg");
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
+    </style>
+
 </head>
-<body style="padding: 80px">
+<body style="padding: 80px" class="bgImg">
     <br>
     <h1 class="cover-heading" style="margin-left: -80px">——修改密码——</h1>
     <br>

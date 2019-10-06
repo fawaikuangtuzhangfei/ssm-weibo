@@ -19,9 +19,19 @@
    <!-- Bootstrap -->
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../css/login.css">
+    
+    <!-- 背景图片 -->
+    <style>
+    .bgImg {
+    	background-image: url("../images/login.jpg");
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
+    </style>
+    
   </head>
 
-  <body>
+  <body class="bgImg">
 
     <div class="container">
 

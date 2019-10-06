@@ -9,6 +9,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="../icons/sina_weibo.ico">
 <title>收到的回复</title>
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath }/css/bootstrap.min.css">
@@ -64,14 +65,24 @@
 
 <!-- 导航栏 -->
 <jsp:include page="../web/navNoLR.jsp"></jsp:include>
+
+    <!-- 背景图片 -->
+    <style>
+    .bgImg {
+    	background-image: url("../images/s3.jpg");
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
+    </style>
+
 </head>
-<body style="padding: 80px">
+<body class="bgImg" style="padding: 80px">
 
 
 	<!-- 正文 -->
 	<div class="container">
 		<!-- 右侧个人简单信息 -->
-		<div style="width: 20%; float: right;">
+		<div style="width: 20%; float: right; background-color: white;">
 			<!-- 头像 -->
 			<img src="/imgUpload/${user.face}" height="100px " width="100px "
 				class="img-circle " align="center">
@@ -92,7 +103,7 @@
 			<c:if test="${user.sex==1 }">
 				<span style="font-size: 15px">♂ </span>
 			</c:if>
-			<span style="font-size: 15px"> ${user.province } | ${user.city } </span>
+			<span style="font-size: 15px"> ${user.nowProvince } | ${user.nowCity } </span>
 		</div>
 
 		<div style="width: 80%; float: left;">

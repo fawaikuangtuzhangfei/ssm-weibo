@@ -9,6 +9,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="../icons/sina_weibo.ico">
 <title>收到的评论</title>
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath }/css/bootstrap.min.css">
@@ -63,8 +64,18 @@
 </script>
 <!-- 导航栏 -->
 <jsp:include page="../web/navNoLR.jsp"></jsp:include>
+
+    <!-- 背景图片 -->
+    <style>
+    .bgImg {
+    	background-image: url("../images/s5.jpg");
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
+    </style>
+
 </head>
-<body style="padding: 80px">
+<body class="bgImg" style="padding: 80px">
 
 
 	<!-- 正文 -->
@@ -91,7 +102,7 @@
 			<c:if test="${user.sex==1 }">
 				<span style="font-size: 15px">♂ </span>
 			</c:if>
-			<span style="font-size: 15px"> ${user.province } | ${user.city } </span>
+			<span style="font-size: 15px"> ${user.nowProvince } | ${user.nowCity } </span>
 		</div>
 
 		<div style="width: 80%; float: left;">
@@ -140,7 +151,7 @@
 			</c:forEach>
 			<div class="container" style="width: 850px;">
 			<!-- 分页 -->
-			<div align="center" style="font-size: 20px">
+			<div align="center" style="font-size: 20px; background-color: #fff;">
 				共${count}条消息|共${pageSize}页|
 				<c:forEach var="i" begin="1" end="${pageSize}">
 					<a

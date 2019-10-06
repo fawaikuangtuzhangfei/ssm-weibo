@@ -5,6 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="../icons/sina_weibo.ico">
 	<script src="../js/jquery-3.1.1.min.js"></script>
 
 	<!-- Bootstrap -->
@@ -14,8 +15,17 @@
 
 <link rel="stylesheet" href="../css/regist.css">
 <title>新用户注册</title>
+
+    <!-- 背景图片 -->
+    <style>
+    .bgImg {
+    	background-image: url("../images/regist.jpg");
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
+    </style>
 </head>
-<body>
+<body class="bgImg" style="color: goldenrod">
 	 <div class="container">
 
       <form id="form-register" class="form-signin" method="post" action="">
@@ -57,8 +67,9 @@
         
         <button id="bt-register" class="btn btn-lg btn-primary btn-block" type="button" >立即注册</button>
         
+        <span>已有账号, <a href="../user/showLogin.do" >立即登录!</a></span>
       </form>
-      <span style="margin-left: 321px;">已有账号, <a href="../user/showLogin.do" >立即登录!</a></span>
+      
 
     </div> <!-- /container -->
 

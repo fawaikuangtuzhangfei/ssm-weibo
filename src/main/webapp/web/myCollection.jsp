@@ -9,6 +9,7 @@
 <title>我的收藏</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="../icons/sina_weibo.ico">
 <script src="../js/jquery-1.12.0.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
 
@@ -75,10 +76,20 @@
 </script>
 <!-- 导航栏 -->
 <jsp:include page="../web/nav.jsp"></jsp:include>
+
+    <!-- 背景图片 -->
+    <style>
+    .bgImg {
+    	background-image: url("../images/myweibo.jpg");
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
+    </style>
+    
 </head>
 
 <body>
-<body style="padding: 80px">
+<body style="padding: 80px" class="bgImg">
 <div style="width: 70%; float: left;">
 			<div class="container" style="width: auto; margin-top: 0px; background-color: #fff;">
 			<p style="font-size: 40px; color: black" align="center">我的收藏</p>
