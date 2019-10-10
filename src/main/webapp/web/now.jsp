@@ -91,7 +91,7 @@
 <body style="padding: 80px" class="bgImg">
 <div style="width: 70%; float: left;">
 <!-- 发送新微博 -->
-			<div class="container" style="width: auto; margin-top: 20px; background-color: #fff;">
+			<div class="container" style="width: auto; margin-top: 0px; background-color: #fff;">
 				<p style="font-size: 40px; color: black" align="center">分享新鲜事</p>
 				<form method="post" action="../weibo/post.do">
 					<textarea class="form-control" rows="4"

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import bean.User;
 import bean.Weibo;
+import service.IRelationService;
 import service.IUserService;
 import service.WeiboService;
 
@@ -30,10 +31,13 @@ public class SerchController {
 	public final Logger log = Logger.getLogger(this.getClass());
 
 	@Resource
-	private WeiboService weiboService;
+	private WeiboService weiboService;// 微博
 
 	@Resource
-	private IUserService userService;
+	private IUserService userService;// 用户
+	
+	@Resource
+	private IRelationService relationService;// 粉丝关注
 
 	// 显示指定内容的微博
 	@RequestMapping("/selectByContents.do")
@@ -99,6 +103,18 @@ public class SerchController {
 			all.get(i).setRepost(repost);
 		}
 		map.addAttribute("all", all);
+		// 把微博数量放进map中去
+		Integer[] userIds = { userId };
+		Integer countWeibo = weiboService.countMany(userIds);
+		map.addAttribute("nowWeiboCount", countWeibo);
+		// 把粉丝数量也存进去
+		Integer[] fans = relationService.selectFans(userId);
+		Integer fanCount = fans.length;
+		map.addAttribute("nowFansCount", fanCount);
+		// 把关注数量也存进去
+		Integer[] follows = relationService.selectAll(userId);
+		Integer followCount = follows.length;
+		map.addAttribute("nowFollowCount", followCount);
 		log.info(all);
 		// 将页数和总数和当前页面放进session中
 		map.addAttribute("count", count);

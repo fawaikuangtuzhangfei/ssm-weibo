@@ -167,7 +167,7 @@ public class RelationController {
 			User user = userService.selectById(followId);
 			if (user != null) {
 				users.add(user);
-				user.setState(1);
+				user.setState(1); // 默认为 未关注
 				//目前nowId的关注 = 登录用户的关注 ->3关注
 				for(int nowfid : nowfollows){
 					if(nowfid == followId){

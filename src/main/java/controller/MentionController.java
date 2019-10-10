@@ -61,6 +61,11 @@ public class MentionController {
 	@Resource
 	private IReplyService replyService;// 回复
 
+	/**
+	 * 展示页面以及设置轮询查询的时间
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping("/getNotice.do")
 	@ResponseBody
 	public ResponseResult<Mention> getNotice(HttpServletRequest request) {
