@@ -110,6 +110,9 @@ public class MentionController {
 	 */
 	@RequestMapping("/showLiked")
 	public String showAllLiked(HttpServletRequest request, ModelMap map, Integer page) {
+		
+		log.info("跳转到我收到的赞页面 开始");
+		
 		// 默认为当前页
 		if (page == null) {
 			page = 1;
@@ -136,6 +139,24 @@ public class MentionController {
 		// 当前页上显示多少个
 		List<Likes> pages = new ArrayList<Likes>();
 		for (int i = offset; i < count; i++) {
+			
+			/*
+			 * 悬浮信息
+			 */
+			userId = likesList.get(i).getUserId();
+			// 把微博数量放进去
+			Integer[] userIds = { userId };
+			Integer countWeibo = weiboService.countMany(userIds);
+			likesList.get(i).setWeibos(countWeibo);
+			// 把粉丝数量也存进去
+			Integer[] fans = relationService.selectFans(userId);
+			Integer fanCount = fans.length;
+			likesList.get(i).setFans(fanCount);
+			// 把关注数量也存进去
+			Integer[] follows = relationService.selectAll(userId);
+			Integer followCount = follows.length;
+			likesList.get(i).setFollows(followCount);
+			
 			pages.add(likesList.get(i));
 			j++;
 			if (j >= haveMany) {
@@ -156,6 +177,9 @@ public class MentionController {
 		map.addAttribute("pageSize", pageSize);
 		map.addAttribute("curpage", page);
 		map.addAttribute("wz", "showLiked.do?");
+		
+		log.info("跳转到我收到的赞页面 结束");
+		
 		return "LikePage";
 	}
 
@@ -232,6 +256,7 @@ public class MentionController {
 	 */
 	@RequestMapping("/showComment")
 	public String showAllComment(HttpServletRequest request, ModelMap map, Integer page) {
+		log.info("跳转到我收到的评论页面开始");
 		// 默认为当前页
 		if (page == null) {
 			page = 1;
@@ -258,6 +283,24 @@ public class MentionController {
 		// 当前页上显示多少个
 		List<Comment> pages = new ArrayList<Comment>();
 		for (int i = offset; i < count; i++) {
+			
+			/*
+			 * 原创微博的悬浮信息
+			 */
+			int userId2 = commentsList.get(i).getUserId();
+			// 把微博数量放进去
+			Integer[] userIds = { userId2 };
+			Integer countWeibo = weiboService.countMany(userIds);
+			commentsList.get(i).setWeibos(countWeibo);
+			// 把粉丝数量也存进去
+			Integer[] fans = relationService.selectFans(userId2);
+			Integer fanCount = fans.length;
+			commentsList.get(i).setFans(fanCount);
+			// 把关注数量也存进去
+			Integer[] follows = relationService.selectAll(userId2);
+			Integer followCount = follows.length;
+			commentsList.get(i).setFollows(followCount);
+			
 			pages.add(commentsList.get(i));
 			j++;
 			if (j >= haveMany) {
@@ -277,6 +320,9 @@ public class MentionController {
 		map.addAttribute("pageSize", pageSize);
 		map.addAttribute("curpage", page);
 		map.addAttribute("wz", "showComment.do?");
+		
+		log.info("跳转到我收到的评论页面结束");
+		
 		return "CommentPage";
 	}
 	
@@ -290,6 +336,9 @@ public class MentionController {
 	 */
 	@RequestMapping("/showReply")
 	public String showAllReply(HttpServletRequest request, ModelMap map, Integer page) {
+		
+		log.info("跳转到我收到的回复页面开始");
+		
 		// 默认为当前页
 		if (page == null) {
 			page = 1;
@@ -321,6 +370,24 @@ public class MentionController {
 			Integer commentId = r.getCommentId();
 			Weibo w = commentService.selectByComment(commentId);
 			r.setWeibo(w);
+			
+			/*
+			 * 悬浮信息
+			 */
+			int userId2 = replyList.get(i).getFromId();
+			// 把微博数量放进去
+			Integer[] userIds = { userId2 };
+			Integer countWeibo = weiboService.countMany(userIds);
+			replyList.get(i).setWeibos(countWeibo);
+			// 把粉丝数量也存进去
+			Integer[] fans = relationService.selectFans(userId2);
+			Integer fanCount = fans.length;
+			replyList.get(i).setFans(fanCount);
+			// 把关注数量也存进去
+			Integer[] follows = relationService.selectAll(userId2);
+			Integer followCount = follows.length;
+			replyList.get(i).setFollows(followCount);
+			
 			pages.add(r);
 			j++;
 			if (j >= haveMany) {
@@ -339,6 +406,9 @@ public class MentionController {
 		map.addAttribute("pageSize", pageSize);
 		map.addAttribute("curpage", page);
 		map.addAttribute("wz", "showReply.do?");
+		
+		log.info("跳转到我收到的回复页面结束");
+		
 		return "replyPage";
 	}
 
@@ -352,7 +422,7 @@ public class MentionController {
 	 */
 	@RequestMapping("/showRepost")
 	public String showAllRepost(HttpServletRequest request, ModelMap map, Integer page) {
-		log.info("跳转到我收到的转发页面");
+		log.info("跳转到-我收到的转发页面");
 		// 默认为当前页
 		if (page == null) {
 			page = 1;
@@ -379,6 +449,24 @@ public class MentionController {
 		// 当前页上显示多少个
 		List<Weibo> pages = new ArrayList<Weibo>();
 		for (int i = offset; i < count; i++) {
+			
+			/*
+			 * 原创微博的悬浮信息
+			 */
+			userId = repostList.get(i).getUserId();
+			// 把微博数量放进去
+			Integer[] userIds = { userId };
+			Integer countWeibo = weiboService.countMany(userIds);
+			repostList.get(i).setWeibos(countWeibo);
+			// 把粉丝数量也存进去
+			Integer[] fans = relationService.selectFans(userId);
+			Integer fanCount = fans.length;
+			repostList.get(i).setFans(fanCount);
+			// 把关注数量也存进去
+			Integer[] follows = relationService.selectAll(userId);
+			Integer followCount = follows.length;
+			repostList.get(i).setFollows(followCount);
+			
 			pages.add(repostList.get(i));
 			j++;
 			if (j >= haveMany) {

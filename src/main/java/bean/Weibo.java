@@ -46,8 +46,30 @@ public class Weibo implements Serializable{
 	//t_reply t_comment
 	private Integer commentId; // 评论的id
 	
+	//粉丝数量、关注数量、微博数量
+	private Integer fans;
+	private Integer follows;
+	private Integer weibos;
 	
 	
+	public Integer getFans() {
+		return fans;
+	}
+	public void setFans(Integer fans) {
+		this.fans = fans;
+	}
+	public Integer getFollows() {
+		return follows;
+	}
+	public void setFollows(Integer follows) {
+		this.follows = follows;
+	}
+	public Integer getWeibos() {
+		return weibos;
+	}
+	public void setWeibos(Integer weibos) {
+		this.weibos = weibos;
+	}
 	public String getFace() {
 		return face;
 	}
@@ -269,7 +291,8 @@ public class Weibo implements Serializable{
 				+ pic1 + ", pic2=" + pic2 + ", pic3=" + pic3 + ", pic4=" + pic4 + ", pic5=" + pic5 + ", pic6=" + pic6
 				+ ", pic7=" + pic7 + ", pic8=" + pic8 + ", pic9=" + pic9 + ", original=" + original + ", repostId="
 				+ repostId + ", repost=" + repost + ", oldContent=" + oldContent + ", username=" + username + ", face="
-				+ face + ", nowProvince=" + nowProvince + ", commentId=" + commentId + "]";
+				+ face + ", nowProvince=" + nowProvince + ", commentId=" + commentId + ", fans=" + fans + ", follows="
+				+ follows + ", weibos=" + weibos + "]";
 	}
 	public String getNowProvince() {
 		return nowProvince;

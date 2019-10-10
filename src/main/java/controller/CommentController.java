@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,8 @@ import service.IReplyService;
 @RequestMapping("/weibo")
 @Controller
 public class CommentController {
+	
+	public final Logger log = Logger.getLogger(this.getClass());
 
 	@Resource
 	private CommentService commentService; //评论
@@ -50,7 +53,7 @@ public class CommentController {
 			allComments.get(i).setCountReply(replys.size());
 		}
 		ResponseResult<List<Comment>> rr = null;
-		System.out.println(allComments);
+		log.info("展示评论");
 		if(allComments.size() < 1){
 			rr =  new ResponseResult<List<Comment>>(1,"查询成功");
 		}else{

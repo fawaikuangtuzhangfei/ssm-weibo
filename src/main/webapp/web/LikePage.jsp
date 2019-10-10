@@ -124,9 +124,9 @@
 								class="img-circle bind_hover_card popover-show" data-toggle="popover"  
 					title="${like.username }" 
 					data-content=
-					"<form><ul><li><span aria-hidden='true' class='icon_globe'></span> <font>粉丝数:</font>7389223</li> 
-     <li><span aria-hidden='true' class='icon_piechart'></span> <font>关注:</font>265</li>
-     <li><span aria-hidden='true' class='icon_search_alt'></span> <font>微博:</font>645</li>
+					"<form><ul><li><span aria-hidden='true' class='icon_globe'></span> <font>粉丝数:</font>${like.fans }</li> 
+     <li><span aria-hidden='true' class='icon_piechart'></span> <font>关注:</font>${like.follows }</li>
+     <li><span aria-hidden='true' class='icon_search_alt'></span> <font>微博:</font>${like.weibos}</li>
      <li><span aria-hidden='true' class='icon_pens_alt'></span> <font>所在地:</font>${like.province}</li>
      <input type='button' value='关注' id='guanzhu${like.nowUserId }' onclick='guanzhu(${like.nowUserId })'/></form>"
 					data-placement="bottom" data-trigger="hover">
@@ -138,9 +138,9 @@
 								class="img-circle bind_hover_card popover-show" data-toggle="popover"  
 					title="${like.username }" 
 					data-content=
-					"<form><ul><li><span aria-hidden='true' class='icon_globe'></span> <font>粉丝数:</font>7389223</li> 
-     <li><span aria-hidden='true' class='icon_piechart'></span> <font>关注:</font>265</li>
-     <li><span aria-hidden='true' class='icon_search_alt'></span> <font>微博:</font>645</li>
+					"<form><ul><li><span aria-hidden='true' class='icon_globe'></span> <font>粉丝数:</font>${like.fans }</li> 
+     <li><span aria-hidden='true' class='icon_piechart'></span> <font>关注:</font>${like.follows }</li>
+     <li><span aria-hidden='true' class='icon_search_alt'></span> <font>微博:</font>${like.weibos}</li>
      <li><span aria-hidden='true' class='icon_pens_alt'></span> <font>所在地:</font>${like.province}</li>
      <input type='button' value='关注' id='guanzhu${like.nowUserId }' onclick='guanzhu(${like.nowUserId })'/></form>"
 					data-placement="bottom" data-trigger="hover">

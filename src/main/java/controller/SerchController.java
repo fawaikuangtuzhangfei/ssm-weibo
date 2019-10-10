@@ -59,10 +59,47 @@ public class SerchController {
 		int pageSize = count % 10 == 0 ? count / 10 : count / 10 + 1;
 		// 存放所有转发的微博
 		for (int i = 0; i < all.size(); i++) {
+			
+			/*
+			 * 原创微博的悬浮信息
+			 */
+			int userId = all.get(i).getUserId();
+			// 把微博数量放进去
+			Integer[] userIds = { userId };
+			Integer countWeibo = weiboService.countMany(userIds);
+			all.get(i).setWeibos(countWeibo);
+			// 把粉丝数量也存进去
+			Integer[] fans = relationService.selectFans(userId);
+			Integer fanCount = fans.length;
+			all.get(i).setFans(fanCount);
+			// 把关注数量也存进去
+			Integer[] follows = relationService.selectAll(userId);
+			Integer followCount = follows.length;
+			all.get(i).setFollows(followCount);
+			
 			// 是否原创
 			Integer repostId = all.get(i).getRepostId();
 			Weibo repost = weiboService.selectByWeiboId(repostId, 0, 10);
-
+			
+			/*
+			 * 如果是非原创则将悬浮信息填充
+			 */
+			if(repost != null){
+				userId = repost.getUserId();
+				// 把微博数量放进去
+				Integer[] userIds2 = { userId };
+				countWeibo = weiboService.countMany(userIds2);
+				repost.setWeibos(countWeibo);
+				// 把粉丝数量也存进去
+				fans = relationService.selectFans(userId);
+				fanCount = fans.length;
+				repost.setFans(fanCount);
+				// 把关注数量也存进去
+				follows = relationService.selectAll(userId);
+				followCount = follows.length;
+				repost.setFollows(followCount);	
+			}
+			
 			all.get(i).setRepost(repost);
 		}
 		map.addAttribute("all", all);
@@ -97,12 +134,54 @@ public class SerchController {
 		// 一页上显示10个，总共几页
 		int pageSize = count % 10 == 0 ? count / 10 : count / 10 + 1;
 		for (int i = 0; i < all.size(); i++) {
+			
+			/*
+			 * 原创微博的悬浮信息
+			 */
+			userId = all.get(i).getUserId();
+			// 把微博数量放进去
+			Integer[] userIds = { userId };
+			Integer countWeibo = weiboService.countMany(userIds);
+			all.get(i).setWeibos(countWeibo);
+			// 把粉丝数量也存进去
+			Integer[] fans = relationService.selectFans(userId);
+			Integer fanCount = fans.length;
+			all.get(i).setFans(fanCount);
+			// 把关注数量也存进去
+			Integer[] follows = relationService.selectAll(userId);
+			Integer followCount = follows.length;
+			all.get(i).setFollows(followCount);
+			
 			// 是否原创
 			Integer repostId = all.get(i).getRepostId();
 			Weibo repost = weiboService.selectByWeiboId(repostId, 0, 10);
+			
+			/*
+			 * 如果是非原创则将悬浮信息填充
+			 */
+			if(repost != null){
+				userId = repost.getUserId();
+				// 把微博数量放进去
+				Integer[] userIds2 = { userId };
+				countWeibo = weiboService.countMany(userIds2);
+				repost.setWeibos(countWeibo);
+				// 把粉丝数量也存进去
+				fans = relationService.selectFans(userId);
+				fanCount = fans.length;
+				repost.setFans(fanCount);
+				// 把关注数量也存进去
+				follows = relationService.selectAll(userId);
+				followCount = follows.length;
+				repost.setFollows(followCount);	
+			}
+			
 			all.get(i).setRepost(repost);
 		}
 		map.addAttribute("all", all);
+		
+		/*
+		 * 侧边栏信息
+		 */
 		// 把微博数量放进map中去
 		Integer[] userIds = { userId };
 		Integer countWeibo = weiboService.countMany(userIds);
@@ -115,7 +194,8 @@ public class SerchController {
 		Integer[] follows = relationService.selectAll(userId);
 		Integer followCount = follows.length;
 		map.addAttribute("nowFollowCount", followCount);
-		log.info(all);
+		
+		
 		// 将页数和总数和当前页面放进session中
 		map.addAttribute("count", count);
 		map.addAttribute("pageSize", pageSize);

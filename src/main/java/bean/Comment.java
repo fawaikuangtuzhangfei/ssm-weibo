@@ -43,8 +43,36 @@ public class Comment implements Serializable{
 	private List<Reply> reply; //回复
 	private Integer countReply; //回复总数
     
+	//粉丝数量、关注数量、微博数量
+	private Integer fans;
+	private Integer follows;
+	private Integer weibos;
 	
-    public String getCommentTime() {
+    public Integer getFans() {
+		return fans;
+	}
+
+	public void setFans(Integer fans) {
+		this.fans = fans;
+	}
+
+	public Integer getFollows() {
+		return follows;
+	}
+
+	public void setFollows(Integer follows) {
+		this.follows = follows;
+	}
+
+	public Integer getWeibos() {
+		return weibos;
+	}
+
+	public void setWeibos(Integer weibos) {
+		this.weibos = weibos;
+	}
+
+	public String getCommentTime() {
 		return commentTime;
 	}
 
@@ -138,7 +166,7 @@ public class Comment implements Serializable{
 		return "Comment [commentId=" + commentId + ", userId=" + userId + ", weiboId=" + weiboId + ", commentTime="
 				+ commentTime + ", commentContent=" + commentContent + ", username=" + username + ", face=" + face
 				+ ", nowUserId=" + nowUserId + ", province=" + province + ", content=" + content + ", reply=" + reply
-				+ ", countReply=" + countReply + "]";
+				+ ", countReply=" + countReply + ", fans=" + fans + ", follows=" + follows + ", weibos=" + weibos + "]";
 	}
 
 	public String getUsername() {

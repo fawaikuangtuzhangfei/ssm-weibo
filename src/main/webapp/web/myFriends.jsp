@@ -107,9 +107,9 @@
 				class="bind_hover_card popover-show" data-toggle="popover"  
 					title="${weibo.username }" 
 					data-content=
-					"<form><ul><li><span aria-hidden='true' class='icon_globe'></span> <font>粉丝数:</font>7389223</li> 
-     <li><span aria-hidden='true' class='icon_piechart'></span> <font>关注:</font>265</li>
-     <li><span aria-hidden='true' class='icon_search_alt'></span> <font>微博:</font>645</li>
+					"<form><ul><li><span aria-hidden='true' class='icon_globe'></span> <font>粉丝数:</font>${weibo.fans }</li> 
+     <li><span aria-hidden='true' class='icon_piechart'></span> <font>关注:</font>${weibo.follows }</li>
+     <li><span aria-hidden='true' class='icon_search_alt'></span> <font>微博:</font>${weibo.weibos}</li>
      <li><span aria-hidden='true' class='icon_pens_alt'></span> <font>所在地:</font>${weibo.nowProvince}</li>
      <input type='button' value='关注' id='guanzhu${weibo.userId }' onclick='guanzhu(${weibo.userId })'/></form>"
 					data-placement="bottom" data-trigger="hover">
@@ -205,9 +205,9 @@
 					class="bind_hover_card popover-show" data-toggle="popover"  
 					title="${weibo.repost.username }" 
 					data-content=
-					"<form><ul><li><span aria-hidden='true' class='icon_globe'></span> <font>粉丝数:</font>7389223</li> 
-     						<li><span aria-hidden='true' class='icon_piechart'></span> <font>关注:</font>265</li>
-    						 <li><span aria-hidden='true' class='icon_search_alt'></span> <font>微博:</font>645</li>
+					"<form><ul><li><span aria-hidden='true' class='icon_globe'></span> <font>粉丝数:</font>${weibo.repost.fans}</li> 
+     						<li><span aria-hidden='true' class='icon_piechart'></span> <font>关注:</font>${weibo.repost.follows}</li>
+    						 <li><span aria-hidden='true' class='icon_search_alt'></span> <font>微博:</font>${weibo.repost.weibos}</li>
      						<li><span aria-hidden='true' class='icon_pens_alt'></span> <font>所在地:</font>${weibo.repost.nowProvince}</li>
      						<input type='button' value='关注' id='guanzhu${weibo.repost.userId }' onclick='guanzhuOther(${weibo.repost.userId })'/></form>"
 					data-placement="bottom" data-trigger="hover">

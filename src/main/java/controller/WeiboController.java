@@ -25,6 +25,7 @@ import bean.User;
 import bean.Weibo;
 import net.sf.json.JSONObject;
 import service.ICommentService;
+import service.IRelationService;
 import service.IReplyService;
 import service.UserService;
 import service.WeiboService;
@@ -52,6 +53,9 @@ public class WeiboController {
 	
 	@Resource
 	private ICommentService commentService;// 评论
+	
+	@Resource
+	private IRelationService relationService;// 粉丝关注
 
 	// 转发微博
 	@RequestMapping("/repost.do")
@@ -132,11 +136,52 @@ public class WeiboController {
 		Integer count = weiboService.count();
 		int pageSize = count % 10 == 0 ? count / 10 : count / 10 + 1;
 		for (int i = 0; i < all.size(); i++) {
-			// 是否原创
+			
+			/*
+			 * 原创用户的悬浮信息
+			 */
+			int userId = all.get(i).getUserId();
+			// 把微博数量放进去
+			Integer[] userIds = { userId };
+			Integer countWeibo = weiboService.countMany(userIds);
+			all.get(i).setWeibos(countWeibo);
+			// 把粉丝数量也存进去
+			Integer[] fans = relationService.selectFans(userId);
+			Integer fanCount = fans.length;
+			all.get(i).setFans(fanCount);
+			// 把关注数量也存进去
+			Integer[] follows = relationService.selectAll(userId);
+			Integer followCount = follows.length;
+			all.get(i).setFollows(followCount);
+			
+			/*
+			 * 非原创用户的悬浮信息
+			 */
 			Integer repostId = all.get(i).getRepostId();
 			Weibo repost = weiboService.selectByWeiboId(repostId, 0, 10);
+			
+			//如果是非原创则将悬浮信息填充
+			if(repost != null){
+				userId = repost.getUserId();
+				// 把微博数量放进去
+				Integer[] userIds2 = { userId };
+				countWeibo = weiboService.countMany(userIds2);
+				repost.setWeibos(countWeibo);
+				// 把粉丝数量也存进去
+				fans = relationService.selectFans(userId);
+				fanCount = fans.length;
+				repost.setFans(fanCount);
+				// 把关注数量也存进去
+				follows = relationService.selectAll(userId);
+				followCount = follows.length;
+				repost.setFollows(followCount);	
+			}
+			
+			// 将非原创用户添加进行
 			all.get(i).setRepost(repost);
+			
 		}
+		
 		map.addAttribute("count", count);
 		map.addAttribute("pageSize", pageSize);
 		map.addAttribute("all", all);
@@ -164,9 +209,47 @@ public class WeiboController {
 		// 一页上显示10个，总共几页
 		int pageSize = count % 10 == 0 ? count / 10 : count / 10 + 1;
 		for (int i = 0; i < all.size(); i++) {
+			
+			/*
+			 * 原创微博的悬浮信息
+			 */
+			userId = all.get(i).getUserId();
+			// 把微博数量放进去
+			Integer[] userIds = { userId };
+			Integer countWeibo = weiboService.countMany(userIds);
+			all.get(i).setWeibos(countWeibo);
+			// 把粉丝数量也存进去
+			Integer[] fans = relationService.selectFans(userId);
+			Integer fanCount = fans.length;
+			all.get(i).setFans(fanCount);
+			// 把关注数量也存进去
+			Integer[] follows = relationService.selectAll(userId);
+			Integer followCount = follows.length;
+			all.get(i).setFollows(followCount);
+			
 			// 是否原创
 			Integer repostId = all.get(i).getRepostId();
 			Weibo repost = weiboService.selectByWeiboId(repostId, 0, 10);
+			
+			/*
+			 * 如果是非原创则将悬浮信息填充
+			 */
+			if(repost != null){
+				userId = repost.getUserId();
+				// 把微博数量放进去
+				Integer[] userIds2 = { userId };
+				countWeibo = weiboService.countMany(userIds2);
+				repost.setWeibos(countWeibo);
+				// 把粉丝数量也存进去
+				fans = relationService.selectFans(userId);
+				fanCount = fans.length;
+				repost.setFans(fanCount);
+				// 把关注数量也存进去
+				follows = relationService.selectAll(userId);
+				followCount = follows.length;
+				repost.setFollows(followCount);	
+			}
+			
 			all.get(i).setRepost(repost);
 		}
 		map.addAttribute("all", all);
@@ -181,6 +264,7 @@ public class WeiboController {
 	// 显示指定微博的全部内容
 	@RequestMapping("/showSingle.do")
 	public String showSingle(ModelMap map, Integer weiboId) {
+		log.info("展示指定人的主页");
 		//查出该条微博的全部内容
 		Weibo weibo = weiboService.selectByWeiboId(weiboId, 0, 1);
 		
@@ -201,7 +285,6 @@ public class WeiboController {
 			//存储评论下的回复
 			List<Reply> replyList = new ArrayList<Reply>();
 			for(int j=0; j< replys.size(); j++){
-				log.info(replys.get(j));
 				replyList.add(replys.get(j));
 			}
 			//将该条评论下的所有回复都放入
@@ -210,7 +293,7 @@ public class WeiboController {
 			commentList.add(c);
 		}
 		map.addAttribute("commentList", commentList);
-		System.out.println(commentList);
+		log.info("展示单条微博" + weiboId);
 		
 		map.addAttribute("weibo", weibo);
 		return "single";
@@ -329,4 +412,5 @@ public class WeiboController {
 		System.out.println(json.toString());
 		return json.toString();
 	}
+	
 }

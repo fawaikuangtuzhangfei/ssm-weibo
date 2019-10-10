@@ -18,6 +18,7 @@ import bean.ResponseResult;
 import bean.User;
 import bean.Weibo;
 import service.ILikesService;
+import service.IRelationService;
 import service.WeiboService;
 
 /**
@@ -34,6 +35,9 @@ public class LikesController {
 
 	@Resource
 	private ILikesService likesService;
+	
+	@Resource
+	private IRelationService relationService;// 粉丝关注
 
 	@Resource
 	WeiboService weiboService;
@@ -145,9 +149,42 @@ public class LikesController {
 			}
 		}
 		for (int i = 0; i < allCollects.size(); i++) {
+			/*
+			 * 原创用户的悬浮信息
+			 */
+			userId = allCollects.get(i).getUserId();
+			// 把微博数量放进去
+			Integer[] userIds = { userId };
+			Integer countWeibo = weiboService.countMany(userIds);
+			allCollects.get(i).setWeibos(countWeibo);
+			// 把粉丝数量也存进去
+			Integer[] fans = relationService.selectFans(userId);
+			Integer fanCount = fans.length;
+			allCollects.get(i).setFans(fanCount);
+			// 把关注数量也存进去
+			Integer[] follows = relationService.selectAll(userId);
+			Integer followCount = follows.length;
+			allCollects.get(i).setFollows(followCount);
+			
 			// 是否原创
 			Integer repostId = allCollects.get(i).getRepostId();
 			Weibo repost = weiboService.selectByWeiboId(repostId, 0, 10);
+			//如果是非原创则将悬浮信息填充
+			if(repost != null){
+				userId = repost.getUserId();
+				// 把微博数量放进去
+				Integer[] userIds2 = { userId };
+				countWeibo = weiboService.countMany(userIds2);
+				repost.setWeibos(countWeibo);
+				// 把粉丝数量也存进去
+				fans = relationService.selectFans(userId);
+				fanCount = fans.length;
+				repost.setFans(fanCount);
+				// 把关注数量也存进去
+				follows = relationService.selectAll(userId);
+				followCount = follows.length;
+				repost.setFollows(followCount);	
+			}
 			allCollects.get(i).setRepost(repost);
 		}
 		log.info("所有点赞");

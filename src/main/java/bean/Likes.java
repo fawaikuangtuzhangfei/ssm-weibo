@@ -29,6 +29,37 @@ public class Likes implements Serializable{
 
 	//t_weibo
 	private String content;
+	
+	//粉丝数量、关注数量、微博数量
+	private Integer fans;
+	private Integer follows;
+	private Integer weibos;
+	
+	
+
+	public Integer getFans() {
+		return fans;
+	}
+
+	public void setFans(Integer fans) {
+		this.fans = fans;
+	}
+
+	public Integer getFollows() {
+		return follows;
+	}
+
+	public void setFollows(Integer follows) {
+		this.follows = follows;
+	}
+
+	public Integer getWeibos() {
+		return weibos;
+	}
+
+	public void setWeibos(Integer weibos) {
+		this.weibos = weibos;
+	}
 
 	public String getUsername() {
 		return username;
@@ -109,7 +140,7 @@ public class Likes implements Serializable{
 	public String toString() {
 		return "Likes [likesId=" + likesId + ", userId=" + userId + ", weiboId=" + weiboId + ", likeTime=" + likeTime
 				+ ", username=" + username + ", face=" + face + ", nowUserId=" + nowUserId + ", province=" + province
-				+ ", content=" + content + "]";
+				+ ", content=" + content + ", fans=" + fans + ", follows=" + follows + ", weibos=" + weibos + "]";
 	}
 
 	public String getLikeTime() {

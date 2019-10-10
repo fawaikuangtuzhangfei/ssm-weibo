@@ -222,7 +222,7 @@ public class UserController {
 	// 显示修改个人资料页面
 	@RequestMapping("/showUserinfo.do")
 	public String showUpdate(HttpSession session) {
-		System.out.println("进入修改页面");
+		log.info("进入修改页面");
 		User user = (User) session.getAttribute("user");
 		User newUser = userService.selectByUsername(user.getUsername());
 		session.setAttribute("user", newUser);
@@ -285,9 +285,46 @@ public class UserController {
 		// 一页上显示10个，总共几页
 		int pageSize = count % 10 == 0 ? count / 10 : count / 10 + 1;
 		for (int i = 0; i < all.size(); i++) {
+			
+			/*
+			 * 原创的悬浮信息
+			 */
+			userId = all.get(i).getUserId();
+			// 把微博数量放进去
+			Integer[] userIds = { userId };
+			Integer countWeibo = weiboService.countMany(userIds);
+			all.get(i).setWeibos(countWeibo);
+			// 把粉丝数量也存进去
+			Integer[] fans = relationService.selectFans(userId);
+			Integer fanCount = fans.length;
+			all.get(i).setFans(fanCount);
+			// 把关注数量也存进去
+			Integer[] follows = relationService.selectAll(userId);
+			Integer followCount = follows.length;
+			all.get(i).setFollows(followCount);
+			
 			// 是否原创
 			Integer repostId = all.get(i).getRepostId();
 			Weibo repost = weiboService.selectByWeiboId(repostId, offset, 10);
+			
+			/*
+			 * 如果是非原创则将悬浮信息填充
+			 */
+			if(repost != null){
+				userId = repost.getUserId();
+				// 把微博数量放进去
+				Integer[] userIds2 = { userId };
+				countWeibo = weiboService.countMany(userIds2);
+				repost.setWeibos(countWeibo);
+				// 把粉丝数量也存进去
+				fans = relationService.selectFans(userId);
+				fanCount = fans.length;
+				repost.setFans(fanCount);
+				// 把关注数量也存进去
+				follows = relationService.selectAll(userId);
+				followCount = follows.length;
+				repost.setFollows(followCount);	
+			}
 			all.get(i).setRepost(repost);
 			log.info("展示单用户微博->非原创微博" + i + ":" + repost);
 		}

@@ -18,6 +18,7 @@ import bean.ResponseResult;
 import bean.User;
 import bean.Weibo;
 import service.ICollectService;
+import service.IRelationService;
 import service.WeiboService;
 
 /**
@@ -32,10 +33,13 @@ public class CollectController {
 	public final Logger log = Logger.getLogger(this.getClass());
 	
 	@Resource
-	WeiboService weiboService;
+	WeiboService weiboService;// 微博
 	
 	@Resource
-	private ICollectService collectService;
+	private ICollectService collectService;// 收藏
+	
+	@Resource
+	private IRelationService relationService;// 粉丝关注
 	
 	//是否被当前用户收藏
 	@RequestMapping("/selectByOne")
@@ -106,7 +110,6 @@ public class CollectController {
 		//存放所有的收藏
 		List<Weibo> allCollects = new ArrayList<Weibo>();
 		for(int i=offset; i<count; i++){
-			log.info("当前用户收藏微博id=" + collects[i]);
 			Weibo allWeibo = weiboService.selectByWeiboId(collects[i], 0,10);
 			//必须加此判断否则若是删除了微博，就会存入空对象导致下面出差错
 			if(allWeibo != null && j<haveMany){
@@ -116,20 +119,57 @@ public class CollectController {
 		}
 
 		for (int i = 0; i < allCollects.size(); i++) {
+			log.info("展示我的所有收藏开始");
+			/*
+			 * 原创微博的悬浮信息
+			 */
+			userId = allCollects.get(i).getUserId();
+			// 把微博数量放进去
+			Integer[] userIds = { userId };
+			Integer countWeibo = weiboService.countMany(userIds);
+			allCollects.get(i).setWeibos(countWeibo);
+			// 把粉丝数量也存进去
+			Integer[] fans = relationService.selectFans(userId);
+			Integer fanCount = fans.length;
+			allCollects.get(i).setFans(fanCount);
+			// 把关注数量也存进去
+			Integer[] follows = relationService.selectAll(userId);
+			Integer followCount = follows.length;
+			allCollects.get(i).setFollows(followCount);
+			
 			// 是否原创
 			Integer repostId = allCollects.get(i).getRepostId();
 			Weibo repost = weiboService.selectByWeiboId(repostId, 0, 10);
+			
+			/*
+			 * 如果是非原创则将悬浮信息填充
+			 */
+			if(repost != null){
+				userId = repost.getUserId();
+				// 把微博数量放进去
+				Integer[] userIds2 = { userId };
+				countWeibo = weiboService.countMany(userIds2);
+				repost.setWeibos(countWeibo);
+				// 把粉丝数量也存进去
+				fans = relationService.selectFans(userId);
+				fanCount = fans.length;
+				repost.setFans(fanCount);
+				// 把关注数量也存进去
+				follows = relationService.selectAll(userId);
+				followCount = follows.length;
+				repost.setFollows(followCount);	
+			}
+			
 			allCollects.get(i).setRepost(repost);
 		}
-		log.info("所有收藏");
 		//实际的收藏数量
-		System.out.println(allCollects);
 		map.addAttribute("all", allCollects);
 		// 将页数和总数和当前页面放进session中
 		map.addAttribute("count", count);
 		map.addAttribute("pageSize", pageSize);
 		map.addAttribute("curpage", page);
 		map.addAttribute("wz", "showOne.do");
+		log.info("展示我的所有收藏完毕");
 		return "myCollection";
 	}
 }

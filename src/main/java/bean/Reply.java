@@ -35,6 +35,36 @@ public class Reply implements Serializable{
     //t_weibo
     private Weibo weibo;
     
+	//粉丝数量、关注数量、微博数量
+	private Integer fans;
+	private Integer follows;
+	private Integer weibos;
+	
+    
+	public Integer getFans() {
+		return fans;
+	}
+
+	public void setFans(Integer fans) {
+		this.fans = fans;
+	}
+
+	public Integer getFollows() {
+		return follows;
+	}
+
+	public void setFollows(Integer follows) {
+		this.follows = follows;
+	}
+
+	public Integer getWeibos() {
+		return weibos;
+	}
+
+	public void setWeibos(Integer weibos) {
+		this.weibos = weibos;
+	}
+
 	public String getFromFace() {
 		return fromFace;
 	}
@@ -152,7 +182,8 @@ public class Reply implements Serializable{
 		return "Reply [replyId=" + replyId + ", commentId=" + commentId + ", fromId=" + fromId + ", toId=" + toId
 				+ ", replyContent=" + replyContent + ", time=" + time + ", fromUsername=" + fromUsername
 				+ ", toUsername=" + toUsername + ", fromFace=" + fromFace + ", fromProvince=" + fromProvince
-				+ ", toProvince=" + toProvince + ", weibo=" + weibo + "]";
+				+ ", toProvince=" + toProvince + ", weibo=" + weibo + ", fans=" + fans + ", follows=" + follows
+				+ ", weibos=" + weibos + "]";
 	}
 
 	public String getReplyContent() {
