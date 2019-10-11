@@ -48,7 +48,7 @@
         </div>
         <button class="btn btn-lg btn-primary btn-block" id="bt-login" type="button">Sign in</button>
         <p>
-		<span>还没有微博？<a href="../user/showRegister.do">立即注册!</a></span>
+		<span>还没有微博？<a href="../user/showRegister.do" style="color: blue;">立即注册!</a></span>
         </p>
       </form>
 

@@ -107,7 +107,7 @@
 					<div id="uploader-demo">
 						<div class="webuploader-container">
 							<!--用来存放item-->
-							<div id="fileList" class="uploader-list"></div>
+							<div id="fileList" class="uploader-list" style="width: 400px;"></div>
 							<div id="sendButtom">
 								<div id="one" style="float: left; margin-left: 40%;">
 									<div id="filePicker" class="webuploader-pick form-control">选择图片</div>

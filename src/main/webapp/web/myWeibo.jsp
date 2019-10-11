@@ -106,7 +106,7 @@
 				<br>
 				<table width="100%" style="table-layout: fixed; font-size: 20px">
 					<tr>
-						<td><a href="../weibo/showOne.do">${nowWeiboCount }微博</a></td>
+						<td><a href="../user/showOne.do?userId=${usernow.id }">${nowWeiboCount }微博</a></td>
                         <td><a href="../relation/showFollowList.do?userId=${user.id}&nowId=${usernow.id}">${nowFollowCount }关注</a></td>
                         <td><a href="../relation/showFanList.do?userId=${user.id }&nowId=${usernow.id}">${nowFansCount }粉丝</a></td>
 					</tr>

@@ -67,7 +67,7 @@
         
         <button id="bt-register" class="btn btn-lg btn-primary btn-block" type="button" >立即注册</button>
         
-        <span>已有账号, <a href="../user/showLogin.do" >立即登录!</a></span>
+        <span>已有账号, <a href="../user/showLogin.do" style="color: gold;">立即登录!</a></span>
       </form>
       
 
