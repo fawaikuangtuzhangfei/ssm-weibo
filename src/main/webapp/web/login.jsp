@@ -37,7 +37,7 @@
 
       <form class="form-signin">
         <h2 class="form-signin-heading">随时随地发现新鲜事!</h2>
-        <input type="text" id="username" name="username" class="form-control" placeholder="用户名/邮箱/手机号" required>
+        <input type="text" id="username" name="username" class="form-control" placeholder="用户名" required>
         <span class="msg-default" id="unamespan"></span>
         <input type="password" id="password" class="form-control" placeholder="密码" required>
         <span class="msg-default" id="showResult"></span>

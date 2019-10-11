@@ -3,7 +3,7 @@ package bean;
 import java.io.Serializable;
 
 /**
- * 相当于
+ * 用于和后台进行交互->传递数据
  * @author nanshoudabaojian
  *
  * @param <T>

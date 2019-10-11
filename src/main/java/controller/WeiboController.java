@@ -69,8 +69,7 @@ public class WeiboController {
 	// 发布微博
 	@RequestMapping("/post.do")
 	// 将form表单中的数据封装到weibo对象中
-	// **存在问题，文件无法获取到，由于jsp页面中from表单传值的问题
-	// 仿照写法直接利用form的submit->然后重定向到我的首页showOne.do
+	// 直接利用form的submit->然后重定向到我的首页showOne.do
 	public String post(HttpServletRequest request, HttpSession session) {
 		Weibo weibo = new Weibo();
 		String content = request.getParameter("content");
@@ -342,9 +341,20 @@ public class WeiboController {
 		return "redirect:showOne.do";
 	}
 
+	/**
+	 * 文件(图片)上传
+	 * JSONObject用于解析json对象
+	 * UUID通用唯一识别码->确定唯一性
+	 * @param file
+	 * @param model
+	 * @param session
+	 * @return
+	 * @throws Exception
+	 */
 	// 图片上传
 	@RequestMapping("/upload.do")
 	public @ResponseBody String upload(MultipartFile file, Model model, HttpSession session) throws Exception {
+		log.info("图片上传开始");
 		JSONObject json = new JSONObject();
 		// 原始名称
 		String originalFilename = file.getOriginalFilename();
@@ -405,11 +415,10 @@ public class WeiboController {
 
 			json.put("status", "OK");
 			json.put("picName", newFileName);
-			System.out.println(json.toString());
 			return json.toString();
 		}
 		json.put("status", "NO");
-		System.out.println(json.toString());
+		log.info("图片上传结束");
 		return json.toString();
 	}
 	

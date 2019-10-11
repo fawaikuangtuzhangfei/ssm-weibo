@@ -1,4 +1,8 @@
 package utils;
+/**
+ *  时间转换工具 ->暂时废弃
+ * @author nanshoudabaojian
+ */
 
 import java.io.IOException;
 import java.text.ParseException;

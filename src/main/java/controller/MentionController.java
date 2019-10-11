@@ -79,19 +79,29 @@ public class MentionController {
 		// 获取到当前mention的全部差值信息
 		Mention mention = mentionService.selectByUserId(userId);
 
-		// 超时时间
-		int maxTime = 0;
-
 		while (true) {
+			
+			// 超时时间
+			int maxTime = 0;
+			maxTime++;
+			if (maxTime == 20) {
+				break;
+			}
 
 			try {
-				Thread.sleep(3000);
+				// 数据不变->休息3s
+				if (mention.getRepostcount() == 0 && mention.getCommentcount() == 0 && mention.getReplycount() == 0
+						&& mention.getFanscount() == 0 && mention.getLikecount() == 0) {
+
+					Thread.sleep(3000);
+				} else {
+					//有变化的话->1s查询一次
+					Thread.sleep(1000);
+					break;
+				}	
+				
 			} catch (InterruptedException e) {
 				e.printStackTrace();
-			}
-			maxTime++;
-			if (maxTime == 1) {// 让他maxTime*3秒刷新一次
-				break;
 			}
 
 		}

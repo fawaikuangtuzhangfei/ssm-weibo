@@ -122,12 +122,10 @@ public class MentionService implements IMentionService{
 		//设置与我相关的转发数量
 		mention.setReplycount(reply);
 		//当转发的总数减少时->设置通知为0 同时修改mention的转发数量
-		if(repost < 0){
+		if(reply < 0){
 			mention.setReplycount(0);
 			mentionMapper.updateRelys(userId, nowReply);
 		}
-		
-		
 		return mention;
 	}
 

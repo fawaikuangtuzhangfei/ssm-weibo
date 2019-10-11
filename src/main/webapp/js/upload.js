@@ -8,6 +8,7 @@ $(function() {
     var uploader = WebUploader.create({
         // 选完文件后，是否自动上传。  
         auto: true,
+        // 上传文件个数限制
         fileNumLimit: 9,
 
         // swf文件路径  
@@ -28,6 +29,9 @@ $(function() {
         },
         method: 'POST',
     });
+    
+    //监听fileQueued事件，通过uploader.makeThumb来创建图片预览图。
+    //PS: 这里得到的是Data URL数据，IE6、IE7不支持直接预览。可以借助FLASH或者服务端来完成预览。
     // 当有文件添加进来的时候  
     uploader.on('fileQueued', function(file) { // webuploader事件.当选择文件后，文件被加载到文件队列中，触发该事件。等效于 uploader.onFileueued = function(file){...} ，类似js的事件定义。  
         var $li = $(
@@ -97,11 +101,14 @@ $(function() {
     uploader.on('uploadComplete', function(file) {
         $('#' + file.id).find('.progress').remove();
     });
+    
+    //触发事件--->调用webuploader.js中的上传方法
     $btn.on('click', function() {
         console.log("上传...");
         uploader.upload();
         console.log("上传成功");
     });
+    
     //删除
     $list.on("click", ".webuploadDelbtn", function() {
     	

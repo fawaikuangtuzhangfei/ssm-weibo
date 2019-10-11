@@ -229,6 +229,12 @@ public class UserController {
 		return "userinfo";
 	}
 
+	/**
+	 * MultipartFile类专门用来接收前台传过来的文件
+	 * @param user
+	 * @param user_face
+	 * @return
+	 */
 	// 实现修改用户个人信息
 	@RequestMapping("/updateUserInfo.do")
 	public String updateUser(User user, MultipartFile user_face) {
@@ -249,7 +255,7 @@ public class UserController {
 
 			// 将内存中的数据写入磁盘
 			try {
-				// transferTo() 我主要就是用来把 MultipartFile 转换成 File
+				// transferTo() 主要就是用来把 MultipartFile 转换成 File
 				user_face.transferTo(newFile);
 			} catch (IllegalStateException e) {
 				e.printStackTrace();

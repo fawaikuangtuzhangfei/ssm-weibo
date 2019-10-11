@@ -106,10 +106,11 @@
 						name="content"></textarea>
 					<div id="uploader-demo">
 						<div class="webuploader-container">
-							<!--用来存放item-->
-							<div id="fileList" class="uploader-list" style="width: 400px;"></div>
+							<!--用来存放item 也就是上传的图片-->
+							<div id="fileList" class="uploader-list" style="width: 400px; margin-left: 256px;"></div>
 							<div id="sendButtom">
 								<div id="one" style="float: left; margin-left: 40%;">
+									<!-- 选择上传图片的按钮 -->
 									<div id="filePicker" class="webuploader-pick form-control">选择图片</div>
 									<input type="file" name="file"
 										class="webuploader-element-invisible" multiple="multiple"

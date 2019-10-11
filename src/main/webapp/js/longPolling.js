@@ -4,7 +4,7 @@ var getNotice ={
 	type:'GET',
 	//async:false,
 	url:pollAction,
-	timeout:120000, //若超时，则去error
+	timeout:10000, //若超时，则去error
 	contentType: 'application/json;charset=utf-8',
     dataType: 'json',
 	success:function(data){
@@ -49,7 +49,7 @@ var getNotice ={
 	},
 	 error: function (XMLHttpRequest, textStatus, errorThrown) {
          if (textStatus == "timeout") { // 请求超时
-        	 //$.ajax(getNotice); // 递归调用
+        	 $.ajax(getNotice); // 递归调用
          } else { // 其他错误，如网络错误等
         	 $.ajax(getNotice);
          }
