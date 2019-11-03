@@ -82,7 +82,7 @@
     <!-- 背景图片 -->
     <style>
     .bgImg {
-    	background-image: url("../images/myweibo.jpg");
+    	background-image: url("../images/a12.jpg");
 		background-repeat: no-repeat;
 		background-size: cover;
 	}

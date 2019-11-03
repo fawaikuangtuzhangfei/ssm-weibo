@@ -54,6 +54,7 @@
 			<mvc:exclude-mapping path="/user/checkEmail.do"/>
 			<mvc:exclude-mapping path="/user/checkPhone.do"/>
 			<mvc:exclude-mapping path="/user/login.do"/>
+			<mvc:exclude-mapping path="/weibo/show.do"/>
 			<mvc:exclude-mapping path="/user/register.do"/>
 			<!-- 实例化拦截器->拦截了做啥 -->
 			<bean class="interceptor.LoginInterceptor"></bean>

@@ -318,7 +318,6 @@
 				<!--回复区域 end-->
 			</div>
 		</div>
-		<hr>
 	</div>
 
 	<script type="text/javascript"
